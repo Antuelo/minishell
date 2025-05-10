@@ -6,11 +6,11 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:54:30 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/10 16:56:53 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/10 17:40:38 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include
+#include "../minishell/include/minishell.h"
 
 int	main(int argc, char **argv, char *envp)
 {
