@@ -6,21 +6,21 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 20:21:57 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 21:53:57 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../minishell/libft/libft.h"
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <unistd.h>
+# include "libft.h"
 
 typedef struct s_cmd
 {
@@ -39,5 +39,11 @@ typedef struct s_cmd
 int		execute(t_cmd *cmd, char **envp);
 char	*get_cmd_path(char *cmd, char **envp);
 char	**extract_paths(char **envp);
+void	execute_path(char *path, char **envp, char **args, char *cmd);
+void	free_cmd(t_cmd *cmd);
+
+/*free everythings*/
+void	freepath(char **patch);
+void	free_cmd(t_cmd *cmd);
 
 #endif

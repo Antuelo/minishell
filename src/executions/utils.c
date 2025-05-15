@@ -6,13 +6,12 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 20:46:10 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/01 22:27:28 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 21:44:52 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex/pipex.h"
-#include "../libft/libft.h"
-#include <stdio.h>
+#include "libft.h"
+#include "minishell.h"
 
 char	**extract_paths(char **envp)
 {
