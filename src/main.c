@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 19:02:35 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
+/*   Updated: 2025/05/15 19:38:15 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell/include/minishell.h"
 
-int	exec(t_cmd *data, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	char	*fullpath;
+	t_cmd	*cmd;
 
-	fullpath = get_cmd_path(data->args, envp);
+	(void)argc;
+	(void)argv;
+	cmd = malloc(sizeof(t_cmd));
+	cmd->args = ft_split("ls -la", ' ');
+	cmd->infile = NULL;
+	cmd->outfile = NULL;
+	cmd->append = -1;
+	cmd->heredoc = 0;
+	cmd->delimiter = NULL;
+	cmd->next = NULL;
+	cmd->append = NULL;
+
+	execute(cmd, envp);
+
+	free_cmd(cmd);
 	return (0);
 }

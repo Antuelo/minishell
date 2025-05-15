@@ -6,14 +6,17 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 14:13:24 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:32:51 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../minishell/libft/libft.h"
 # include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_cmd
 {
@@ -27,5 +30,9 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;
+
+/*parsing*/
+char	*get_cmd_path(char *cmd, char **envp);
+char	**extract_paths(char **envp);
 
 #endif
