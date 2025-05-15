@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 21:53:57 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:02:56 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include "libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+
 
 typedef struct s_cmd
 {

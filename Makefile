@@ -7,7 +7,8 @@ CFLAGS = -Wall -Wextra -Werror -g
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRCS = main.c src/executions/execute.c src/executions/utils.c src/executions/utils2.c src/executions/free.c
+SRCS =	 main.c \
+		src/executions/execute.c src/executions/utils.c src/executions/utils2.c src/executions/free.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -19,7 +20,7 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 	@echo "✅ MINISHELL completed successfully!"
 
 %.o: %.c

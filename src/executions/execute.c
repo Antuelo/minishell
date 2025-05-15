@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 21:39:46 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 22:58:44 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	execute(t_cmd *cmd, char **envp)
 			perror("command");
 			exit(1);
 		}
-	execve(fullpath, cmd->args, envp);
-	perror("execve");
-	exit (1);
+		execve(fullpath, cmd->args, envp);
+		perror("execve");
+		exit(1);
 	}
 	else
 		waitpid(pid, NULL, 0);
