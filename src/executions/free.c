@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 21:53:21 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:24:25 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,14 @@ void	free_cmd(t_cmd *cmd)
 		free(cmd->args);
 	}
 	free(cmd);
+}
+
+void	freepath(char **patch)
+{
+	int	i;
+
+	i = 0;
+	while (patch[i])
+		free(patch[i++]);
+	free(patch);
 }

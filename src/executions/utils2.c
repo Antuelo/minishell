@@ -6,22 +6,12 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 10:52:26 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 21:46:06 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:24:17 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
-
-void	freepath(char **patch)
-{
-	int	i;
-
-	i = 0;
-	while (patch[i])
-		free(patch[i++]);
-	free(patch);
-}
 
 void	execute_path(char *path, char **envp, char **args, char *cmd)
 {

@@ -6,11 +6,11 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 23:14:23 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:55:54 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell/include/minishell.h"
+#include "minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -27,10 +27,10 @@ int	main(int argc, char **argv, char **envp)
 		if (input)
 			add_history(input);
 		cmd = malloc(sizeof(t_cmd)); // SIMULATION DU PARSER ...
-		cmd->args = ft_split("ls -la", ' ');
+		cmd->args = ft_split("echo hola", ' ');
 		cmd->infile = NULL;
-		cmd->outfile = NULL;
-		cmd->append = -1;
+		cmd->outfile = "salida.txt";
+		cmd->append = 0;
 		cmd->heredoc = 0;
 		cmd->delimiter = NULL;
 		cmd->next = NULL;
