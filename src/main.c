@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 19:38:15 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 20:10:25 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd->heredoc = 0;
 	cmd->delimiter = NULL;
 	cmd->next = NULL;
-	cmd->append = NULL;
-
 	execute(cmd, envp);
-
 	free_cmd(cmd);
 	return (0);
 }
