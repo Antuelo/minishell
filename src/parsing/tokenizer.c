@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 18:15:39 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/12 18:15:39 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/15 18:45:56 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/15 18:46:26 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../../include/parsing.h"
 
 static int	is_operator(char c)
 {
@@ -52,30 +52,32 @@ static char	*extract_operator(char *line, int *i)
 {
 	int		start;
 	int		count;
+	char	op;
 
 	start = *i;
+	op = line[*i];
 	count = 1;
-	if ((line[*i] == '<' || line[*i] == '>') && line[*i + 1] == line[*i])
+	(*i)++;
+	if (line[*i] == op)
 	{
 		count++;
 		(*i)++;
 	}
-	(*i)++;
-	if (line[*i] == line[start])
+	if (line[*i] == op)
 		return (NULL);
 	return (strndup(line + start, count));
 }
 
-
 static char	*extract_word(char *line, int *i)
 {
-	int		start;
+	int	start;
 
 	start = *i;
-	while (line[*i] && !isspace(line[*i]) && !is_operator(line[*i]))
+	while (line[*i]
+		&& !isspace(line[*i])
+		&& !is_operator(line[*i])
+		&& line[*i] != '\'' && line[*i] != '"')
 	{
-		if (line[*i] == '\'' || line[*i] == '"')
-			break ;
 		if (line[*i] == '\\')
 			(*i)++;
 		(*i)++;
@@ -85,11 +87,15 @@ static char	*extract_word(char *line, int *i)
 
 t_token	*tokenize(char *line)
 {
-	t_token	*head = NULL;
-	t_token	**curr = &head;
-	char	*word;
-	int		i = 0;
+	t_token		*head;
+	t_token		*last;
+	t_token		*new;
+	char		*word;
+	int			i;
 
+	head = NULL;
+	last = NULL;
+	i = 0;
 	while (line[i])
 	{
 		while (isspace(line[i]))
@@ -99,23 +105,20 @@ t_token	*tokenize(char *line)
 		if (line[i] == '\'' || line[i] == '"')
 			word = extract_quoted(line, &i);
 		else if (is_operator(line[i]))
-        {
-	        word = extract_operator(line, &i);
-	        if (!word)
-	        {
-		        printf("Syntax error : invalid redirection\n");
-		        free_tokens(head);
-		        return (NULL);
-	        }
-        }
+			word = extract_operator(line, &i);
 		else
 			word = extract_word(line, &i);
 		if (!word)
-			return (free_tokens(head), NULL);
-		*curr = new_token(word, get_token_type(word));
-		if (!*curr)
+			return (free_tokens(head), printf("Syntax error\n"), NULL);
+		new = new_token(word, get_token_type(word));
+		if (!new)
 			return (free(word), free_tokens(head), NULL);
-		curr = &(*curr)->next;
+		new->prev = last;
+		if (last)
+			last->next = new;
+		else
+			head = new;
+		last = new;
 	}
 	return (head);
 }

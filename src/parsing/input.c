@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 18:15:11 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/12 18:15:11 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/15 18:45:23 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/15 18:45:23 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../../include/parsing.h"
 
 char	*get_user_input(void)
 {

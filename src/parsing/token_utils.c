@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 18:15:23 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/12 18:15:23 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/15 18:45:50 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/15 18:45:50 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../../include/parsing.h"
 
 
 t_token	*new_token(char *value, t_token_type type)

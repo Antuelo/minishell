@@ -5,10 +5,12 @@ CFLAGS		= -Wall -Wextra -Werror
 READLINE	= -lreadline
 INCLUDES	= -Iincludes
 
-SRC			=	src/main.c \
-				src/input.c \
-				src/tokenizer.c \
-				src/token_utils.c \
+SRC			=	src/parsing/main.c \
+				src/parsing/input.c \
+				src/parsing/tokenizer.c \
+				src/parsing/token_utils.c \
+				src/parsing/parser.c \
+				src/parsing/redirections.c \
 
 OBJ			= $(SRC:.c=.o)
 
