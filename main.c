@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 23:00:09 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:14:23 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	while (1)
 	{
-		input = realine("minishell$ ");
+		input = readline("minishell$ ");
 		if (!input) // JE LAISSE POUR LE CTRL-D
 			break ;
 		if (input)
