@@ -6,12 +6,23 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 20:46:10 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 21:44:52 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/17 17:59:43 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+
+void	controlpath(char *path, t_cmd *cmd)
+{
+	if (!path)
+	{
+		free_cmd(cmd);
+		free(path);
+		perror("error: command not found");
+		exit(127);
+	}
+}
 
 char	**extract_paths(char **envp)
 {
@@ -50,4 +61,17 @@ char	*get_cmd_path(char *cmd, char **envp)
 	}
 	freepath(path);
 	return (NULL);
+}
+
+int	countcmds(t_cmd *cmd)
+{
+	int	count;
+
+	count = 0;
+	while (cmd)
+	{
+		count++;
+		cmd = cmd->next;
+	}
+	return (count);
 }

@@ -6,12 +6,49 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 10:52:26 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 23:24:17 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/17 17:24:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+
+void	handle_infile(t_cmd *cmd)
+{
+	int	fd_in;
+
+	fd_in = open(cmd->infile, O_RDONLY);
+	if (fd_in < 0)
+	{
+		perror("open infile");
+		exit(1);
+	}
+	dup2(fd_in, STDIN_FILENO);
+	close(fd_in);
+}
+
+void	handle_outfile(t_cmd *cmd)
+{
+	int	fd_out;
+	int	flags;
+
+	flags = O_CREAT | O_WRONLY;
+	if (cmd->append == 1)
+		flags |= O_APPEND;
+	else
+		flags |= O_TRUNC;
+	if (cmd->outfile)
+	{
+		fd_out = open(cmd->outfile, flags, 0644);
+		if (fd_out < 0)
+		{
+			perror("open outfile");
+			exit(1);
+		}
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
+}
 
 void	execute_path(char *path, char **envp, char **args, char *cmd)
 {

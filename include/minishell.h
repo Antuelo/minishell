@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 23:02:56 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:10:31 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,26 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 }					t_cmd;
 
-/*execution*/
+typedef struct s_exec
+{
+	int				pipe_fd[2];		//pour le pipe actuel
+	int				fd_in;			//fd d entrée pour le procces actuel
+	pid_t			*pid;			//array pour les procces fils
+	int				cmd_count;		//cantité de commandes
+}					t_exec;
+
+/*execution and main*/
 int		execute(t_cmd *cmd, char **envp);
 char	*get_cmd_path(char *cmd, char **envp);
-char	**extract_paths(char **envp);
+int	execute_pipeline(t_cmd *cmd_list, char **envp);
+
+/*utils*/
+int		countcmds(t_cmd *cmd);
 void	execute_path(char *path, char **envp, char **args, char *cmd);
-void	free_cmd(t_cmd *cmd);
+char	**extract_paths(char **envp);
+void	controlpath(char *path, t_cmd *cmd);
+void	handle_infile(t_cmd *cmd);
+void	handle_outfile(t_cmd *cmd);
 
 /*free everythings*/
 void	freepath(char **patch);

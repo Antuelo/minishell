@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 23:55:54 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:15:05 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,50 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = readline("minishell$ ");
-		if (!input) // JE LAISSE POUR LE CTRL-D
+		if (!input)
+			break ;
+		if (input)
+			add_history(input);
+		// Simulación de parser:
+		cmd = malloc(sizeof(t_cmd));
+		cmd->args = ft_split(input, ' ');
+		cmd->infile = NULL;
+		cmd->outfile = NULL;
+		cmd->append = -1;
+		cmd->heredoc = 0;
+		cmd->delimiter = NULL;
+		cmd->next = NULL;
+		cmd->prev = NULL;
+		if (cmd->args && ft_strncmp(cmd->args[0], "exit", 5) == 0)
+		{
+			free_cmd(cmd);
+			break ;
+		}
+		if (execute(cmd, envp) == 1)
+		{
+			free_cmd(cmd);
+			return (1);
+		}
+		free_cmd(cmd);
+		free(input);
+	}
+	return (0);
+}
+
+/*
+int	main(int argc, char **argv, char **envp)
+{
+	t_cmd	*cmd;
+	char	*input;
+
+	(void)argc;
+	(void)argv;
+	while (1)
+	{
+		input = readline("minishell$ ");
+		if (!input || (cmd && cmd->args && ft_strncmp(cmd->args[0], "exit",
+					5) == 0)) // si l'utilisateur tape Ctrl+D ou écrit "exit",
+						on quitte la boucle
 			break ;
 		if (input)
 			add_history(input);
@@ -35,8 +78,10 @@ int	main(int argc, char **argv, char **envp)
 		cmd->delimiter = NULL;
 		cmd->next = NULL;
 		cmd->prev = NULL;
-		execute(cmd, envp);
+		if (execute(cmd, envp) == 1)
+			return (free_cmd(cmd), 1);
 		free_cmd(cmd);
 	}
 	return (0);
 }
+*/

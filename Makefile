@@ -8,7 +8,8 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 SRCS =	 main.c \
-		src/executions/execute.c src/executions/utils.c src/executions/utils2.c src/executions/free.c
+		src/executions/execute.c src/executions/utils.c src/executions/utils2.c src/executions/free.c\
+		src/executions/execute_pipeline.c
 
 OBJS = $(SRCS:.c=.o)
 
