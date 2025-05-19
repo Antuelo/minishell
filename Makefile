@@ -11,6 +11,8 @@ SRC			=	src/parsing/main.c \
 				src/parsing/token_utils.c \
 				src/parsing/parser.c \
 				src/parsing/redirections.c \
+				src/parsing/expansion.c \
+				src/parsing/libft.c \
 
 OBJ			= $(SRC:.c=.o)
 

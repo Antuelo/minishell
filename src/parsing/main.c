@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 18:45:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/15 18:45:29 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/19 19:02:33 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/19 19:02:33 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,16 @@ void	print_cmd(t_cmd *cmd)
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_token	*tokens;
 	t_cmd	*cmd;
+	int		last_exit_code;
 
+	(void)argc;
+	(void)argv;
+	last_exit_code = 0;
 	while (1)
 	{
 		line = get_user_input();
@@ -79,6 +83,7 @@ int	main(void)
 			free(line);
 			continue ;
 		}
+		expand_tokens(tokens, envp, last_exit_code);
 		cmd = malloc(sizeof(t_cmd));
 		if (!cmd)
 			return (free_tokens(tokens), free(line), 1);
