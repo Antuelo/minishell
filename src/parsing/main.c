@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 19:02:33 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/19 19:02:33 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/19 19:26:51 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/19 19:26:51 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-
+// Libère la structure t_cmd
 void	free_cmd(t_cmd *cmd)
 {
 	int	i;
@@ -38,6 +38,7 @@ void	free_cmd(t_cmd *cmd)
 	free(cmd);
 }
 
+// Affiche le contenu de la structure t_cmd pour debug
 void	print_cmd(t_cmd *cmd)
 {
 	int	i;
@@ -68,29 +69,41 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	last_exit_code = 0;
+	last_exit_code = 0; // Sert à remplacer $?
+
 	while (1)
 	{
+		// Affiche le prompt et lit la ligne utilisateur
 		line = get_user_input();
 		if (!line[0])
 		{
 			free(line);
 			continue ;
 		}
+
+		// Découpe la ligne en tokens
 		tokens = tokenize(line);
 		if (!tokens)
 		{
 			free(line);
 			continue ;
 		}
+
+		// Remplace les variables d'environnement dans les tokens ($VAR, $?)
 		expand_tokens(tokens, envp, last_exit_code);
+
+		// Alloue une structure de commande à remplir depuis les tokens
 		cmd = malloc(sizeof(t_cmd));
 		if (!cmd)
 			return (free_tokens(tokens), free(line), 1);
+
+		// Construit la structure de commande à partir des tokens
 		if (!fill_cmd_from_tokens(tokens, cmd))
 			printf("Parsing failed.\n");
 		else
 			print_cmd(cmd);
+
+		// Nettoyage mémoire
 		free_cmd(cmd);
 		free_tokens(tokens);
 		free(line);

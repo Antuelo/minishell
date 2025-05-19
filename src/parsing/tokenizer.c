@@ -5,18 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 18:45:56 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/15 18:46:26 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/19 19:27:19 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/19 19:27:19 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
+// Détecte si un caractère est un opérateur spécial du shell
 static int	is_operator(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
 }
 
+// Associe une string à son type de token
 static t_token_type	get_token_type(char *str)
 {
 	if (!strcmp(str, "|"))
@@ -32,6 +34,7 @@ static t_token_type	get_token_type(char *str)
 	return (T_WORD);
 }
 
+// Extrait une chaîne entre quotes (simples ou doubles)
 static char	*extract_quoted(char *line, int *i)
 {
 	char	quote;
@@ -41,13 +44,16 @@ static char	*extract_quoted(char *line, int *i)
 	start = ++(*i);
 	while (line[*i] && line[*i] != quote)
 	{
+		// On gère les backslashes uniquement dans les double quotes
 		if (line[*i] == '\\' && quote == '"')
 			(*i)++;
 		(*i)++;
 	}
+	// strndup extrait la partie entre les quotes
 	return (strndup(line + start, (*i)++ - start));
 }
 
+// Extrait un opérateur (<, <<, >, >>, |) et détecte les erreurs type >>>>
 static char	*extract_operator(char *line, int *i)
 {
 	int		start;
@@ -63,11 +69,13 @@ static char	*extract_operator(char *line, int *i)
 		count++;
 		(*i)++;
 	}
+	// Si un troisième caractère identique est présent (>>> ou <<<), on considère que c'est invalide
 	if (line[*i] == op)
 		return (NULL);
 	return (strndup(line + start, count));
 }
 
+// Extrait un mot (commande, argument) jusqu’à un espace ou un caractère spécial
 static char	*extract_word(char *line, int *i)
 {
 	int	start;
@@ -78,6 +86,7 @@ static char	*extract_word(char *line, int *i)
 		&& !is_operator(line[*i])
 		&& line[*i] != '\'' && line[*i] != '"')
 	{
+		// On saute le caractère suivant s’il est échappé par '\'
 		if (line[*i] == '\\')
 			(*i)++;
 		(*i)++;
@@ -85,11 +94,12 @@ static char	*extract_word(char *line, int *i)
 	return (strndup(line + start, *i - start));
 }
 
+// Découpe la ligne en tokens liés entre eux (liste chaînée)
 t_token	*tokenize(char *line)
 {
-	t_token		*head;
-	t_token		*last;
-	t_token		*new;
+	t_token		*head; // Premier token
+	t_token		*last; // Dernier token ajouté
+	t_token		*new;  // Token temporaire
 	char		*word;
 	int			i;
 
@@ -98,10 +108,12 @@ t_token	*tokenize(char *line)
 	i = 0;
 	while (line[i])
 	{
+		// Ignore les espaces
 		while (isspace(line[i]))
 			i++;
 		if (!line[i])
 			break ;
+		// Extraction selon le type de caractère rencontré
 		if (line[i] == '\'' || line[i] == '"')
 			word = extract_quoted(line, &i);
 		else if (is_operator(line[i]))
@@ -110,6 +122,8 @@ t_token	*tokenize(char *line)
 			word = extract_word(line, &i);
 		if (!word)
 			return (free_tokens(head), printf("Syntax error\n"), NULL);
+
+		// Crée le token avec son type, et le relie à la liste
 		new = new_token(word, get_token_type(word));
 		if (!new)
 			return (free(word), free_tokens(head), NULL);

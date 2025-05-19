@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 18:45:50 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/15 18:45:50 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/19 19:27:13 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/19 19:27:13 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-
+// Alloue et initialise un nouveau token avec sa valeur et son type
 t_token	*new_token(char *value, t_token_type type)
 {
 	t_token	*token;
@@ -26,6 +26,7 @@ t_token	*new_token(char *value, t_token_type type)
 	return (token);
 }
 
+// Libère toute la liste chaînée de tokens
 void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
@@ -39,6 +40,7 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
+// Affiche tous les tokens pour le debug (valeur + type numérique)
 void	print_tokens(t_token *tokens)
 {
 	while (tokens)
