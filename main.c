@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/17 18:15:05 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:29:23 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,17 @@ int	main(int argc, char **argv, char **envp)
 		cmd->prev = NULL;
 		if (cmd->args && ft_strncmp(cmd->args[0], "exit", 5) == 0)
 		{
+			clear_history();
+			rl_clear_history();
+			free(input);
 			free_cmd(cmd);
 			break ;
 		}
 		if (execute(cmd, envp) == 1)
 		{
+			clear_history();
+			rl_clear_history();
+			free(input);
 			free_cmd(cmd);
 			return (1);
 		}
