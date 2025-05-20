@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/17 18:10:31 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:16:58 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ typedef struct s_exec
 /*execution and main*/
 int		execute(t_cmd *cmd, char **envp);
 char	*get_cmd_path(char *cmd, char **envp);
-int	execute_pipeline(t_cmd *cmd_list, char **envp);
+int		execute_pipeline(t_cmd *cmd_list, char **envp);
+int		is_builtin(char *cmd);
+
 
 /*utils*/
 int		countcmds(t_cmd *cmd);
