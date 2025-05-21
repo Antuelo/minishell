@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/20 10:29:23 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:05:44 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd->delimiter = NULL;
 		cmd->next = NULL;
 		cmd->prev = NULL;
-		if (cmd->args && ft_strncmp(cmd->args[0], "exit", 5) == 0)
+		if (cmd->args)
 		{
 			clear_history();
 			rl_clear_history();

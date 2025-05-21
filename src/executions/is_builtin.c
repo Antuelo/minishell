@@ -6,11 +6,21 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/20 19:23:51 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:36:05 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_env(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp && envp[i])
+		ft_putendl_fd(envp[i++], 1);
+	return (0);
+}
 
 int	ft_echo(char **args)
 {
@@ -28,10 +38,10 @@ int	ft_echo(char **args)
 	{
 		ft_putstr_fd(args[i++], 1);
 		if (args[i])
-			write (1, " ", 1);
+			write(1, " ", 1);
 	}
 	if (control == 0)
-		write (1, "\n", 1);
+		write(1, "\n", 1);
 	return (0);
 }
 
@@ -42,31 +52,28 @@ int	exec_builtin(t_cmd *cmd, char **envp)
 	builtin_id = is_builtin(cmd->args[0]);
 	if (builtin_id == 0)
 		return (1);
-	switch (builtin_id)
-	{
-	case 1:
+	else if (builtin_id == 1)
 		return (ft_echo(cmd->args));
-	case 2:
+	else if (builtin_id == 2)
 		return (ft_env(envp));
-	case 3:
+	else if (builtin_id == 3)
 		return (ft_pwd());
-	case 4:
+	else if (builtin_id == 4)
 		return (ft_unset(cmd->args, envp));
-	case 5:
+	else if (builtin_id == 5)
 		return (ft_exit(cmd->args));
-	case 6:
+	else if (builtin_id == 6)
 		return (ft_export(cmd->args, envp));
-	case 7:
+	else if (builtin_id == 7)
 		return (ft_cd(cmd->args, envp));
-	default:
+	else
 		return (1);
-	}
 }
 
 int	is_builtin(char *cmd)
 {
 	if (!cmd)
-		return (0);
+		return (-1);
 	if (ft_strncmp(cmd, "echo", 5) == 0)
 		return (1);
 	if (ft_strncmp(cmd, "env", 4) == 0)

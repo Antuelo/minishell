@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/20 18:36:28 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/21 21:54:57 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	control_fork_pipe(t_cmd *cmd, t_exec *exec, int i, char **envp)
 
 	control = is_builtin(cmd->args[0]);				//pour savoir si c'est un built or proccess fils
 	if (cmd->next && pipe(exec->pipe_fd) == -1)		//control "si il existe autre comande (pipe)... et pipe fonctionne"
-		return (perror("pipe"), 1);
-	if (control <=3)
+		return (perror("pipe"), -1);
+	if (control >= 1 && control <= 3)
 	{
 		exec_builtin(cmd, envp);
 		return (42);
@@ -104,14 +104,15 @@ int	execute_pipeline(t_cmd *cmd_list, char **envp)
 		return (perror("malloc"), 1);
 	while (cmd)											//execution de pipes
 	{
-		control = control_fork_pipe(cmd, &exec, i);		//génerer fork et pipe
-		if (control == 1)
+		control = control_fork_pipe(cmd, &exec, i, envp);		//génerer fork et pipe
+		if (control == -1)
 			return (free(exec.pid), 1);
 		if (control != 42)								//si c'est un built, on fait pas fork
 			execute_fork(cmd, &exec, envp, i);				//executer les forks
 		i++;
 		cmd = cmd->next;
 	}
+	wait_all_processes(&exec);
 	free(exec.pid);
 	return (0);
 }

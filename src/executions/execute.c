@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/17 18:09:08 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:21:48 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 int	execute(t_cmd *cmd, char **envp)
 {
-	execute_pipeline(cmd, envp);
+	char	**mini_env;
+
+	mini_env = copy_envp(envp);
+	if (!mini_env)
+		return (1);
+	execute_pipeline(cmd, mini_env);
+	free_envp(mini_env, count_env(mini_env));
 	return (0);
 }
-
 
 /*int	execute(t_cmd *cmd, char **envp)
 {

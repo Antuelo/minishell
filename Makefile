@@ -9,7 +9,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 SRCS =	 main.c \
 		src/executions/execute.c src/executions/utils.c src/executions/utils2.c src/executions/free.c\
-		src/executions/execute_pipeline.c src/executions/is_builtin.c
+		src/executions/execute_pipeline.c src/executions/is_builtin.c src/executions/is_builtin_exec.c\
+		src/executions/mini_envp.c
 
 OBJS = $(SRCS:.c=.o)
 

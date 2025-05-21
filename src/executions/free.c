@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/15 23:24:25 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:20:09 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,23 @@ void	freepath(char **patch)
 	while (patch[i])
 		free(patch[i++]);
 	free(patch);
+}
+
+void	free_envp(char **envp, int count)
+{
+	while (--count >= 0)
+		free(envp[count]);
+	free(envp);
+}
+
+void	wait_all_processes(t_exec *exec)
+{
+	int	j;
+
+	j = 0;
+	while (j < exec->cmd_count)
+	{
+		waitpid(exec->pid[j], NULL, 0);
+		j++;
+	}
 }

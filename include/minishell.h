@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/20 14:16:58 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/21 23:31:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,16 @@ int		execute(t_cmd *cmd, char **envp);
 char	*get_cmd_path(char *cmd, char **envp);
 int		execute_pipeline(t_cmd *cmd_list, char **envp);
 int		is_builtin(char *cmd);
-
+int		exec_builtin(t_cmd *cmd, char **envp);
+char	**copy_envp(char **envp);
+int		count_env(char **envp);
+int		ft_echo(char **args);
+int		ft_env(char **envp);
+int		ft_pwd(void);
+int		ft_unset(char **args, char **envp);
+int		ft_exit(char **args);
+char	ft_export(char **args, char **envp);
+int		ft_cd(char **args, char **envp);
 
 /*utils*/
 int		countcmds(t_cmd *cmd);
@@ -64,5 +73,7 @@ void	handle_outfile(t_cmd *cmd);
 /*free everythings*/
 void	freepath(char **patch);
 void	free_cmd(t_cmd *cmd);
+void	free_envp(char **envp, int count);
+void	wait_all_processes(t_exec *exec);
 
 #endif
