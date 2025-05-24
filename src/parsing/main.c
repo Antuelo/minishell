@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 19:26:51 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/19 19:26:51 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/24 16:14:43 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/24 16:15:11 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ int	main(int argc, char **argv, char **envp)
 			free(line);
 			continue ;
 		}
+		if (check_unclosed_quotes(line))
+		{
+			printf("Syntax error: unclosed quote\n");
+			free(line);
+			continue ;
+		}
 
 		// Découpe la ligne en tokens
 		tokens = tokenize(line);
@@ -91,7 +97,7 @@ int	main(int argc, char **argv, char **envp)
 
 		// Remplace les variables d'environnement dans les tokens ($VAR, $?)
 		expand_tokens(tokens, envp, last_exit_code);
-
+		remove_quotes_from_tokens(tokens);
 		// Alloue une structure de commande à remplir depuis les tokens
 		cmd = malloc(sizeof(t_cmd));
 		if (!cmd)

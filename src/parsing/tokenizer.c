@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 19:27:19 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/19 19:27:19 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/24 16:16:57 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/24 16:19:37 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,41 @@ static t_token_type	get_token_type(char *str)
 }
 
 // Extrait une chaîne entre quotes (simples ou doubles)
-static char	*extract_quoted(char *line, int *i)
+static char	*extract_quoted(char *line, int *i, char quote)
 {
-	char	quote;
-	int		start;
+	char	*res;
+	int		j;
 
-	quote = line[*i];
-	start = ++(*i);
+	res = malloc(strlen(line) + 1);
+	if (!res)
+		return (NULL);
+	j = 0;
+	(*i)++; // Skip opening quote
+
 	while (line[*i] && line[*i] != quote)
 	{
-		// On gère les backslashes uniquement dans les double quotes
 		if (line[*i] == '\\' && quote == '"')
-			(*i)++;
-		(*i)++;
+		{
+			if (line[*i + 1] == '"' || line[*i + 1] == '\\')
+			{
+				(*i)++; // skip backslash
+				res[j++] = line[(*i)++]; // copy next char
+			}
+			else
+			{
+				res[j++] = line[(*i)++];
+			}
+		}
+		else
+		{
+			res[j++] = line[(*i)++];
+		}
 	}
-	// strndup extrait la partie entre les quotes
-	return (strndup(line + start, (*i)++ - start));
+	if (line[*i] == quote)
+		(*i)++; // Skip closing quote
+
+	res[j] = '\0';
+	return (res);
 }
 
 // Extrait un opérateur (<, <<, >, >>, |) et détecte les erreurs type >>>>
@@ -106,25 +125,36 @@ t_token	*tokenize(char *line)
 	head = NULL;
 	last = NULL;
 	i = 0;
+
 	while (line[i])
 	{
-		// Ignore les espaces
 		while (isspace(line[i]))
 			i++;
 		if (!line[i])
 			break ;
 		// Extraction selon le type de caractère rencontré
 		if (line[i] == '\'' || line[i] == '"')
-			word = extract_quoted(line, &i);
+		{
+			char quote = line[i];
+			word = extract_quoted(line, &i, quote);
+			new = new_token(word, T_WORD);
+			if (quote == '\'')
+				new->in_single_quote = 1;
+			else
+				new->in_double_quote = 1;
+		}
 		else if (is_operator(line[i]))
+		{
 			word = extract_operator(line, &i);
+			if (!word)
+				return (free_tokens(head), printf("Syntax error\n"), NULL);
+			new = new_token(word, get_token_type(word));
+		}
 		else
+		{
 			word = extract_word(line, &i);
-		if (!word)
-			return (free_tokens(head), printf("Syntax error\n"), NULL);
-
-		// Crée le token avec son type, et le relie à la liste
-		new = new_token(word, get_token_type(word));
+			new = new_token(word, T_WORD);
+		}
 		if (!new)
 			return (free(word), free_tokens(head), NULL);
 		new->prev = last;
@@ -136,3 +166,4 @@ t_token	*tokenize(char *line)
 	}
 	return (head);
 }
+

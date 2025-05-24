@@ -13,6 +13,7 @@ SRC			=	src/parsing/main.c \
 				src/parsing/redirections.c \
 				src/parsing/expansion.c \
 				src/parsing/libft.c \
+				src/parsing/quotes_handler.c \
 
 OBJ			= $(SRC:.c=.o)
 

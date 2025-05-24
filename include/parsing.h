@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 19:01:28 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/19 19:01:28 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/24 16:10:15 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/24 16:10:25 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	int				in_single_quote; // 1 si extrait depuis '...'
+	int				in_double_quote; // 1 si extrait depuis "..."
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
-
-
-
 
 
 char	*get_user_input(void);
@@ -68,4 +67,7 @@ char	*get_env_value(char *name, char **envp);
 char	*expand_var(char *str, char **envp, int exit_status);
 void	expand_tokens(t_token *tokens, char **envp, int exit_status);
 char	*ft_itoa(int n);
+int	check_unclosed_quotes(const char *line);
+void	remove_quotes_from_tokens(t_token *tokens);
+
 #endif

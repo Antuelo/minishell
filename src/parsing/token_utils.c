@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 19:27:13 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/19 19:27:13 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/24 16:16:08 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/24 16:16:08 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ t_token	*new_token(char *value, t_token_type type)
 	token->value = value;
 	token->type = type;
 	token->next = NULL;
+	token->prev = NULL;
+	token->in_single_quote = 0;
+	token->in_double_quote = 0;
 	return (token);
 }
 

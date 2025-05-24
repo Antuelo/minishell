@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 19:26:28 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/19 19:26:28 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/24 16:12:48 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/24 16:13:41 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,29 @@ static int	is_var_char(char c)
 // Remplace toutes les variables dans une chaîne (ex: $USER, $?) par leur valeur
 char	*expand_var(char *str, char **envp, int exit_status)
 {
-	char	tmp[4096]; // Buffer temporaire pour construire la nouvelle string
+	char	tmp[4096]; // buffer temporaire
 	char	*result;
 	char	*var;
 	char	*val;
-	int		i;
-	int		j;
+	int		i = 0;
+	int		j = 0;
 
-	i = 0;
-	j = 0;
 	while (str[i])
 	{
+		// Gestion de \$ → juste un $
+		if (str[i] == '\\' && str[i + 1] == '$')
+		{
+			tmp[j++] = '$';
+			i += 2;
+			continue ;
+		}
+		// Début d'une variable à expandre
 		if (str[i] == '$' && str[i + 1])
 		{
-			// Expansion spéciale de $?
+			// Cas spécial : $?
 			if (str[i + 1] == '?')
 			{
-				val = ft_itoa(exit_status); // convertit le code de retour en string
+				val = ft_itoa(exit_status);
 				strcpy(&tmp[j], val);
 				j += strlen(val);
 				free(val);
@@ -46,21 +52,20 @@ char	*expand_var(char *str, char **envp, int exit_status)
 			else
 			{
 				int start = ++i;
-				// Trouve le nom de la variable (lettres/chiffres/_)
 				while (is_var_char(str[i]))
 					i++;
 				var = strndup(&str[start], i - start);
-				val = get_env_value(var, envp); // Cherche la valeur dans envp
+				val = get_env_value(var, envp);
 				strcpy(&tmp[j], val);
 				j += strlen(val);
 				free(var);
 			}
 		}
 		else
-			tmp[j++] = str[i++]; // Caractère normal : copie tel quel
+			tmp[j++] = str[i++];
 	}
 	tmp[j] = '\0';
-	result = strdup(tmp); // Duplique la string finale
+	result = strdup(tmp);
 	return (result);
 }
 
@@ -91,7 +96,14 @@ void	expand_tokens(t_token *tokens, char **envp, int exit_status)
 	curr = tokens;
 	while (curr)
 	{
-		if (curr->type == T_WORD && curr->value && strchr(curr->value, '$'))
+		// Expansion autorisée uniquement si :
+		// - c'est un T_WORD
+		// - il contient un $
+		// - il N’EST PAS dans des quotes simples
+		if (curr->type == T_WORD
+			&& curr->value
+			&& strchr(curr->value, '$')
+			&& !curr->in_single_quote) // expansion seulement si PAS dans des quotes simples
 		{
 			expanded = expand_var(curr->value, envp, exit_status);
 			free(curr->value);
