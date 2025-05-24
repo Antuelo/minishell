@@ -6,11 +6,13 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/21 23:05:44 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/24 10:59:25 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		g_exit_status;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -19,6 +21,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	g_exit_status = 0;
 	while (1)
 	{
 		input = readline("minishell$ ");

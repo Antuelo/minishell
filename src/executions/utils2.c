@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 10:52:26 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/17 17:24:45 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/24 10:48:40 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,26 +87,3 @@ void	run_command(char *cmd, char **envp)
 	path = get_cmd_path(args[0], envp);
 	execute_path (path, envp, args, cmd);
 }
-
-/*
-void	execute_cmdin(t_pipex *px, char **argv, char **envp, int error)
-{
-	dup2(px->fd_in, STDIN_FILENO);
-	dup2(px->pipe_fd[1], STDOUT_FILENO);
-	close(px->pipe_fd[1]);
-	close(px->fd_in);
-	if (error != 0)
-		return ;
-	run_command(argv[2], envp);
-}*/
-
-/**px->pipe_fd[0] lire le pipe */
-/*
-void	execute_cmdout(t_pipex *px, char **argv, char **envp)
-{
-	dup2(px->pipe_fd[0], STDIN_FILENO);
-	dup2(px->fd_out, STDOUT_FILENO);
-	close(px->pipe_fd[0]);
-	close(px->fd_out);
-	run_command(argv[3], envp);
-}*/

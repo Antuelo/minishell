@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/21 17:36:05 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:34:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	exec_builtin(t_cmd *cmd, char **envp)
 
 	builtin_id = is_builtin(cmd->args[0]);
 	if (builtin_id == 0)
-		return (1);
+		return (0);
 	else if (builtin_id == 1)
 		return (ft_echo(cmd->args));
 	else if (builtin_id == 2)
@@ -67,7 +67,7 @@ int	exec_builtin(t_cmd *cmd, char **envp)
 	else if (builtin_id == 7)
 		return (ft_cd(cmd->args, envp));
 	else
-		return (1);
+		return (-1);
 }
 
 int	is_builtin(char *cmd)
