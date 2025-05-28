@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 19:26:59 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/19 19:26:59 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/27 22:15:12 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/27 22:15:12 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,49 +22,47 @@ int	fill_cmd_from_tokens(t_token *tokens, t_cmd *cmd)
 	curr = tokens;
 	i = 0;
 
-	// Compte le nombre d'arguments à allouer pour args[]
 	arg_count = count_args(tokens);
 	cmd->args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!cmd->args)
 		return (0);
+	while (i <= arg_count)
+		cmd->args[i++] = NULL; // Défensif
 
-	// Initialisation des champs de redirection
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
 	cmd->delimiter = NULL;
 	cmd->append = -1;
 	cmd->heredoc = 0;
 
-	// Parcours de la liste de tokens
+	i = 0;
+	curr = tokens;
 	while (curr)
 	{
 		if (curr->type == T_WORD)
 		{
-			// Si le mot est lié à une redirection (ex: fichier après >), on l'ignore comme argument
-			if (curr->prev
-				&& (curr->prev->type == T_REDIR_IN
-					|| curr->prev->type == T_REDIR_OUT
-					|| curr->prev->type == T_REDIR_APPEND
-					|| curr->prev->type == T_HEREDOC))
+			// On saute les arguments de redirection (ex : fichier après >)
+			if (curr->prev && curr->prev->type >= T_REDIR_IN && curr->prev->type <= T_HEREDOC)
 			{
 				curr = curr->next;
 				continue ;
 			}
-			// Sinon, on l'ajoute aux args[]
-			cmd->args[i++] = strdup(curr->value);
+			cmd->args[i] = strdup(curr->value);
+			if (!cmd->args[i++])
+				return (0);
 		}
 		else if (curr->type >= T_REDIR_IN && curr->type <= T_HEREDOC)
 		{
-			// Si c’est une redirection, on la gère avec handle_redirection()
-			if (!handle_redirection(cmd, curr))
-				return (0);
-			curr = curr->next; // skip le token suivant (le fichier/delimiter)
+			handle_redirection(cmd, curr); // Supposé valide (déjà checké)
+			curr = curr->next; // Skip du mot cible (ex : > fichier.txt)
 		}
 		curr = curr->next;
 	}
-	cmd->args[i] = NULL; // Fin du tableau d'arguments
+	cmd->args[i] = NULL;
 	return (1);
 }
+
+
 
 // Compte le nombre d'arguments valides
 int	count_args(t_token *tokens)

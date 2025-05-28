@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 19:27:06 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/19 19:27:06 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/27 22:15:45 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/27 22:15:45 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,8 @@ static int	set_heredoc(t_cmd *cmd, t_token *token)
 // Analyse une redirection et appelle la fonction adaptée
 int	handle_redirection(t_cmd *cmd, t_token *curr)
 {
-	t_token	*next;
+	t_token	*next = curr->next;
 
-	next = curr->next;
-
-	// Vérifie qu’un fichier ou délimiteur suit la redirection
-	if (!next || next->type != T_WORD)
-	{
-		printf("Syntax error: expected filename after redirection\n");
-		return (0);
-	}
-
-	// Selon le type de redirection, appelle la fonction adaptée
 	if (curr->type == T_REDIR_IN)
 		return (set_infile(cmd, next));
 	if (curr->type == T_REDIR_OUT)
@@ -66,6 +56,6 @@ int	handle_redirection(t_cmd *cmd, t_token *curr)
 		return (set_outfile(cmd, next, 1));
 	if (curr->type == T_HEREDOC)
 		return (set_heredoc(cmd, next));
-
 	return (1);
 }
+

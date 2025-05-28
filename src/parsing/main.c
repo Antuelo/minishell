@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 16:14:43 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/24 16:15:11 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/28 18:22:47 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/28 18:22:54 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,28 @@ void	print_cmd(t_cmd *cmd)
 	}
 }
 
+void	free_cmd_list(t_cmd *cmd)
+{
+	t_cmd *tmp;
+	while (cmd)
+	{
+		tmp = cmd->next;
+		free_cmd(cmd);
+		cmd = tmp;
+	}
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_token	*tokens;
-	t_cmd	*cmd;
+	t_cmd	*cmds;
 	int		last_exit_code;
 
 	(void)argc;
 	(void)argv;
-	last_exit_code = 0; // Sert à remplacer $?
+	last_exit_code = 0;
 
 	while (1)
 	{
@@ -80,6 +92,8 @@ int	main(int argc, char **argv, char **envp)
 			free(line);
 			continue ;
 		}
+
+		// Vérifie les quotes non fermées avant de tokenizer
 		if (check_unclosed_quotes(line))
 		{
 			printf("Syntax error: unclosed quote\n");
@@ -87,7 +101,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 
-		// Découpe la ligne en tokens
+		// Tokenize la ligne
 		tokens = tokenize(line);
 		if (!tokens)
 		{
@@ -95,22 +109,33 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 
-		// Remplace les variables d'environnement dans les tokens ($VAR, $?)
+		// Vérification centralisée de la syntaxe
+		if (!syntax_is_valid(tokens))
+		{
+			free_tokens(tokens);
+			free(line);
+			continue ;
+		}
+
+		// Expansion des variables
 		expand_tokens(tokens, envp, last_exit_code);
 		remove_quotes_from_tokens(tokens);
-		// Alloue une structure de commande à remplir depuis les tokens
-		cmd = malloc(sizeof(t_cmd));
-		if (!cmd)
-			return (free_tokens(tokens), free(line), 1);
 
-		// Construit la structure de commande à partir des tokens
-		if (!fill_cmd_from_tokens(tokens, cmd))
+		// Parsing en liste de commandes
+		cmds = build_cmd_list_from_tokens(tokens);
+		if (!cmds)
 			printf("Parsing failed.\n");
 		else
-			print_cmd(cmd);
-
-		// Nettoyage mémoire
-		free_cmd(cmd);
+		{
+			t_cmd *tmp = cmds;
+			while (tmp)
+			{
+				print_cmd(tmp);
+				printf("--------\n");
+				tmp = tmp->next;
+			}
+			free_cmd_list(cmds);
+		}
 		free_tokens(tokens);
 		free(line);
 	}

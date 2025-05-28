@@ -14,6 +14,8 @@ SRC			=	src/parsing/main.c \
 				src/parsing/expansion.c \
 				src/parsing/libft.c \
 				src/parsing/quotes_handler.c \
+				src/parsing/cmd_builder.c \
+				src/parsing/syntax_checker.c \
 
 OBJ			= $(SRC:.c=.o)
 

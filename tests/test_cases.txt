@@ -1,0 +1,47 @@
+echo hello
+echo "hello world"
+echo 'hello world'
+echo "hello   world"
+echo 'user: $USER'
+echo "user: $USER"
+echo "$USER said 'hello'"
+echo "chemin: \$HOME"
+echo 'quote: '\''hello'\'''
+echo "quote: \"hello\""
+echo "antislash: \\test"
+echo 'antislash: \\test'
+ls > out.txt
+ls >> out.txt
+cat < in.txt
+cat < in.txt > out.txt
+cat < in.txt >> out.txt
+cat << EOF
+ls | grep main
+echo "coucou" | cat -e
+echo "un" | echo "deux" | echo "trois"
+ls > out.txt | grep .c >> result.txt
+echo > out.txt > out2.txt
+echo coucou < in.txt < in2.txt
+cat <
+cat <<
+echo coucou >
+echo coucou >>
+ls >>> file
+cat <<<< EOF
+echo "quote ouverte
+echo 'quote ouverte
+echo bonjour $UNDEFINED_VAR
+echo $? 
+| ls
+ls |
+ls || echo coucou
+ls ||| echo fail
+cat <<
+cat << |
+cat << >
+echo Coucou && echo Salut
+echo ouch &&& echo help
+ls |< grep test
+ls | < grep test
+cat <<< EOF
+echo Hello~

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 16:16:57 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/24 16:19:37 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/28 17:39:26 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/28 17:39:26 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 // Détecte si un caractère est un opérateur spécial du shell
 static int	is_operator(char c)
 {
-	return (c == '|' || c == '<' || c == '>');
+	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
 
 // Associe une string à son type de token
-static t_token_type	get_token_type(char *str)
+t_token_type	get_token_type(char *str)
 {
 	if (!strcmp(str, "|"))
 		return (T_PIPE);
@@ -31,8 +31,16 @@ static t_token_type	get_token_type(char *str)
 		return (T_HEREDOC);
 	if (!strcmp(str, ">>"))
 		return (T_REDIR_APPEND);
-	return (T_WORD);
+
+	// Opérateurs interdits
+	if (!strcmp(str, "<<<") || !strcmp(str, ">>>")
+		|| !strcmp(str, "||") || !strcmp(str, "|||")
+		|| !strcmp(str, "&&") || !strcmp(str, "&&&"))
+		return (T_INVALID);
+
+	return (T_WORD); // tout le reste
 }
+
 
 // Extrait une chaîne entre quotes (simples ou doubles)
 static char	*extract_quoted(char *line, int *i, char quote)
@@ -73,26 +81,53 @@ static char	*extract_quoted(char *line, int *i, char quote)
 }
 
 // Extrait un opérateur (<, <<, >, >>, |) et détecte les erreurs type >>>>
-static char	*extract_operator(char *line, int *i)
+static int	is_invalid_operator_combo(char c1, char c2, char c3)
+{
+	// Cas de triple opérateur (ex: <<<, >>>, |||, &&&)
+	if (c1 == c2 && c2 == c3)
+		return (1);
+	// Cas de séquences interdites (ex: |<, <|, >|, |>, etc)
+	if ((c1 == '|' && (c2 == '<' || c2 == '>')) ||
+		((c1 == '<' || c1 == '>') && c2 == '|'))
+		return (1);
+	return (0);
+}
+
+char	*extract_operator(char *line, int *i)
 {
 	int		start;
-	int		count;
-	char	op;
+	char	c1, c2, c3;
+	int		len = 1;
 
 	start = *i;
-	op = line[*i];
-	count = 1;
-	(*i)++;
-	if (line[*i] == op)
+	c1 = line[*i];
+	c2 = line[*i + 1];
+	c3 = line[*i + 2];
+
+	// Vérifie s'il y a une combinaison invalide
+	if (is_invalid_operator_combo(c1, c2, c3))
 	{
-		count++;
-		(*i)++;
-	}
-	// Si un troisième caractère identique est présent (>>> ou <<<), on considère que c'est invalide
-	if (line[*i] == op)
+		printf("Syntax error: invalid operator sequence\n");
 		return (NULL);
-	return (strndup(line + start, count));
+	}
+
+	// Si c1 == c2 (ex: << ou >>), on prend 2 caractères
+	if (c1 == c2)
+	{
+		len = 2;
+		*i += 2;
+	}
+	else
+	{
+		len = 1;
+		*i += 1;
+	}
+
+	return (ft_substr(line, start, len));
 }
+
+
+
 
 // Extrait un mot (commande, argument) jusqu’à un espace ou un caractère spécial
 static char	*extract_word(char *line, int *i)
@@ -147,8 +182,15 @@ t_token	*tokenize(char *line)
 		{
 			word = extract_operator(line, &i);
 			if (!word)
-				return (free_tokens(head), printf("Syntax error\n"), NULL);
+				return (free_tokens(head), NULL);
+
 			new = new_token(word, get_token_type(word));
+			if (new->type == T_INVALID)
+			{
+				printf("Syntax error: invalid operator `%s`\n", word);
+				free(word);
+				return (free_tokens(head), NULL);
+			}
 		}
 		else
 		{
