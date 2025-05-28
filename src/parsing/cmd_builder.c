@@ -5,36 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 27/05/2025 19:47:25 by llabatut          #+#    #+#             */
-/*   Updated: 28/05/2025 18:40:52 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/28 22:43:48 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/28 22:43:48 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-static t_token	*next_pipe(t_token *token)
+t_token	*next_pipe(t_token *token)
 {
 	while (token && token->type != T_PIPE)
 		token = token->next;
 	return (token);
 }
 
-t_cmd *init_cmd(void)
+t_cmd	*init_cmd(void)
 {
-	t_cmd *cmd = malloc(sizeof(t_cmd));
+	t_cmd	*cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
+	cmd->args = NULL;
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
 	cmd->delimiter = NULL;
-	cmd->args = NULL;
 	cmd->append = -1;
 	cmd->heredoc = 0;
+	cmd->hdoc_pipe[0] = -1;
+	cmd->hdoc_pipe[1] = -1;
 	cmd->next = NULL;
 	cmd->prev = NULL;
 	return (cmd);
 }
 
+
+t_token	*last_token(t_token *start)
+{
+	t_token	*tmp = start;
+
+	while (tmp && tmp->next)
+		tmp = tmp->next;
+	return (tmp);
+}
 
 t_cmd	*build_cmd_list_from_tokens(t_token *tokens)
 {
@@ -43,30 +54,40 @@ t_cmd	*build_cmd_list_from_tokens(t_token *tokens)
 	t_cmd	*new;
 	t_token	*start = tokens;
 	t_token	*pipe;
-	t_token	*cut;
 
 	while (start)
 	{
 		pipe = next_pipe(start);
+		t_token *next_cmd = NULL;
+
 		if (pipe)
 		{
-			cut = pipe->next;
-			if (pipe->prev)
-				pipe->prev->next = NULL;
+			next_cmd = pipe->next;
+			pipe->prev->next = NULL;  // couper temporairement
 			pipe->prev = NULL;
-			pipe->next = NULL;
 		}
-		else
-			cut = NULL;
 
 		new = init_cmd();
-		if (!new || !fill_cmd_from_tokens(start, new))
+		if (!new)
 		{
-			if (new)
-				free_cmd(new);
 			free_cmd_list(head);
 			return (NULL);
 		}
+
+		if (!fill_cmd_from_tokens(start, new))
+		{
+			if (pipe)
+			{
+				// Restaure la liaison pour permettre free_tokens
+				start = pipe;
+				if (pipe->next)
+					pipe->next->prev = pipe;
+			}
+			free_cmd(new);
+			free_cmd_list(head);
+			return (NULL);
+		}
+
 		if (last)
 		{
 			last->next = new;
@@ -75,7 +96,15 @@ t_cmd	*build_cmd_list_from_tokens(t_token *tokens)
 		else
 			head = new;
 		last = new;
-		start = cut;
+
+		// Restore link après parsing
+		if (pipe)
+		{
+			pipe->prev = last_token(start);
+			if (pipe->prev)
+				pipe->prev->next = pipe;
+		}
+		start = next_cmd;
 	}
 	return (head);
 }

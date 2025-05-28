@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 16:16:08 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/24 16:16:08 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/28 21:53:51 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/28 21:56:32 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ t_token	*new_token(char *value, t_token_type type)
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->value = value;
+	token->value = strdup(value);
+	if (!token->value)
+	{
+		free(token);
+		return (NULL);
+	}
 	token->type = type;
 	token->next = NULL;
 	token->prev = NULL;
@@ -37,11 +42,13 @@ void	free_tokens(t_token *tokens)
 	while (tokens)
 	{
 		tmp = tokens->next;
-		free(tokens->value);
+		if (tokens->value)
+			free(tokens->value);
 		free(tokens);
 		tokens = tmp;
 	}
 }
+
 
 // Affiche tous les tokens pour le debug (valeur + type numérique)
 void	print_tokens(t_token *tokens)

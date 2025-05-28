@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 17:39:26 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/28 17:39:26 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/28 22:36:59 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/28 22:40:18 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,35 +96,37 @@ static int	is_invalid_operator_combo(char c1, char c2, char c3)
 char	*extract_operator(char *line, int *i)
 {
 	int		start;
-	char	c1, c2, c3;
 	int		len = 1;
+	char	c1, c2 = '\0', c3 = '\0';
 
 	start = *i;
 	c1 = line[*i];
-	c2 = line[*i + 1];
-	c3 = line[*i + 2];
 
-	// Vérifie s'il y a une combinaison invalide
+	if (line[*i + 1])
+		c2 = line[*i + 1];
+	if (line[*i + 2])
+		c3 = line[*i + 2];
+
 	if (is_invalid_operator_combo(c1, c2, c3))
 	{
 		printf("Syntax error: invalid operator sequence\n");
 		return (NULL);
 	}
 
-	// Si c1 == c2 (ex: << ou >>), on prend 2 caractères
-	if (c1 == c2)
+	if ((c1 == '<' || c1 == '>') && c2 == c1)
 	{
 		len = 2;
 		*i += 2;
 	}
 	else
-	{
-		len = 1;
 		*i += 1;
-	}
 
 	return (ft_substr(line, start, len));
 }
+
+
+
+
 
 
 
@@ -151,28 +153,29 @@ static char	*extract_word(char *line, int *i)
 // Découpe la ligne en tokens liés entre eux (liste chaînée)
 t_token	*tokenize(char *line)
 {
-	t_token		*head; // Premier token
-	t_token		*last; // Dernier token ajouté
-	t_token		*new;  // Token temporaire
+	t_token		*head = NULL;
+	t_token		*last = NULL;
+	t_token		*new = NULL;
 	char		*word;
-	int			i;
-
-	head = NULL;
-	last = NULL;
-	i = 0;
+	int			i = 0;
+	char		quote;
 
 	while (line[i])
 	{
 		while (isspace(line[i]))
 			i++;
 		if (!line[i])
-			break ;
-		// Extraction selon le type de caractère rencontré
+			break;
 		if (line[i] == '\'' || line[i] == '"')
 		{
-			char quote = line[i];
+			quote = line[i];
 			word = extract_quoted(line, &i, quote);
+			if (!word)
+				return (free_tokens(head), NULL);
 			new = new_token(word, T_WORD);
+			free(word);
+			if (!new)
+				return (free_tokens(head), NULL);
 			if (quote == '\'')
 				new->in_single_quote = 1;
 			else
@@ -180,25 +183,39 @@ t_token	*tokenize(char *line)
 		}
 		else if (is_operator(line[i]))
 		{
-			word = extract_operator(line, &i);
+		// Si c’est le dernier caractère, on ne peut pas extraire un opérateur double
+			if (!line[i + 1])
+			{
+				word = strndup(&line[i], 1);
+				i++;
+			}
+			else
+				word = extract_operator(line, &i);
+
 			if (!word)
 				return (free_tokens(head), NULL);
 
 			new = new_token(word, get_token_type(word));
-			if (new->type == T_INVALID)
+			free(word);
+			if (!new || new->type == T_INVALID)
 			{
-				printf("Syntax error: invalid operator `%s`\n", word);
-				free(word);
+				if (new && new->type == T_INVALID)
+					free(new);
+				printf("Syntax error: invalid operator\n");
 				return (free_tokens(head), NULL);
 			}
 		}
+
 		else
 		{
 			word = extract_word(line, &i);
+			if (!word)
+				return (free_tokens(head), NULL);
 			new = new_token(word, T_WORD);
+			free(word);
+			if (!new)
+				return (free_tokens(head), NULL);
 		}
-		if (!new)
-			return (free(word), free_tokens(head), NULL);
 		new->prev = last;
 		if (last)
 			last->next = new;
@@ -208,4 +225,7 @@ t_token	*tokenize(char *line)
 	}
 	return (head);
 }
+
+
+
 

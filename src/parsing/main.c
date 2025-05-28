@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 18:22:47 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/28 18:22:54 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/28 22:43:30 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/28 22:43:30 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,17 @@ void	free_cmd(t_cmd *cmd)
 		}
 		free(cmd->args);
 	}
+	// Fermer les pipes heredoc si ouverts
+	if (cmd->heredoc)
+	{
+		if (cmd->hdoc_pipe[0] != -1)
+			close(cmd->hdoc_pipe[0]);
+		if (cmd->hdoc_pipe[1] != -1)
+			close(cmd->hdoc_pipe[1]);
+	}
 	free(cmd);
 }
+
 
 // Affiche le contenu de la structure t_cmd pour debug
 void	print_cmd(t_cmd *cmd)
@@ -70,6 +79,16 @@ void	free_cmd_list(t_cmd *cmd)
 		cmd = tmp;
 	}
 }
+void	free_all(char *line, t_token *tokens, t_cmd *cmds)
+{
+	if (line)
+		free(line);
+	if (tokens)
+		free_tokens(tokens);
+	if (cmds)
+		free_cmd_list(cmds);
+}
+
 
 
 int	main(int argc, char **argv, char **envp)
@@ -85,59 +104,58 @@ int	main(int argc, char **argv, char **envp)
 
 	while (1)
 	{
-		// Affiche le prompt et lit la ligne utilisateur
 		line = get_user_input();
+		if (!line)
+			continue;
+
 		if (!line[0])
 		{
 			free(line);
-			continue ;
+			continue;
 		}
 
-		// Vérifie les quotes non fermées avant de tokenizer
 		if (check_unclosed_quotes(line))
 		{
 			printf("Syntax error: unclosed quote\n");
 			free(line);
-			continue ;
+			continue;
 		}
 
-		// Tokenize la ligne
 		tokens = tokenize(line);
 		if (!tokens)
 		{
 			free(line);
-			continue ;
+			continue;
 		}
 
-		// Vérification centralisée de la syntaxe
 		if (!syntax_is_valid(tokens))
 		{
-			free_tokens(tokens);
-			free(line);
-			continue ;
+			free_all(line, tokens, NULL);
+			continue;
 		}
 
-		// Expansion des variables
 		expand_tokens(tokens, envp, last_exit_code);
 		remove_quotes_from_tokens(tokens);
 
-		// Parsing en liste de commandes
 		cmds = build_cmd_list_from_tokens(tokens);
 		if (!cmds)
-			printf("Parsing failed.\n");
-		else
 		{
-			t_cmd *tmp = cmds;
-			while (tmp)
-			{
-				print_cmd(tmp);
-				printf("--------\n");
-				tmp = tmp->next;
-			}
-			free_cmd_list(cmds);
+			printf("Parsing failed.\n");
+			free_all(line, tokens, NULL);
+			continue;
 		}
-		free_tokens(tokens);
-		free(line);
+
+		t_cmd *tmp = cmds;
+		while (tmp)
+		{
+			print_cmd(tmp);
+			printf("--------\n");
+			tmp = tmp->next;
+		}
+
+		free_all(line, tokens, cmds); 
 	}
+	printf("Bye\n");
 	return (0);
 }
+

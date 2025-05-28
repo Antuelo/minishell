@@ -5,29 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 22:15:12 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/27 22:15:12 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/28 22:32:20 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/28 22:35:09 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-// Remplit une structure t_cmd à partir d'une liste de tokens
+
+
 int	fill_cmd_from_tokens(t_token *tokens, t_cmd *cmd)
 {
 	t_token	*curr;
 	int		arg_count;
 	int		i;
 
-	curr = tokens;
-	i = 0;
-
 	arg_count = count_args(tokens);
 	cmd->args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!cmd->args)
 		return (0);
+	i = 0;
 	while (i <= arg_count)
-		cmd->args[i++] = NULL; // Défensif
+	{
+		cmd->args[i] = NULL;
+		i++;
+	}
 
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
@@ -35,32 +37,53 @@ int	fill_cmd_from_tokens(t_token *tokens, t_cmd *cmd)
 	cmd->append = -1;
 	cmd->heredoc = 0;
 
-	i = 0;
 	curr = tokens;
+	i = 0;
 	while (curr)
 	{
 		if (curr->type == T_WORD)
 		{
-			// On saute les arguments de redirection (ex : fichier après >)
-			if (curr->prev && curr->prev->type >= T_REDIR_IN && curr->prev->type <= T_HEREDOC)
+			if (curr->prev && curr->prev->type >= T_REDIR_IN
+				&& curr->prev->type <= T_HEREDOC)
 			{
 				curr = curr->next;
 				continue ;
 			}
 			cmd->args[i] = strdup(curr->value);
-			if (!cmd->args[i++])
+			if (!cmd->args[i])
+			{
+				while (i > 0)
+				{
+					i--;
+					free(cmd->args[i]);
+				}
+				free(cmd->args);
 				return (0);
+			}
+			i++;
 		}
 		else if (curr->type >= T_REDIR_IN && curr->type <= T_HEREDOC)
 		{
-			handle_redirection(cmd, curr); // Supposé valide (déjà checké)
-			curr = curr->next; // Skip du mot cible (ex : > fichier.txt)
+			if (!handle_redirection(cmd, curr))
+			{
+				while (i > 0)
+				{
+					i--;
+					free(cmd->args[i]);
+				}
+				free(cmd->args);
+				return (0);
+			}
+			curr = curr->next;
 		}
-		curr = curr->next;
+		if (curr)
+			curr = curr->next;
 	}
 	cmd->args[i] = NULL;
 	return (1);
 }
+
+
 
 
 

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 17:10:52 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/28 17:11:15 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/28 22:29:21 by llabatut          #+#    #+#             */
+/*   Updated: 2025/05/28 22:29:21 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	free_cmd(t_cmd *cmd);
 void	free_cmd_list(t_cmd *cmd);
 int	syntax_is_valid(t_token *tokens);
 int	check_syntax_errors(t_token *tokens);
+t_token *next_pipe(t_token *token);
+t_cmd   *init_cmd(void);
 
 // libft, à supprimer
 char	*ft_itoa(int n);
