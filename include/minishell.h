@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 14:55:49 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:46:31 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,26 @@ typedef struct s_exec
 	int				cmd_count;  // cantité de commandes
 }					t_exec;
 
-/*execution and main*/
+/*execution, main et le builtin utils...*/
 int					execute(t_cmd *cmd);
 char				*get_cmd_path(char *cmd, char **envp);
 int					execute_pipeline(t_cmd *cmd_list, char **envp);
 int					is_builtin(char *cmd);
-int					exec_builtin(t_cmd *cmd, char **envp);
 char				**copy_envp(char **envp);
 int					count_env(char **envp);
+int					exec_builtin(t_cmd *cmd, char **envp);
 int					ft_echo(char **args);
 int					ft_env(char **envp);
 int					ft_pwd(void);
 int					ft_unset(char **args, char ***envp);
 char				**rebuild_envp(char **args, char **envp, int i, int j);
 int					ft_exit(char **args);
-//char				ft_export(char **args, char **envp);
+int					ft_export(char **args, char ***envp);
+void				tryed_env(char **envp);
+void				print_export_format(char *line);
+int					is_valid_key(char *args);
+int					add_or_replace_var(char ***envp, char *new_var);
+
 //int					ft_cd(char **args, char **envp);
 
 /*utils*/

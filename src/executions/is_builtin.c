@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 15:00:32 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:28:43 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	exec_builtin(t_cmd *cmd, char **envp)
 		return (ft_unset(cmd->args, &g_envp));
 	else if (builtin_id == 5)
 		return (ft_exit(cmd->args));
-//	else if (builtin_id == 6)
-//		return (ft_export(cmd->args, envp));
+	else if (builtin_id == 6)
+		return (ft_export(cmd->args, &envp));
 //	else if (builtin_id == 7)
 //		return (ft_cd(cmd->args, envp));
 	else
@@ -79,8 +79,8 @@ int	is_builtin(char *cmd)
 	if (ft_strncmp(cmd, "env", 4) == 0)
 		return (2);
 	if (ft_strncmp(cmd, "pwd", 4) == 0)
-		return (3);                       // jusqu'à 3 c'est dans fork
-	if (ft_strncmp(cmd, "unset", 6) == 0) //à partir du 4 c'est hors fork
+		return (3);
+	if (ft_strncmp(cmd, "unset", 6) == 0)
 		return (4);
 	if (ft_strncmp(cmd, "exit", 5) == 0)
 		return (5);

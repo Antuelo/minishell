@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:55:04 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 13:46:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:22:55 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,50 @@ char	**rebuild_envp(char **args, char **envp, int i, int j)
 	new_envp[k] = NULL;
 	return (new_envp);
 }
+
+void	bubble_sort(char **env)
+{
+	int		i;
+	int		j;
+	char	*temp;
+	int		count;
+
+	count = 0;
+	while (env[count])
+		count++;
+	i = 0;
+	while (i < count - 1)
+	{
+		j = 0;
+		while (j < count - i - 1)
+		{
+			if (ft_strncmp(env[j], env[j + 1], ft_strlen(env[j])) > 0)
+			{
+				temp = env[j];
+				env[j] = env[j + 1];
+				env[j + 1] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	tryed_env(char **envp)
+{
+	char	**copy;
+	int		i;
+
+	copy = copy_envp(envp);
+	if (!copy)
+		return ;
+	bubble_sort(copy);
+	i = 0;
+	while (copy[i])
+	{
+		print_export_format(copy[i]);
+		i++;
+	}
+	free_envp(copy, i);
+}
+

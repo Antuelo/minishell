@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 14:35:49 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:30:34 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 			handle_outfile(cmd);
 		if (cmd->infile)							// si parsing "<"
 			handle_infile(cmd);
-		if (is_builtin(cmd->args[0]) > 0)
+		if (is_builtin(cmd->args[0]) >= 1)
 			exec_builtin(cmd, envp);
 		else
 			execute_execve(fullpath, cmd, envp);
