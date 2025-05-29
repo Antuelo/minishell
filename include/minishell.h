@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 18:46:31 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:57:19 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void				tryed_env(char **envp);
 void				print_export_format(char *line);
 int					is_valid_key(char *args);
 int					add_or_replace_var(char ***envp, char *new_var);
-
 //int					ft_cd(char **args, char **envp);
 
 /*utils*/

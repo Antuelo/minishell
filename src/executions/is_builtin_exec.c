@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 17:35:04 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:57:13 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int	ft_export(char **args, char ***envp)
 			ft_putendl_fd("': not a valid identifier", 2);
 			return (1);
 		}
-		add_or_replace_var(&g_envp, args);
+		add_or_replace_var(envp, args[i]);
+		i++;
 	}
 	return (0);
 }
