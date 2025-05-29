@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/21 23:31:09 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:21:17 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,52 @@ int	ft_pwd(void)
 	return (0);
 }
 
-int	ft_unset(char **args, char **envp)
+/*je utilise ***envp pour modifier la racine*/
+int	ft_unset(char **args, char ***envp)
 {
+	int		count;
+	char	**new_envp;
+
+	if (!args, args[1])
+		return (0);
+	count = count_env(envp);//"count" necessaire pour eliminer et liberer le vieux envp
+	new_envp = rebuild_envp(args, envp, 0, 0);
+	if (!new_envp)
+		return (1);
+	free_envp(envp, count);
+	*envp = new_envp;
 	return (0);
 }
 
 int	ft_exit(char **args)
 {
-	exit(0);
+	long	exit_code;
+	int		i;
+
+	write(2, "exit\n", 5);
+	if (!args[1])
+		exit(0);
+	i = 0;
+	while (args[1][i])
+	{
+		if ((args[1][i] < '0' || args[1][i] > '9') && !(i == 0
+				&& args[1][i] == '-'))
+		{
+			ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
+			exit(2);
+		}
+		i++;
+	}
+	if (args[2])
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		g_exit_status = 1;
+		return (1);
+	}
+	exit_code = ft_atoi(args[1]);
+	exit((unsigned char)exit_code);
 }
+	/* unsigned char ... en bash le valeur sont entre 0 et 255*/
 
 char	ft_export(char **args, char **envp)
 {

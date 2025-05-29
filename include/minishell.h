@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/24 10:47:21 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:11:56 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <unistd.h>
 
 extern int			g_exit_status;
+extern char			**g_envp;
 
 typedef struct s_cmd
 {
@@ -59,14 +60,15 @@ int					ft_echo(char **args);
 int					ft_env(char **envp);
 int					ft_pwd(void);
 int					ft_unset(char **args, char **envp);
+char				**rebuild_envp(char **args, char **envp, int i, int j);
 int					ft_exit(char **args);
 char				ft_export(char **args, char **envp);
 int					ft_cd(char **args, char **envp);
 
 /*utils*/
 int					countcmds(t_cmd *cmd);
-void				execute_path(char *path, char **envp, char **args,
-						char *cmd);
+void				execute_path(char *path, char **envp, \
+						char **args, char *cmd);
 char				**extract_paths(char **envp);
 void				controlpath(char *path, t_cmd *cmd);
 void				execute_execve(char *fullpath, t_cmd *cmd, char **envp);

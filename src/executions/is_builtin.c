@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/22 11:34:45 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:21:26 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	exec_builtin(t_cmd *cmd, char **envp)
 	else if (builtin_id == 3)
 		return (ft_pwd());
 	else if (builtin_id == 4)
-		return (ft_unset(cmd->args, envp));
+		return (ft_unset(cmd->args, &g_envp));
 	else if (builtin_id == 5)
 		return (ft_exit(cmd->args));
 	else if (builtin_id == 6)

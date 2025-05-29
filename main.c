@@ -6,19 +6,21 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/24 10:59:25 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:26:53 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		g_exit_status;
+char	**g_envp = NULL;
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd	*cmd;
 	char	*input;
 
+	g_envp = copy_envp(envp);
 	(void)argc;
 	(void)argv;
 	g_exit_status = 0;
@@ -31,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 		// Simulación de parser:
 		cmd = malloc(sizeof(t_cmd));
-		cmd->args = ft_split(input, ' ');
+		cmd->args = ft_split("env", ' ');
 		cmd->infile = NULL;
 		cmd->outfile = NULL;
 		cmd->append = -1;
@@ -39,6 +41,8 @@ int	main(int argc, char **argv, char **envp)
 		cmd->delimiter = NULL;
 		cmd->next = NULL;
 		cmd->prev = NULL;
+		execute(cmd, g_envp);
+		free_cmd(cmd);
 		if (cmd->args)
 		{
 			clear_history();

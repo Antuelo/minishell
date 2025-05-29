@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/24 10:57:11 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/24 11:26:59 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,3 +65,34 @@ void	wait_all_processes(t_exec *exec)
 		j++;
 	}
 }
+/*Estoy esperando a que los procesos hijos terminen
+con waitpid, y luego uso macros de <sys/wait.h> para
+ analizar el resultado. Si el proceso terminó
+ normalmente, guardo su exit code.
+ Si fue interrumpido por una señal (como Ctrl+C),
+ entonces devuelvo 128 + signal, como hace Bash.
+ Esto me permite simular correctamente el comportamiento
+ de salida de comandos en una shell real.
+
+** 📌 Rappel pour les macros de <sys/wait.h> :
+**
+** WIFEXITED(status)
+** → "Wait If Exited" : Retourne true si le processus s'est terminé
+normalement avec exit().
+**
+** WEXITSTATUS(status)
+** → "Wait Exit Status" : Donne le code de retour passé à exit() (ex :
+exit(1) → 1).
+**   ⚠️ À utiliser seulement si WIFEXITED(status) est vrai.
+**
+** WIFSIGNALED(status)
+** → "Wait If Signaled" : Retourne true
+si le processus a été terminé par un signal (ex: Ctrl+C).
+**
+** WTERMSIG(status)
+** → "Wait Termination Signal" : Donne le numéro du
+signal ayant tué le processus.
+**   (ex : SIGINT = 2 → Bash retourne 130, car 128 + 2).
+**
+** 💡 Ces macros permettent de simuler le comportement de Bash dans une minishell.
+*/
