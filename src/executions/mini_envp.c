@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 22:28:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/21 23:17:27 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:57:22 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**copy_envp(char **envp)
 	count = count_env(envp);
 	copy = malloc(sizeof(char *) * (count + 1));
 	if (!copy)
-		return (1);
+		return (NULL);
 	while (i < count)
 	{
 		copy[i] = ft_strdup(envp[i]);

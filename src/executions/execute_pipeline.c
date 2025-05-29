@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/24 10:57:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:35:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		parent_process(exec, cmd, i);
 }
 
-int	control_fork_pipe(t_cmd *cmd, t_exec *exec, int i, char **envp)
+int	control_fork_pipe(t_cmd *cmd, t_exec *exec, int i)
 {
 	is_builtin(cmd->args[0]);				//pour savoir si c'est un built or proccess fils
 	if (cmd->next && pipe(exec->pipe_fd) == -1)		//control "si il existe autre comande (pipe)... et pipe fonctionne"
@@ -88,7 +88,7 @@ int	execute_pipeline(t_cmd *cmd_list, char **envp)
 		return (perror("malloc"), 1);
 	while (cmd)											//execution de pipes
 	{
-		control = control_fork_pipe(cmd, &exec, i, envp);		//génerer fork et pipe
+		control = control_fork_pipe(cmd, &exec, i);		//génerer fork et pipe
 		if (control == -1)
 			return (free(exec.pid), 1);
 		execute_fork(cmd, &exec, envp, i);				//executer les forks

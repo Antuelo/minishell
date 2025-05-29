@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 14:11:56 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:55:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_cmd
 	int				heredoc;      // 1 si heredoc, 0 sinon
 	char			*delimiter;  // Pour heredoc : ex. "EOF, end, finish ..."
 	int				hdoc_pipe[2]; // Pipe pour le heredoc
-	structs_cmd		*next;
+	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;
 
@@ -49,7 +49,7 @@ typedef struct s_exec
 }					t_exec;
 
 /*execution and main*/
-int					execute(t_cmd *cmd, char **envp);
+int					execute(t_cmd *cmd);
 char				*get_cmd_path(char *cmd, char **envp);
 int					execute_pipeline(t_cmd *cmd_list, char **envp);
 int					is_builtin(char *cmd);
@@ -59,11 +59,11 @@ int					count_env(char **envp);
 int					ft_echo(char **args);
 int					ft_env(char **envp);
 int					ft_pwd(void);
-int					ft_unset(char **args, char **envp);
+int					ft_unset(char **args, char ***envp);
 char				**rebuild_envp(char **args, char **envp, int i, int j);
 int					ft_exit(char **args);
-char				ft_export(char **args, char **envp);
-int					ft_cd(char **args, char **envp);
+//char				ft_export(char **args, char **envp);
+//int					ft_cd(char **args, char **envp);
 
 /*utils*/
 int					countcmds(t_cmd *cmd);

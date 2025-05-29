@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 14:21:17 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:19:27 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	ft_unset(char **args, char ***envp)
 	int		count;
 	char	**new_envp;
 
-	if (!args, args[1])
+	if (!args || !args[1])
 		return (0);
-	count = count_env(envp);//"count" necessaire pour eliminer et liberer le vieux envp
-	new_envp = rebuild_envp(args, envp, 0, 0);
+	count = count_env(*envp);//"count" necessaire pour eliminer et liberer le vieux envp
+	new_envp = rebuild_envp(args, *envp, 0, 0);
 	if (!new_envp)
 		return (1);
-	free_envp(envp, count);
+	free_envp(*envp, count);
 	*envp = new_envp;
 	return (0);
 }
@@ -69,9 +69,10 @@ int	ft_exit(char **args)
 	exit_code = ft_atoi(args[1]);
 	exit((unsigned char)exit_code);
 }
-	/* unsigned char ... en bash le valeur sont entre 0 et 255*/
 
-char	ft_export(char **args, char **envp)
+/* unsigned char ... en bash le valeur sont entre 0 et 255*/
+
+/*char	ft_export(char **args, char **envp)
 {
 	return (NULL);
 }
@@ -79,4 +80,4 @@ char	ft_export(char **args, char **envp)
 int	ft_cd(char **args, char **envp)
 {
 	return ;
-}
+}*/

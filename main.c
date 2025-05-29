@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 14:26:53 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:10:19 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = readline("minishell$ ");
-		if (!input)
-			break ;
+		if (!input || input[0] == '\0')
+		{
+			free(input);
+			continue ;
+		}
 		if (input)
 			add_history(input);
 		// Simulación de parser:
@@ -41,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd->delimiter = NULL;
 		cmd->next = NULL;
 		cmd->prev = NULL;
-		execute(cmd, g_envp);
+		execute(cmd);
 		free_cmd(cmd);
 		if (cmd->args)
 		{
@@ -51,7 +54,7 @@ int	main(int argc, char **argv, char **envp)
 			free_cmd(cmd);
 			break ;
 		}
-		if (execute(cmd, envp) == 1)
+		if (execute(cmd) == 1)
 		{
 			clear_history();
 			rl_clear_history();
@@ -59,6 +62,8 @@ int	main(int argc, char **argv, char **envp)
 			free_cmd(cmd);
 			return (1);
 		}
+		if (cmd->args && ft_strncmp(cmd->args[0], "exit", 5) == 0)
+			exit(0);
 		free_cmd(cmd);
 		free(input);
 	}
