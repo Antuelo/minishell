@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:20:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 18:45:59 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:47:12 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	add_new_var(char ***envp, char *new_var)
 	if (!new_envp)
 		return (1);
 	i = 0;
-	while (i <= count)
+	while (i < count)
 	{
 		new_envp[i] = (*envp)[i];
 		i++;
@@ -87,7 +87,8 @@ int	add_or_replace_var(char ***envp, char *new_var)
 	while ((*envp)[i])
 	{
 		if (ft_strncmp((*envp)[i], key, ft_strlen(key)) == 0
-			&& (*envp)[i][ft_strlen(key)] == '=')
+		&& ((*envp)[i][ft_strlen(key)] == '='
+		|| (*envp)[i][ft_strlen(key)] == '\0'))
 		{
 			free((*envp)[i]);
 			(*envp)[i] = ft_strdup(new_var);

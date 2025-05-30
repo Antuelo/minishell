@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 16:30:34 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:01:56 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,16 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 	if (exec->pid[i] == 0)
 	{
 		setup_redirections(cmd, exec);
-		fullpath = get_cmd_path(cmd->args[0], envp); // obtenir le path
-		controlpath(fullpath, cmd);                       // control d'erreur pour path (free aussi)
+		if (is_builtin(cmd->args[0]) <= 0)
+		{
+			fullpath = get_cmd_path(cmd->args[0], envp);
+			controlpath(fullpath, cmd);
+		}
 		if (cmd->outfile != NULL && cmd->append != -1)// si parsing ">" or ">>"
 			handle_outfile(cmd);
 		if (cmd->infile)							// si parsing "<"
 			handle_infile(cmd);
-		if (is_builtin(cmd->args[0]) >= 1)
+		if (is_builtin(cmd->args[0]) >= 1 && is_builtin(cmd->args[0]) <= 3)
 			exec_builtin(cmd, envp);
 		else
 			execute_execve(fullpath, cmd, envp);
@@ -80,12 +83,11 @@ int	execute_pipeline(t_cmd *cmd_list, char **envp)
 	t_cmd	*cmd;
 
 	i = 0;
-	exec.fd_in = 0;
-	cmd = cmd_list;										//copier le cmd
-	exec.cmd_count = countcmds(cmd_list);				//compter la quantité de cmd
-	exec.pid = malloc(sizeof(pid_t) * exec.cmd_count);
-	if (!exec.pid)
-		return (perror("malloc"), 1);
+	cmd = cmd_list;
+	if (init_exec(&exec, countcmds(cmd_list)))
+		return (1);
+	if (control_builtin(cmd))
+		return (0);
 	while (cmd)											//execution de pipes
 	{
 		control = control_fork_pipe(cmd, &exec, i);		//génerer fork et pipe

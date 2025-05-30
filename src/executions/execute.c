@@ -6,11 +6,32 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 14:32:23 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:53:56 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	init_exec(t_exec *exec, int count)
+{
+	exec->cmd_count = count;
+	exec->pid = malloc(sizeof(pid_t) * count);
+	if (!exec->pid)
+		return (perror("malloc"), 1);
+	exec->fd_in = 0;
+	return (0);
+}
+
+int	control_builtin(t_cmd *cmd_list)
+{
+	if (countcmds(cmd_list) == 1 && is_builtin(cmd_list->args[0]) >= 4
+		&& is_builtin(cmd_list->args[0]) <= 7)
+	{
+		exec_builtin(cmd_list, g_envp);
+		return (1);
+	}
+	return (0);
+}
 
 int	execute(t_cmd *cmd)
 {
