@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 14:55:51 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:52:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void				tryed_env(char **envp);
 void				print_export_format(char *line);
 int					is_valid_key(char *args);
 int					add_or_replace_var(char ***envp, char *new_var);
-//int					ft_cd(char **args, char **envp);
+int					ft_cd(char **args, char ***envp);
+char				*get_env_value(char **envp, char *key);
+void				update_pwd_vars(char ***envp);
+void				print_in_case(char *arg, char *path);
 
 /*utils*/
 int					countcmds(t_cmd *cmd);

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 14:53:56 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:05:39 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ int	init_exec(t_exec *exec, int count)
 
 int	control_builtin(t_cmd *cmd_list)
 {
-	if (countcmds(cmd_list) == 1 && is_builtin(cmd_list->args[0]) >= 4
-		&& is_builtin(cmd_list->args[0]) <= 7)
+	int	id;
+
+	id = is_builtin(cmd_list->args[0]);
+	if (countcmds(cmd_list) == 1
+		&& (id == 4 || id == 5 || id == 6 || id == 7))
 	{
 		exec_builtin(cmd_list, g_envp);
 		return (1);

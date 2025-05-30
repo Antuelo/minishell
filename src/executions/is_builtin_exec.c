@@ -5,96 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 18:57:13 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
+/*   Updated: 2025/05/30 18:16:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(void)
-{
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		return (perror("pwd"), 1);
-	ft_putendl_fd(pwd, 1);
-	free(pwd);
-	return (0);
-}
-
-/*je utilise ***envp pour modifier la racine*/
-int	ft_unset(char **args, char ***envp)
-{
-	int		count;
-	char	**new_envp;
-
-	if (!args || !args[1])
-		return (0);
-	count = count_env(*envp);
-	//"count" necessaire pour eliminer et liberer le vieux envp
-	new_envp = rebuild_envp(args, *envp, 0, 0);
-	if (!new_envp)
-		return (1);
-	free_envp(*envp, count);
-	*envp = new_envp;
-	return (0);
-}
-
-int	ft_exit(char **args)
-{
-	long	exit_code;
-	int		i;
-
-	write(2, "exit\n", 5);
-	if (!args[1])
-		exit(0);
-	i = 0;
-	while (args[1][i])
-	{
-		if ((args[1][i] < '0' || args[1][i] > '9') && !(i == 0
-				&& args[1][i] == '-'))
-		{
-			ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
-			exit(2);
-		}
-		i++;
-	}
-	if (args[2])
-	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		g_exit_status = 1;
-		return (1);
-	}
-	exit_code = ft_atoi(args[1]);
-	exit((unsigned char)exit_code);
-}
-
-int	ft_export(char **args, char ***envp)
+int	ft_env(char **envp)
 {
 	int	i;
 
-	i = 1;
-	if (!args || !args[1])
-		return (tryed_env(*envp), 0);
-	while (args[i])
-	{
-		if (!is_valid_key(args[i]))
-		{
-			ft_putstr_fd("export: `", 2);
-			ft_putstr_fd(args[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
-			return (1);
-		}
-		add_or_replace_var(envp, args[i]);
-		i++;
-	}
+	i = 0;
+	while (envp && envp[i])
+		ft_putendl_fd(envp[i++], 1);
 	return (0);
 }
 
-/*
-int	ft_cd(char **args, char **envp)
+int	ft_echo(char **args)
 {
-	return ;
-}*/
+	int	i;
+	int	control;
+
+	i = 0;
+	control = 0;
+	if (!args || !args[i])
+		return (write(1, "\n", 1), 0);
+	i = 1;
+	while (args[i] && ft_strncmp(args[i], "-n", 3) == 0)
+		control = i++;
+	while (args[i])
+	{
+		ft_putstr_fd(args[i++], 1);
+		if (args[i])
+			write(1, " ", 1);
+	}
+	if (control == 0)
+		write(1, "\n", 1);
+	return (0);
+}
+
+int	exec_builtin(t_cmd *cmd, char **envp)
+{
+	int	builtin_id;
+
+	builtin_id = is_builtin(cmd->args[0]);
+	if (builtin_id == 0)
+		return (0);
+	else if (builtin_id == 1)
+		return (ft_echo(cmd->args));
+	else if (builtin_id == 2)
+		return (ft_env(envp));
+	else if (builtin_id == 3)
+		return (ft_pwd());
+	else if (builtin_id == 4)
+		return (ft_unset(cmd->args, &g_envp));
+	else if (builtin_id == 5)
+		return (ft_exit(cmd->args));
+	else if (builtin_id == 6)
+		return (ft_export(cmd->args, &g_envp));
+	else if (builtin_id == 7)
+		return (ft_cd(cmd->args, &g_envp));
+	else
+		return (-1);
+}
+
+int	is_builtin(char *cmd)
+{
+	if (!cmd)
+		return (-1);
+	if (ft_strncmp(cmd, "echo", 5) == 0)
+		return (1);
+	if (ft_strncmp(cmd, "env", 4) == 0)
+		return (2);
+	if (ft_strncmp(cmd, "pwd", 4) == 0)
+		return (3);
+	if (ft_strncmp(cmd, "unset", 6) == 0)
+		return (4);
+	if (ft_strncmp(cmd, "exit", 5) == 0)
+		return (5);
+	if (ft_strncmp(cmd, "export", 7) == 0)
+		return (6);
+	if (ft_strncmp(cmd, "cd", 3) == 0)
+		return (7);
+	return (0);
+}

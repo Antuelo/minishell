@@ -6,13 +6,13 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:55:04 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/29 17:22:55 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:20:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*comparation de l'argument plus le = pour chercher considences*/
+/*comparation de l'argument(ex USER) plus le "=" pour chercher considences*/
 int	comparison_envp(char **args, char **envp, int i, int j)
 {
 	if (ft_strncmp(envp[i], args[j], ft_strlen(args[j])) == 0
@@ -22,7 +22,8 @@ int	comparison_envp(char **args, char **envp, int i, int j)
 		return (0);
 }
 
-/*fontion pour unset ... compte combien de modification pour malloc*/
+/*fontion pour unset ... compte combien de modification pour
+pouvoir faire malloc*/
 int	count_to_keep(char **args, char **envp, int i, int j)
 {
 	int	count;
@@ -49,7 +50,8 @@ int	count_to_keep(char **args, char **envp, int i, int j)
 	return (count);
 }
 
-/*fonction pour unset ... genère un nouveux envp modifié*/
+/*fonction pour unset ... genère un nouveux envp modifié
+donc, si on a éliminé des paramètres*/
 char	**rebuild_envp(char **args, char **envp, int i, int j)
 {
 	char	**new_envp;
@@ -74,6 +76,8 @@ char	**rebuild_envp(char **args, char **envp, int i, int j)
 	return (new_envp);
 }
 
+/*bubble sort pour imprimer de façon alphabetique le env
+demandé dans le built-in export*/
 void	bubble_sort(char **env)
 {
 	int		i;
@@ -102,6 +106,7 @@ void	bubble_sort(char **env)
 	}
 }
 
+/*trier et imprimer env pour export*/
 void	tryed_env(char **envp)
 {
 	char	**copy;
