@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 18:51:48 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:02:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	ft_pwd(void)
 	return (0);
 }
 
-/*je utilise ***envp pour modifier la racine*/
+/*je utilise ***envp pour modifier la racine...
+"count" necessaire pour eliminer et liberer le vieux envp*/
 int	ft_unset(char **args, char ***envp)
 {
 	int		count;
@@ -33,7 +34,6 @@ int	ft_unset(char **args, char ***envp)
 	if (!args || !args[1])
 		return (0);
 	count = count_env(*envp);
-	//"count" necessaire pour eliminer et liberer le vieux envp
 	new_envp = rebuild_envp(args, *envp, 0, 0);
 	if (!new_envp)
 		return (1);

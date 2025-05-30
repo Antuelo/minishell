@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 15:01:56 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:16:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	parent_process(t_exec *exec, t_cmd *cmd, int i)
 	}
 }
 
+/*if (cmd->outfile != NULL && cmd->append != -1)	si parsing ">" or ">>"
+** if (cmd->infile)									si parsing "<"*/
 void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 {
 	char	*fullpath;
@@ -51,9 +53,9 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 			fullpath = get_cmd_path(cmd->args[0], envp);
 			controlpath(fullpath, cmd);
 		}
-		if (cmd->outfile != NULL && cmd->append != -1)// si parsing ">" or ">>"
+		if (cmd->outfile != NULL && cmd->append != -1)
 			handle_outfile(cmd);
-		if (cmd->infile)							// si parsing "<"
+		if (cmd->infile)
 			handle_infile(cmd);
 		if (is_builtin(cmd->args[0]) >= 1 && is_builtin(cmd->args[0]) <= 3)
 			exec_builtin(cmd, envp);
@@ -64,10 +66,12 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		parent_process(exec, cmd, i);
 }
 
+/*control pour savoir si c'est un built or proccess fils
+** control "si il existe autre comande (pipe)... et pipe fonctionne" */
 int	control_fork_pipe(t_cmd *cmd, t_exec *exec, int i)
 {
-	is_builtin(cmd->args[0]);				//pour savoir si c'est un built or proccess fils
-	if (cmd->next && pipe(exec->pipe_fd) == -1)		//control "si il existe autre comande (pipe)... et pipe fonctionne"
+	is_builtin(cmd->args[0]);
+	if (cmd->next && pipe(exec->pipe_fd) == -1)
 		return (perror("pipe"), -1);
 	exec->pid[i] = fork();
 	if (exec->pid[i] < 0)
@@ -75,6 +79,10 @@ int	control_fork_pipe(t_cmd *cmd, t_exec *exec, int i)
 	return (0);
 }
 
+/*fait --- >
+** execution de pipes
+** génerer fork et pipe
+** executer les forks*/
 int	execute_pipeline(t_cmd *cmd_list, char **envp)
 {
 	t_exec	exec;
@@ -88,12 +96,12 @@ int	execute_pipeline(t_cmd *cmd_list, char **envp)
 		return (1);
 	if (control_builtin(cmd))
 		return (0);
-	while (cmd)											//execution de pipes
+	while (cmd)
 	{
-		control = control_fork_pipe(cmd, &exec, i);		//génerer fork et pipe
+		control = control_fork_pipe(cmd, &exec, i);
 		if (control == -1)
 			return (free(exec.pid), 1);
-		execute_fork(cmd, &exec, envp, i);				//executer les forks
+		execute_fork(cmd, &exec, envp, i);
 		i++;
 		cmd = cmd->next;
 	}

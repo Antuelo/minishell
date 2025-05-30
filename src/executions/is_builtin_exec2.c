@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:55:04 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 17:20:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:11:36 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 /*comparation de l'argument(ex USER) plus le "=" pour chercher considences*/
 int	comparison_envp(char **args, char **envp, int i, int j)
 {
-	if (ft_strncmp(envp[i], args[j], ft_strlen(args[j])) == 0
-		&& envp[i][ft_strlen(args[j])] == '=')
+	size_t	len;
+
+	len = ft_strlen(args[j]);
+	if (ft_strncmp(envp[i], args[j], len) == 0
+		&& (envp[i][len] == '=' || envp[i][len] == '\0'))
 		return (1);
 	else
 		return (0);
 }
 
 /*fontion pour unset ... compte combien de modification pour
-pouvoir faire malloc*/
+**pouvoir faire malloc...
+** combien de variables NON dois pas eliminer*/
 int	count_to_keep(char **args, char **envp, int i, int j)
 {
 	int	count;
@@ -106,7 +110,8 @@ void	bubble_sort(char **env)
 	}
 }
 
-/*trier et imprimer env pour export*/
+/*trier et imprimer env pour export quand il n y a
+** que export comme argument seulement...*/
 void	tryed_env(char **envp)
 {
 	char	**copy;

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 19:05:39 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:28:59 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ int	control_builtin(t_cmd *cmd_list)
 	int	id;
 
 	id = is_builtin(cmd_list->args[0]);
-	if (countcmds(cmd_list) == 1
-		&& (id == 4 || id == 5 || id == 6 || id == 7))
+	if (countcmds(cmd_list) == 1 && (id >= 4 && id <= 7))
 	{
-		exec_builtin(cmd_list, g_envp);
+		if (id == 5)
+			ft_exit(cmd_list->args);
+		else
+			exec_builtin(cmd_list, g_envp);
 		return (1);
 	}
 	return (0);
@@ -38,7 +40,8 @@ int	control_builtin(t_cmd *cmd_list)
 
 int	execute(t_cmd *cmd)
 {
-	execute_pipeline(cmd, g_envp);
+	if (execute_pipeline(cmd, g_envp))
+		return (1);
 	return (0);
 }
 

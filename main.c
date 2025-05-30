@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 15:03:15 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:28:31 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ int	main(int argc, char **argv, char **envp)
 		cmd->next = NULL;
 		cmd->prev = NULL;
 //		printf("comando recibido: [%s]\n", cmd->args[0]);
-		if (cmd->args && ft_strncmp(cmd->args[0], "exit", 5) == 0)
-		{
-			free_cmd(cmd);
-			free(input);
-			break ;
-		}
 		execute(cmd);
 		free_cmd(cmd);
 		free(input);
