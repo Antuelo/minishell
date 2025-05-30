@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:20:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 18:18:01 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:20:07 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	is_valid_key(char *args)
 	return (1);
 }
 
+/*fonction pour export, ajute une nouvelle variable à env*/
 int	add_new_var(char ***envp, char *new_var)
 {
 	char	**new_envp;
@@ -89,8 +90,8 @@ int	add_or_replace_var(char ***envp, char *new_var)
 	while ((*envp)[i])
 	{
 		if (ft_strncmp((*envp)[i], key, ft_strlen(key)) == 0
-		&& ((*envp)[i][ft_strlen(key)] == '='
-		|| (*envp)[i][ft_strlen(key)] == '\0'))
+			&& ((*envp)[i][ft_strlen(key)] == '='
+				|| (*envp)[i][ft_strlen(key)] == '\0'))
 		{
 			free((*envp)[i]);
 			(*envp)[i] = ft_strdup(new_var);
@@ -116,7 +117,7 @@ char	*get_env_value(char **envp, char *key)
 	len = ft_strlen(key);
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], key, len) ==0 && envp[i][len] == '=')
+		if (ft_strncmp(envp[i], key, len) == 0 && envp[i][len] == '=')
 			return (envp[i] + len + 1);
 		i++;
 	}

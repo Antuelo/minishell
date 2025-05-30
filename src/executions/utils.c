@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 20:46:10 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/22 12:16:40 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:16:39 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	controlpath(char *path, t_cmd *cmd)
 	if (!path)
 	{
 		free_cmd(cmd);
-		free(path);
 		perror("error: command not found");
 		exit(127);
 	}

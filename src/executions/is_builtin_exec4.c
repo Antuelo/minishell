@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:54:23 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 18:51:11 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:14:17 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	update_pwd_vars(char ***envp)
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 		return ;
-	str_old = ft_strjoin("OLDPWD=", old_pwd);
+	if (old_pwd)
+		str_old = ft_strjoin("OLDPWD=", old_pwd);
+	else
+		str_old = ft_strdup("OLDPWD=");
 	str_new = ft_strjoin("PWD=", new_pwd);
 	add_or_replace_var(envp, str_old);
 	add_or_replace_var(envp, str_new);
@@ -38,9 +41,12 @@ void	update_pwd_vars(char ***envp)
 	free(str_old);
 }
 
-/*c'est seulement pour imprimer le PWD dasn le cas
+/*
+** c'est seulement pour imprimer le PWD dasn le cas
 ** où tout se passe bien et le deuxième argument
-** c'est un "-". Tout pour la norminette...*/
+** c'est un "-". Tout pour la norminette...
+**(ça ne rentrée pas dans la fonction originale)
+*/
 void	print_in_case(char *arg, char *path)
 {
 	if (!arg)

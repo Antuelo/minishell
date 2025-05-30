@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:55:04 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 21:11:36 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/05/30 22:19:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,4 +129,3 @@ void	tryed_env(char **envp)
 	}
 	free_envp(copy, i);
 }
-
