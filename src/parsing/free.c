@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:43:51 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:43:51 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:22:34 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:23:27 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+// Libère chaque argument d’un tableau de strings (args)
 static void	free_cmd_args(char **args)
 {
 	int	i;
@@ -25,7 +26,7 @@ static void	free_cmd_args(char **args)
 	free(args);
 }
 
-// Libère la structure t_cmd
+// Libère une structure t_cmd et tous ses champs dynamiques
 void	free_cmd(t_cmd *cmd)
 {
 	if (!cmd)
@@ -48,6 +49,7 @@ void	free_cmd(t_cmd *cmd)
 	free(cmd);
 }
 
+// Libère une liste chaînée de t_cmd
 void	free_cmd_list(t_cmd *cmd)
 {
 	t_cmd	*tmp;
@@ -60,6 +62,7 @@ void	free_cmd_list(t_cmd *cmd)
 	}
 }
 
+// Libère line, tokens et la liste de commandes cmds
 void	free_all(char *line, t_token *tokens, t_cmd *cmds)
 {
 	if (line)

@@ -5,13 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:30:26 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:30:26 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:04:58 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:06:32 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+// Remplit une structure t_cmd à partir des tokens entre tokens et limit
+// Elle alloue les arguments, initialise les champs, 
+// copie les T_WORD non liés aux redirections et 
+// traite les redirections (<, >, <<, >>) en sautant les fichiers/limiteurs.
 int	fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd)
 {
 	t_token	*curr;

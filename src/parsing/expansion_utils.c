@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:31:44 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:31:44 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:19:20 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:20:26 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+// Remplace $? par la valeur du dernier code de sortie dans buffer
 void	handle_exit_code(char *buffer, int *j, int *i, int exit_status)
 {
 	char	*val;
@@ -29,6 +30,7 @@ static int	is_var_char(char c)
 	return (ft_isalnum(c) || c == '_');
 }
 
+// Remplace une variable d’environnement par sa valeur dans buffer
 void	handle_env_variable(t_expand_ctx *ctx, const char *str)
 {
 	int		start;
@@ -49,6 +51,7 @@ void	handle_env_variable(t_expand_ctx *ctx, const char *str)
 	free(var);
 }
 
+// Supprime un token vide de la liste chaînée et retourne la nouvelle tête
 t_token	*remove_empty_token(t_token *curr, t_token *tokens)
 {
 	if (curr->prev)
@@ -62,6 +65,7 @@ t_token	*remove_empty_token(t_token *curr, t_token *tokens)
 	return (tokens);
 }
 
+// Gère l’échappement de $ en insérant un $ littéral dans buffer
 void	handle_escaped_dollar(char *buffer, int *j, int *i)
 {
 	buffer[*j] = '$';

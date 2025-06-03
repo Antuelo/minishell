@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:43:16 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:43:16 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:12:31 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:12:35 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	is_operator(char c)
 	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
 
+// Libère un token individuel (valeur et structure)
 void	free_single_token(t_token *token)
 {
 	if (!token)

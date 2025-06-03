@@ -6,7 +6,7 @@
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:43:45 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:43:45 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/03 21:21:47 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*get_env_value(char *name, char **envp)
 	return ("");
 }
 
+// Boucle principale d’expansion des variables dans une string
 static void	expansion_loop(const char *str, t_expand_ctx *ctx, int exit_status)
 {
 	while (str[*ctx->i] && ctx->buffer)
@@ -47,6 +48,7 @@ static void	expansion_loop(const char *str, t_expand_ctx *ctx, int exit_status)
 	}
 }
 
+// Remplace les variables ($VAR, $?) dans une string par leur valeur
 static char	*expand_var(const char *str, char **envp, int exit_status)
 {
 	char			buffer[4096];
@@ -65,7 +67,7 @@ static char	*expand_var(const char *str, char **envp, int exit_status)
 	return (ft_strdup(buffer));
 }
 
-// Applique expand_var à tous les T_WORD sauf ceux dans des single quotes
+// Applique l’expansion des variables à chaque token, sauf en single quotes
 void	expand_tokens(t_token *tokens, char **envp, int exit_status)
 {
 	t_token	*curr;

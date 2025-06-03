@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:42:46 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:42:46 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:04:11 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:04:11 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static int	count_args(t_token *tokens)
 	return (count);
 }
 
+// Alloue le tableau d'arguments de la commande en comptant les T_WORD valides
+// fonction utilitaire de fill_cmd_from_tokens
 int	allocate_args_array(t_token *tokens, t_cmd *cmd)
 {
 	int	arg_count;
@@ -55,6 +57,8 @@ int	allocate_args_array(t_token *tokens, t_cmd *cmd)
 	return (1);
 }
 
+// Initialise les champs d'entrée/sortie et redirections d'une commande
+// fonction utilitaire de fill_cmd_from_tokens
 void	init_cmd_fields(t_cmd *cmd)
 {
 	cmd->infile = NULL;
@@ -64,6 +68,8 @@ void	init_cmd_fields(t_cmd *cmd)
 	cmd->heredoc = 0;
 }
 
+// Copie un argument dans le tableau cmd->args, avec gestion des erreurs
+// fonction utilitaire de fill_cmd_from_tokens
 int	copy_argument(t_cmd *cmd, char *value, int *i)
 {
 	cmd->args[*i] = strdup(value);
@@ -82,6 +88,8 @@ int	copy_argument(t_cmd *cmd, char *value, int *i)
 	return (1);
 }
 
+// Appelle handle_redirection et libère les ressources cmd en cas d'échec
+// fonction utilitaire de fill_cmd_from_tokens
 int	handle_redir_fail(t_cmd *cmd, t_token *curr, int i)
 {
 	if (!handle_redirection(cmd, curr))

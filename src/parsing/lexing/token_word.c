@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:43:25 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:43:25 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:14:03 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:14:09 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static char	*extract_word(char *line, int *i)
 	return (word);
 }
 
+// Crée un token de type T_WORD à partir d’un mot extrait de la ligne
 t_token	*handle_word_token(char *line, int *i)
 {
 	char	*word;

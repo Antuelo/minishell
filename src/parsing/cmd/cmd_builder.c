@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:42:38 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:42:38 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:03:54 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:04:01 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+// Initialise une structure t_cmd avec des valeurs par défaut
 t_cmd	*init_cmd(void)
 {
 	t_cmd	*cmd;
@@ -32,6 +33,8 @@ t_cmd	*init_cmd(void)
 	return (cmd);
 }
 
+// Parcourt les tokens et construit 
+// la liste chaînée de commandes correspondantes
 t_cmd	*build_cmd_list_from_tokens(t_token *tokens)
 {
 	t_cmd		*head;

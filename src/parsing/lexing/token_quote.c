@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:43:07 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:43:07 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:10:39 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:11:11 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+// Gère les caractères échappés dans les quotes doubles (ex: \" ou \\)
 static void	handle_double_quote_escape(char *line, int *i, char *res, int *j)
 {
 	if (line[*i + 1] == '"' || line[*i + 1] == '\\')
@@ -29,6 +30,7 @@ static void	handle_double_quote_escape(char *line, int *i, char *res, int *j)
 	}
 }
 
+// Extrait le contenu d’une chaîne entre quotes, en gérant les échappements
 static char	*extract_quoted(char *line, int *i, char quote)
 {
 	char	*res;
@@ -56,6 +58,7 @@ static char	*extract_quoted(char *line, int *i, char quote)
 	return (res);
 }
 
+// Crée un token de type WORD à partir d’une chaîne entre quotes
 t_token	*handle_quoted_token(char *line, int *i)
 {
 	char	*word;

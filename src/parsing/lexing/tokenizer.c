@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:43:33 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:43:33 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:17:10 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:18:33 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+// Traite un segment de la ligne et retourne le token correspondant
 static t_token	*process_token_segment(char *line, int *i)
 {
 	t_token	*token;
@@ -34,6 +35,7 @@ static t_token	*process_token_segment(char *line, int *i)
 	return (token);
 }
 
+// Ajoute un nouveau token à la fin de la liste chaînée
 static void	append_token(t_token **head, t_token **last, t_token *new)
 {
 	if (!new)
@@ -51,6 +53,7 @@ static void	append_token(t_token **head, t_token **last, t_token *new)
 	}
 }
 
+// Transforme la ligne d'entrée en liste chaînée de tokens
 t_token	*tokenize(char *line)
 {
 	t_token	*head;

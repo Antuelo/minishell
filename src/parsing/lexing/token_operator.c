@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:42:59 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:42:59 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 21:11:17 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 21:11:17 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+// Retourne le type de token correspondant à la chaîne donnée
 static t_token_type	get_token_type(char *str)
 {
 	if (!strcmp(str, "|"))
@@ -31,7 +32,7 @@ static t_token_type	get_token_type(char *str)
 	return (T_WORD);
 }
 
-// Extrait un opérateur (<, <<, >, >>, |) et détecte les erreurs type >>>>
+// Vérifie si une séquence de 3 opérateurs est invalide (ex: >>>, |||, etc.)
 static int	is_invalid_operator_combo(char c1, char c2, char c3)
 {
 	if (c1 == c2 && c2 == c3)
@@ -42,6 +43,7 @@ static int	is_invalid_operator_combo(char c1, char c2, char c3)
 	return (0);
 }
 
+// Calcule la longueur de l'opérateur à extraire et détecte les erreurs
 static int	get_operator_length(char c1, char c2, char c3, int *i)
 {
 	if (is_invalid_operator_combo(c1, c2, c3))
@@ -59,6 +61,7 @@ static int	get_operator_length(char c1, char c2, char c3, int *i)
 	return (1);
 }
 
+// Extrait un opérateur (|, ||, <, <<, etc.) depuis la ligne
 static char	*extract_operator(char *line, int *i)
 {
 	int		start;
@@ -77,6 +80,7 @@ static char	*extract_operator(char *line, int *i)
 	return (ft_substr(line, start, len));
 }
 
+// Crée un token à partir d’un opérateur extrait de la ligne
 t_token	*handle_operator_token(char *line, int *i)
 {
 	char	*word;
