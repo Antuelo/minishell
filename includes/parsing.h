@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:33:45 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:33:45 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:04:47 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:04:47 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_token	*handle_word_token(char *line, int *i);
 void	free_single_token(t_token *token);
 int	process_command(t_cmd **head, t_cmd **last,
 				t_token **start, t_token *curr);
+t_cmd	*parse_line(char *line, char **envp, int exit_code);
 
 
 // libft, à supprimer
