@@ -3,20 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 22:43:30 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/28 22:43:30 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 19:32:15 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 19:32:15 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "parsing.h"
+
+void	free_cmd_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
+}
 
 // Libère la structure t_cmd
 void	free_cmd(t_cmd *cmd)
 {
-	int	i;
-
 	if (!cmd)
 		return ;
 	if (cmd->infile)
@@ -26,15 +37,7 @@ void	free_cmd(t_cmd *cmd)
 	if (cmd->delimiter)
 		free(cmd->delimiter);
 	if (cmd->args)
-	{
-		i = 0;
-		while (cmd->args[i])
-		{
-			free(cmd->args[i]);
-			i++;
-		}
-		free(cmd->args);
-	}
+		free_cmd_args(cmd->args);
 	// Fermer les pipes heredoc si ouverts
 	if (cmd->heredoc)
 	{
@@ -155,7 +158,5 @@ int	main(int argc, char **argv, char **envp)
 
 		free_all(line, tokens, cmds); 
 	}
-	printf("Bye\n");
 	return (0);
 }
-

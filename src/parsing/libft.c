@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 16:11:46 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/28 16:11:46 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 19:32:05 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 19:32:05 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "parsing.h"
 
 static int	count_digits(int n)
 {

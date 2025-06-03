@@ -1,24 +1,11 @@
+NAME        = minishell
+CC          = cc
+CFLAGS      = -Wall -Wextra -Werror
+READLINE    = -lreadline
+INCLUDES    = -Iincludes
 
-NAME		= minishell
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
-READLINE	= -lreadline
-INCLUDES	= -Iincludes
-
-SRC			=	src/parsing/main.c \
-				src/parsing/input.c \
-				src/parsing/tokenizer.c \
-				src/parsing/token_utils.c \
-				src/parsing/parser.c \
-				src/parsing/redirections.c \
-				src/parsing/expansion.c \
-				src/parsing/libft.c \
-				src/parsing/quotes_handler.c \
-				src/parsing/cmd_builder.c \
-				src/parsing/syntax_checker.c \
-
-OBJ			= $(SRC:.c=.o)
-
+SRC         := $(shell find src/parsing -name '*.c')
+OBJ         := $(SRC:.c=.o)
 
 all: $(NAME)
 

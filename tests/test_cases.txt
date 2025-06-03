@@ -6,7 +6,6 @@ echo 'user: $USER'
 echo "user: $USER"
 echo "$USER said 'hello'"
 echo "chemin: \$HOME"
-echo 'quote: '\''hello'\'''
 echo "quote: \"hello\""
 echo "antislash: \\test"
 echo 'antislash: \\test'
@@ -36,7 +35,6 @@ echo $?
 ls |
 ls || echo coucou
 ls ||| echo fail
-cat <<
 cat << |
 cat << >
 echo Coucou && echo Salut
@@ -45,3 +43,15 @@ ls |< grep test
 ls | < grep test
 cat <<< EOF
 echo Hello~
+with\\ space
+escaped\\>char
+echo\\$HOME
+no\\escape\\
+trailing\\
+double\\\\backslash
+echo first > out1.txt | grep second | wc -l > out2.txt
+echo test > file1 file2
+cat << EOF | grep hello
+echo "$UNDEFINED"
+echo hello '>' file
+

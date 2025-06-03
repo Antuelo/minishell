@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 24/05/2025 16:20:33 by llabatut          #+#    #+#             */
-/*   Updated: 24/05/2025 16:20:55 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 19:32:24 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 19:32:24 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/parsing.h"
+
+#include "parsing.h"
 
 // Vérifie s'il y a des quotes non fermées dans la ligne
 int	check_unclosed_quotes(const char *line)
@@ -26,21 +27,20 @@ int	check_unclosed_quotes(const char *line)
 			while (line[i])
 			{
 				if (line[i] == quote)
-					break;
+					break ;
 				if (line[i] == '\\' && quote == '"')
-					i++; // saute le caractère échappé
+					i++;
 				i++;
 			}
 			if (!line[i] || line[i] != quote)
-				return (1); // quote non fermée
-			i++; // skip la quote fermée
+				return (1);
+			i++;
 		}
 		else
 			i++;
 	}
 	return (0);
 }
-
 
 // Supprime les quotes dans une string
 static char	*remove_quotes(char *str)

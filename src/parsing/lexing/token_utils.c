@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 21:53:51 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/28 21:56:32 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 19:31:20 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 19:31:20 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "parsing.h"
 
 // Alloue et initialise un nouveau token avec sa valeur et son type
 t_token	*new_token(char *value, t_token_type type)
@@ -27,10 +27,10 @@ t_token	*new_token(char *value, t_token_type type)
 		return (NULL);
 	}
 	token->type = type;
-	token->next = NULL;
-	token->prev = NULL;
 	token->in_single_quote = 0;
 	token->in_double_quote = 0;
+	token->next = NULL;
+	token->prev = NULL;
 	return (token);
 }
 
@@ -49,7 +49,6 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
-
 // Affiche tous les tokens pour le debug (valeur + type numérique)
 void	print_tokens(t_token *tokens)
 {
@@ -58,4 +57,18 @@ void	print_tokens(t_token *tokens)
 		printf("Token: [%s] | Type: %d\n", tokens->value, tokens->type);
 		tokens = tokens->next;
 	}
+}
+
+// Détecte si un caractère est un opérateur spécial du shell
+int	is_operator(char c)
+{
+	return (c == '|' || c == '<' || c == '>' || c == '&');
+}
+
+void	free_single_token(t_token *token)
+{
+	if (!token)
+		return ;
+	free(token->value);
+	free(token);
 }

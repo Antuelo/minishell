@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 22:29:21 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/28 22:29:21 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 19:33:45 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 19:33:45 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,21 @@ typedef struct s_token
 	struct s_token	*prev;
 }	t_token;
 
+typedef struct s_expand_ctx
+{
+	char	*buffer;
+	int		*j;
+	int		*i;
+	char	**envp;
+}	t_expand_ctx;
 
 char	*get_user_input(void);
 t_token	*tokenize(char *line);
 t_token	*new_token(char *value, t_token_type type);
 void	free_tokens(t_token *tokens);
-void	print_tokens(t_token *tokens);
+void	print_tokens(t_token *tokens); ////////////
 int	handle_redirection(t_cmd *cmd, t_token *curr);
-int	fill_cmd_from_tokens(t_token *tokens, t_cmd *cmd);
+int	fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd);
 int	count_args(t_token *tokens);
 char	*get_env_value(char *name, char **envp);
 char	*expand_var(const char *str, char **envp, int exit_status);
@@ -76,6 +83,27 @@ int	syntax_is_valid(t_token *tokens);
 int	check_syntax_errors(t_token *tokens);
 t_token *next_pipe(t_token *token);
 t_cmd   *init_cmd(void);
+t_token	*prepare_pipe_segment(t_token *pipe);
+t_cmd	*add_new_cmd(t_token *start, t_token *pipe, t_cmd *head);
+void	link_pipe_back(t_token *pipe, t_token *start);
+void	link_cmd(t_cmd **head, t_cmd **last, t_cmd *new);
+t_token	*last_token(t_token *start);
+void	handle_exit_code(char *buffer, int *j, int *i, int exit_status);
+void	handle_env_variable(t_expand_ctx *ctx, const char *str);
+t_token	*remove_empty_token(t_token *curr, t_token *tokens);
+void	handle_escaped_dollar(char *buffer, int *j, int *i);
+int	allocate_args_array(t_token *tokens, t_cmd *cmd);
+void	init_cmd_fields(t_cmd *cmd);
+int	copy_argument(t_cmd *cmd, char *value, int *i);
+int	handle_redir_fail(t_cmd *cmd, t_token *curr, int i);
+int	is_operator(char c);
+t_token	*handle_operator_token(char *line, int *i);
+t_token	*handle_quoted_token(char *line, int *i);
+t_token	*handle_word_token(char *line, int *i);
+void	free_single_token(t_token *token);
+int	process_command(t_cmd **head, t_cmd **last,
+				t_token **start, t_token *curr);
+
 
 // libft, à supprimer
 char	*ft_itoa(int n);

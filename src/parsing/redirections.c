@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/27 22:15:45 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/27 22:15:45 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 19:32:31 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 19:32:31 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "parsing.h"
 
 // Gère la redirection d'entrée (ex: < fichier)
 // Remplace infile si elle existe déjà
@@ -19,7 +19,9 @@ static int	set_infile(t_cmd *cmd, t_token *token)
 	if (cmd->infile)
 		free(cmd->infile);
 	cmd->infile = strdup(token->value);
-	cmd->append = -1; // aucune redirection de sortie
+	if (!cmd->infile)
+		return (0);
+	cmd->append = -1;
 	return (1);
 }
 
@@ -30,6 +32,8 @@ static int	set_outfile(t_cmd *cmd, t_token *token, int append)
 	if (cmd->outfile)
 		free(cmd->outfile);
 	cmd->outfile = strdup(token->value);
+	if (!cmd->outfile)
+		return (0);
 	cmd->append = append;
 	return (1);
 }
@@ -39,15 +43,23 @@ static int	set_outfile(t_cmd *cmd, t_token *token, int append)
 static int	set_heredoc(t_cmd *cmd, t_token *token)
 {
 	cmd->heredoc = 1;
+	if (cmd->delimiter)
+	{
+		free(cmd->delimiter);
+		cmd->delimiter = NULL;
+	}
 	cmd->delimiter = strdup(token->value);
+	if (!cmd->delimiter)
+		return (0);
 	return (1);
 }
 
 // Analyse une redirection et appelle la fonction adaptée
 int	handle_redirection(t_cmd *cmd, t_token *curr)
 {
-	t_token	*next = curr->next;
+	t_token	*next;
 
+	next = curr->next;
 	if (curr->type == T_REDIR_IN)
 		return (set_infile(cmd, next));
 	if (curr->type == T_REDIR_OUT)
@@ -58,4 +70,3 @@ int	handle_redirection(t_cmd *cmd, t_token *curr)
 		return (set_heredoc(cmd, next));
 	return (1);
 }
-

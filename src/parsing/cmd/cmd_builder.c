@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/28 22:43:48 by llabatut          #+#    #+#             */
-/*   Updated: 2025/05/28 22:43:48 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 19:30:09 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 19:30:09 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "parsing.h"
 
 t_token	*next_pipe(t_token *token)
 {
@@ -21,7 +21,9 @@ t_token	*next_pipe(t_token *token)
 
 t_cmd	*init_cmd(void)
 {
-	t_cmd	*cmd = malloc(sizeof(t_cmd));
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
 	cmd->args = NULL;
@@ -37,11 +39,11 @@ t_cmd	*init_cmd(void)
 	return (cmd);
 }
 
-
 t_token	*last_token(t_token *start)
 {
-	t_token	*tmp = start;
+	t_token	*tmp;
 
+	tmp = start;
 	while (tmp && tmp->next)
 		tmp = tmp->next;
 	return (tmp);
@@ -49,62 +51,24 @@ t_token	*last_token(t_token *start)
 
 t_cmd	*build_cmd_list_from_tokens(t_token *tokens)
 {
-	t_cmd	*head = NULL;
-	t_cmd	*last = NULL;
-	t_cmd	*new;
-	t_token	*start = tokens;
-	t_token	*pipe;
+	t_cmd		*head;
+	t_cmd		*last;
+	t_token		*curr;
+	t_token		*start;
+	int			ok;
 
-	while (start)
+	head = NULL;
+	last = NULL;
+	start = tokens;
+	curr = tokens;
+	while (curr)
 	{
-		pipe = next_pipe(start);
-		t_token *next_cmd = NULL;
-
-		if (pipe)
-		{
-			next_cmd = pipe->next;
-			pipe->prev->next = NULL;  // couper temporairement
-			pipe->prev = NULL;
-		}
-
-		new = init_cmd();
-		if (!new)
-		{
-			free_cmd_list(head);
-			return (NULL);
-		}
-
-		if (!fill_cmd_from_tokens(start, new))
-		{
-			if (pipe)
-			{
-				// Restaure la liaison pour permettre free_tokens
-				start = pipe;
-				if (pipe->next)
-					pipe->next->prev = pipe;
-			}
-			free_cmd(new);
-			free_cmd_list(head);
-			return (NULL);
-		}
-
-		if (last)
-		{
-			last->next = new;
-			new->prev = last;
-		}
-		else
-			head = new;
-		last = new;
-
-		// Restore link après parsing
-		if (pipe)
-		{
-			pipe->prev = last_token(start);
-			if (pipe->prev)
-				pipe->prev->next = pipe;
-		}
-		start = next_cmd;
+		ok = 1;
+		if (curr->type == T_PIPE || curr->next == NULL)
+			ok = process_command(&head, &last, &start, curr);
+		if (!ok)
+			return (free_cmd_list(head), NULL);
+		curr = curr->next;
 	}
 	return (head);
 }

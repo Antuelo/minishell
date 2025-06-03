@@ -1,0 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_builder_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/03 19:29:59 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 19:29:59 by llabatut         ###   ########.ch       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "parsing.h"
+
+static void	update_cmd_links(t_cmd **head, t_cmd **last, t_cmd *new)
+{
+	if (!*head)
+		*head = new;
+	else
+		(*last)->next = new;
+	*last = new;
+}
+
+static int	handle_new_cmd(t_token *start, t_token *end, t_cmd **new)
+{
+	*new = init_cmd();
+	if (!*new)
+		return (0);
+	if (!fill_cmd_from_tokens(start, end, *new))
+	{
+		free_cmd(*new);
+		return (0);
+	}
+	(*new)->next = NULL;
+	return (1);
+}
+
+int	process_command(t_cmd **head, t_cmd **last,
+				t_token **start, t_token *curr)
+{
+	t_cmd	*new;
+	t_token	*limit;
+	int		ok;
+
+	limit = NULL;
+	if (curr->type == T_PIPE)
+		limit = curr;
+	ok = handle_new_cmd(*start, limit, &new);
+	if (!ok)
+		return (0);
+	update_cmd_links(head, last, new);
+	if (curr->type == T_PIPE)
+		*start = curr->next;
+	return (1);
+}
