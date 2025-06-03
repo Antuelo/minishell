@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:31:51 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:31:51 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:43:45 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:43:45 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	expansion_loop(const char *str, t_expand_ctx *ctx, int exit_status)
 	}
 }
 
-char	*expand_var(const char *str, char **envp, int exit_status)
+static char	*expand_var(const char *str, char **envp, int exit_status)
 {
 	char			buffer[4096];
 	int				i;

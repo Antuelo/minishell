@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:31:01 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:31:01 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:42:59 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:42:59 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_token_type	get_token_type(char *str)
+static t_token_type	get_token_type(char *str)
 {
 	if (!strcmp(str, "|"))
 		return (T_PIPE);
@@ -59,7 +59,7 @@ static int	get_operator_length(char c1, char c2, char c3, int *i)
 	return (1);
 }
 
-char	*extract_operator(char *line, int *i)
+static char	*extract_operator(char *line, int *i)
 {
 	int		start;
 	int		len;

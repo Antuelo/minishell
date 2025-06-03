@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:31:57 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:31:57 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:44:09 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:44:09 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-// Affiche le prompt, lit l'entrée utilisateur, gère l'historique et Ctrl+D
+// Affiche le prompt, lit l'entrée utilisateur, gère l'historique
 char	*get_user_input(void)
 {
 	char	*line;

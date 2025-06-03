@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:31:28 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:31:28 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:43:25 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:43:25 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 // Extrait un mot (commande, argument) jusqu’à un espace ou un caractère spécial
-char	*extract_word(char *line, int *i)
+static char	*extract_word(char *line, int *i)
 {
 	char	*word;
 	int		j;

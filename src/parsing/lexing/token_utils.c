@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:31:20 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:31:20 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:43:16 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:43:16 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,6 @@ void	free_tokens(t_token *tokens)
 			free(tokens->value);
 		free(tokens);
 		tokens = tmp;
-	}
-}
-
-// Affiche tous les tokens pour le debug (valeur + type numérique)
-void	print_tokens(t_token *tokens)
-{
-	while (tokens)
-	{
-		printf("Token: [%s] | Type: %d\n", tokens->value, tokens->type);
-		tokens = tokens->next;
 	}
 }
 

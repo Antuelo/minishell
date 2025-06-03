@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:30:18 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:30:18 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:42:46 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:42:46 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 // Compte le nombre d'arguments valides
-int	count_args(t_token *tokens)
+static int	count_args(t_token *tokens)
 {
 	t_token	*curr;
 	int		count;

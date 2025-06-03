@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:17:25 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:18:29 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:43:51 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:43:51 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	free_cmd_args(char **args)
+static void	free_cmd_args(char **args)
 {
 	int	i;
 

@@ -5,19 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:30:09 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:30:09 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:42:38 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:42:38 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-t_token	*next_pipe(t_token *token)
-{
-	while (token && token->type != T_PIPE)
-		token = token->next;
-	return (token);
-}
 
 t_cmd	*init_cmd(void)
 {
@@ -37,16 +30,6 @@ t_cmd	*init_cmd(void)
 	cmd->next = NULL;
 	cmd->prev = NULL;
 	return (cmd);
-}
-
-t_token	*last_token(t_token *start)
-{
-	t_token	*tmp;
-
-	tmp = start;
-	while (tmp && tmp->next)
-		tmp = tmp->next;
-	return (tmp);
 }
 
 t_cmd	*build_cmd_list_from_tokens(t_token *tokens)

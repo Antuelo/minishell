@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:31:10 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:31:10 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:43:07 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:43:07 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	handle_double_quote_escape(char *line, int *i, char *res, int *j)
+static void	handle_double_quote_escape(char *line, int *i, char *res, int *j)
 {
 	if (line[*i + 1] == '"' || line[*i + 1] == '\\')
 	{

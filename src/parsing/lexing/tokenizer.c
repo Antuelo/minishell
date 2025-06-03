@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:31:36 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:31:36 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:43:33 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/03 20:43:33 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_token	*process_token_segment(char *line, int *i)
+static t_token	*process_token_segment(char *line, int *i)
 {
 	t_token	*token;
 
@@ -34,7 +34,7 @@ t_token	*process_token_segment(char *line, int *i)
 	return (token);
 }
 
-void	append_token(t_token **head, t_token **last, t_token *new)
+static void	append_token(t_token **head, t_token **last, t_token *new)
 {
 	if (!new)
 		return ;
