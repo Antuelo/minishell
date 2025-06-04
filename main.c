@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 20:28:31 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:28:53 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			continue ;
 		}
-		// Simulación del parser — reemplazá esto por tu parser real después
+		// Simulación del parser — à remplacer plus tard
 		cmd = malloc(sizeof(t_cmd));
 		if (!cmd)
 			return (free(input), 1);
