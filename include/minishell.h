@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 18:52:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:40:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <unistd.h>
 
 extern int			g_exit_status;
-extern char			**g_envp;
 
 typedef struct s_cmd
 {
@@ -49,10 +48,10 @@ typedef struct s_exec
 }					t_exec;
 
 /*execution, main ...*/
-int					execute(t_cmd *cmd);
+int					execute(t_cmd *cmd, char ***envp);
+int					execute_pipeline(t_cmd *cmd_list, char ***envp);
 char				*get_cmd_path(char *cmd, char **envp);
-int					execute_pipeline(t_cmd *cmd_list, char **envp);
-int					control_builtin(t_cmd *cmd_list);
+int					control_builtin(t_cmd *cmd_list, char **envp);
 int					init_exec(t_exec *exec, int count);
 
 /*builtins*/

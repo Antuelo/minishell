@@ -6,14 +6,13 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/03 16:28:53 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:35:18 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		g_exit_status;
-char	**g_envp = NULL;
+int		g_exit_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {

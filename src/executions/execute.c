@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 21:49:43 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:42:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	init_exec(t_exec *exec, int count)
 	return (0);
 }
 
-int	control_builtin(t_cmd *cmd_list)
+int	control_builtin(t_cmd *cmd_list, char **envp)
 {
 	int	id;
 
@@ -32,15 +32,15 @@ int	control_builtin(t_cmd *cmd_list)
 		if (id == 5)
 			ft_exit(cmd_list->args);
 		else
-			exec_builtin(cmd_list, g_envp);
+			exec_builtin(cmd_list, envp);
 		return (1);
 	}
 	return (0);
 }
 
-int	execute(t_cmd *cmd)
+int	execute(t_cmd *cmd, char ***envp)
 {
-	if (execute_pipeline(cmd, g_envp))
-		return (1);
+	if (execute_pipeline(cmd, envp))
+		g_exit_status = return (1);
 	return (0);
 }
