@@ -1,5 +1,5 @@
 NAME = minishell
-INCLUDES = -Iinclude -Ilibft -Iminishell
+INCLUDES = -Iinclude -Ilibft
 MAKEFLAGS += --no-print-directory
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
