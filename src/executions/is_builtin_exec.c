@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 18:16:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:03:35 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_echo(char **args)
 	return (0);
 }
 
-int	exec_builtin(t_cmd *cmd, char **envp)
+int	exec_builtin(t_cmd *cmd, char ***envp)
 {
 	int	builtin_id;
 
@@ -55,17 +55,17 @@ int	exec_builtin(t_cmd *cmd, char **envp)
 	else if (builtin_id == 1)
 		return (ft_echo(cmd->args));
 	else if (builtin_id == 2)
-		return (ft_env(envp));
+		return (ft_env(*envp));
 	else if (builtin_id == 3)
 		return (ft_pwd());
 	else if (builtin_id == 4)
-		return (ft_unset(cmd->args, &g_envp));
+		return (ft_unset(cmd->args, envp));
 	else if (builtin_id == 5)
 		return (ft_exit(cmd->args));
 	else if (builtin_id == 6)
-		return (ft_export(cmd->args, &g_envp));
+		return (ft_export(cmd->args, envp));
 	else if (builtin_id == 7)
-		return (ft_cd(cmd->args, &g_envp));
+		return (ft_cd(cmd->args, envp));
 	else
 		return (-1);
 }

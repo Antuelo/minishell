@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/05 13:35:18 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:47:07 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_cmd	*cmd;
 	char	*input;
+	char	**my_envp;
 
 	(void)argc;
 	(void)argv;
-	g_envp = copy_envp(envp);
+	my_envp = copy_envp(envp);
 	g_exit_status = 0;
 	while (1)
 	{
@@ -48,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd->next = NULL;
 		cmd->prev = NULL;
 //		printf("comando recibido: [%s]\n", cmd->args[0]);
-		execute(cmd);
+		execute(cmd, &my_envp);
 		free_cmd(cmd);
 		free(input);
 	}

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/05/30 22:06:32 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:08:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		if (cmd->infile)
 			handle_infile(cmd);
 		if (id_builtin >= 1 && id_builtin <= 3)
-			exec_builtin(cmd, envp);
+			exec_builtin(cmd, &envp);
 		else
 			execute_execve(fullpath, cmd, envp);
 	}
@@ -87,7 +87,7 @@ int	control_fork_pipe(t_cmd *cmd, t_exec *exec, int i)
 ** génerer fork et pipe (control_for_pipe)
 ** executer les forks (tous les fils avec execute_fork)
 ** wait_processes attends tout les procces pour eviter les bugs*/
-int	execute_pipeline(t_cmd *cmd_list, char **envp)
+int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 {
 	t_exec	exec;
 	int		i;
@@ -98,14 +98,14 @@ int	execute_pipeline(t_cmd *cmd_list, char **envp)
 	cmd = cmd_list;
 	if (init_exec(&exec, countcmds(cmd_list)))
 		return (1);
-	if (control_builtin(cmd))
+	if (control_builtin(cmd, envp))
 		return (0);
 	while (cmd)
 	{
 		control = control_fork_pipe(cmd, &exec, i);
 		if (control == -1)
 			return (free(exec.pid), 1);
-		execute_fork(cmd, &exec, envp, i);
+		execute_fork(cmd, &exec, (*envp), i);
 		i++;
 		cmd = cmd->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/05 13:40:37 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:03:58 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ typedef struct s_exec
 int					execute(t_cmd *cmd, char ***envp);
 int					execute_pipeline(t_cmd *cmd_list, char ***envp);
 char				*get_cmd_path(char *cmd, char **envp);
-int					control_builtin(t_cmd *cmd_list, char **envp);
+int					control_builtin(t_cmd *cmd_list, char ***envp);
 int					init_exec(t_exec *exec, int count);
 
 /*builtins*/
 int					is_builtin(char *cmd);
 char				**copy_envp(char **envp);
 int					count_env(char **envp);
-int					exec_builtin(t_cmd *cmd, char **envp);
+int					exec_builtin(t_cmd *cmd, char ***envp);
 int					ft_echo(char **args);
 int					ft_env(char **envp);
 int					ft_pwd(void);
