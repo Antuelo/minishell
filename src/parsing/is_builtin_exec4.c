@@ -6,7 +6,7 @@
 /*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:54:23 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:19:10 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/07 14:39:25 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	update_pwd_vars(char ***envp)
 	char	*str_old;
 	char	*str_new;
 
-	old_pwd = get_env_value(*envp, "PWD");
+	old_pwd = get_env_value("PWD", *envp);
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 		return ;

@@ -14,7 +14,7 @@ EXEC_SRCS = \
 	src/executions/execute.c \
 	src/executions/utils.c \
 	src/executions/utils2.c \
-	src/executions/free.c \
+	src/executions/free_exec.c \
 	src/executions/execute_pipeline.c \
 	src/executions/is_builtin_exec.c \
 	src/executions/is_builtin_exec1.c \
@@ -27,7 +27,6 @@ EXEC_SRCS = \
 PARSING_SRCS := $(shell find src/parsing -name '*.c')
 
 SRCS = $(EXEC_SRCS) $(PARSING_SRCS)
-
 OBJS = $(SRCS:.c=.o)
 
 RM = rm -f

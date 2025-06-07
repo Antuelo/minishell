@@ -6,7 +6,7 @@
 /*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:18:52 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/07 14:38:46 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int	ft_cd(char **args, char ***envp)
 	char	*path;
 
 	if (!args[1])
-		path = get_env_value(*envp, "HOME");
+		path = get_env_value("HOME", *envp);
 	else if (ft_strncmp(args[1], "-", 2) == 0)
-		path = get_env_value(*envp, "OLDPWD");
+		path = get_env_value("OLDPWD", *envp);
 	else
 		path = args[1];
 	if (!path)

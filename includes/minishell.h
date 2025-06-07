@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/05 14:03:58 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/07 14:37:16 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void				print_export_format(char *line);
 int					is_valid_key(char *args);
 int					add_or_replace_var(char ***envp, char *new_var);
 int					ft_cd(char **args, char ***envp);
-char				*get_env_value(char **envp, char *key);
+char				*get_env_value(char *name, char **envp);
 void				update_pwd_vars(char ***envp);
 void				print_in_case(char *arg, char *path);
 

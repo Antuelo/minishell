@@ -6,7 +6,7 @@
 /*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:20:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:19:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/07 14:37:38 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,10 @@ int	add_or_replace_var(char ***envp, char *new_var)
 	return (0);
 }
 
-/*fonction pour cd ... charche dans env ce qui est apres le "="
-ex. key = "PWD" et le return = /home/user */
+/*
+J UTILISE L AUTRE
+fonction pour cd ... charche dans env ce qui est apres le "="
+ex. key = "PWD" et le return = /home/user
 char	*get_env_value(char **envp, char *key)
 {
 	int	i;
@@ -123,4 +125,4 @@ char	*get_env_value(char **envp, char *key)
 		i++;
 	}
 	return (NULL);
-}
+}*/

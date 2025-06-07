@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:47:01 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:47:01 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 14:32:02 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <ctype.h>
 
+-/* il est deja dans minishell.h
 typedef struct s_cmd
 {
 	char			**args;
@@ -32,7 +33,7 @@ typedef struct s_cmd
 	int				hdoc_pipe[2];
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
-}	t_cmd;
+}	t_cmd;*/
 
 typedef enum e_token_type
 {
