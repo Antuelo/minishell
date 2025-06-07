@@ -1,25 +1,57 @@
-NAME        = minishell
-CC          = cc
-CFLAGS      = -Wall -Wextra -Werror
-READLINE    = -lreadline
-INCLUDES    = -Iincludes
+NAME = minishell
+INCLUDES = -Iincludes -Ilibft
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g
+MAKEFLAGS += --no-print-directory
 
-SRC         := $(shell find src/parsing -name '*.c')
-OBJ         := $(SRC:.c=.o)
+# Libft setup
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-all: $(NAME)
+# Source files 'src/executions'
+EXEC_SRCS = \
+	main.c \
+	src/executions/execute.c \
+	src/executions/utils.c \
+	src/executions/utils2.c \
+	src/executions/free.c \
+	src/executions/execute_pipeline.c \
+	src/executions/is_builtin_exec.c \
+	src/executions/is_builtin_exec1.c \
+	src/executions/is_builtin_exec2.c \
+	src/executions/is_builtin_exec3.c \
+	src/executions/is_builtin_exec4.c \
+	src/executions/mini_envp.c
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(READLINE)
+# Automatically find all .c files inside 'src/parsing'
+PARSING_SRCS := $(shell find src/parsing -name '*.c')
+
+SRCS = $(EXEC_SRCS) $(PARSING_SRCS)
+
+OBJS = $(SRCS:.c=.o)
+
+RM = rm -f
+
+all: $(LIBFT) $(NAME)
+
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR)
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
+	@echo "✅ MINISHELL completed successfully!"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(RM) $(OBJS)
+	@echo "🧹 MINISHELL files removed successfully!"
 
 fclean: clean
-	rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(RM) $(NAME)
 
 re: fclean all
 

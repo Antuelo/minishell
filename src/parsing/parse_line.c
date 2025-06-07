@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:23:44 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 21:23:57 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 11:23:06 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "minishell.h"
+# include "parsing.h"
 
 // Vérifie que l’entrée est non vide et sans quotes non fermées
 static int	sanitize_input(char *line)

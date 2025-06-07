@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:19:20 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 21:20:26 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 11:10:02 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "minishell.h"
+# include "parsing.h"
 
 // Remplace $? par la valeur du dernier code de sortie dans buffer
 void	handle_exit_code(char *buffer, int *j, int *i, int exit_status)

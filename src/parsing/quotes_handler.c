@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 19:32:24 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:32:24 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 11:23:15 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "minishell.h"
+# include "parsing.h"
 
 // Vérifie s'il y a des quotes non fermées dans la ligne
 int	check_unclosed_quotes(const char *line)

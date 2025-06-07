@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:10:39 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 21:11:11 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 11:17:19 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "minishell.h"
+# include "parsing.h"
 
 // Gère les caractères échappés dans les quotes doubles (ex: \" ou \\)
 static void	handle_double_quote_escape(char *line, int *i, char *res, int *j)

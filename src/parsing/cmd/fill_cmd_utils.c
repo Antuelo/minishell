@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:04:11 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 21:04:11 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 11:17:02 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "minishell.h"
+# include "parsing.h"
 
 // Compte le nombre d'arguments valides
 static int	count_args(t_token *tokens)

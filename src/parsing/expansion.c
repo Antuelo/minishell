@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:43:45 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 21:21:47 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 11:10:07 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "minishell.h"
+# include "parsing.h"
 
 // Cherche la valeur d'une variable d'environnement dans envp
 char	*get_env_value(char *name, char **envp)

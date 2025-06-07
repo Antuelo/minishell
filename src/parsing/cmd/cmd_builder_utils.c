@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 19:29:59 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:58:59 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 11:16:50 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "minishell.h"
+# include "parsing.h"
 
-// Met à jour les pointeurs head/last pour chaîner 
+// Met à jour les pointeurs head/last pour chaîner
 // la nouvelle commande dans la liste
 // fonction utilitaire de process_command
 static void	update_cmd_links(t_cmd **head, t_cmd **last, t_cmd *new)
@@ -40,7 +41,7 @@ static int	handle_new_cmd(t_token *start, t_token *end, t_cmd **new)
 	return (1);
 }
 
-// Gère la création d'une commande à partir d'un segment de tokens 
+// Gère la création d'une commande à partir d'un segment de tokens
 // et l'ajoute à la liste
 int	process_command(t_cmd **head, t_cmd **last,
 				t_token **start, t_token *curr)

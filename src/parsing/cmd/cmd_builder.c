@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:03:54 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 21:04:01 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 11:16:56 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "minishell.h"
+# include "parsing.h"
 
 // Initialise une structure t_cmd avec des valeurs par défaut
 t_cmd	*init_cmd(void)
@@ -33,7 +34,7 @@ t_cmd	*init_cmd(void)
 	return (cmd);
 }
 
-// Parcourt les tokens et construit 
+// Parcourt les tokens et construit
 // la liste chaînée de commandes correspondantes
 t_cmd	*build_cmd_list_from_tokens(t_token *tokens)
 {

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:17:10 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 21:18:33 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/06/07 11:17:44 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+# include "minishell.h"
+# include "parsing.h"
 
 // Traite un segment de la ligne et retourne le token correspondant
 static t_token	*process_token_segment(char *line, int *i)

@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
+/*   mini_envp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/07 11:01:00 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:01:47 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/06/07 11:22:38 by anoviedo          #+#    #+#             */
+/*   Updated: 2025/06/07 11:22:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "parsing.h"
-#include "minishell.h"
+# include "minishell.h"
+# include "parsing.h"
 
 // Affiche le prompt, lit l'entrée utilisateur, gère l'historique
 char	*get_user_input(void)
@@ -63,4 +62,5 @@ char	**copy_envp(char **envp)
 	}
 	copy[i] = NULL;
 	return (copy);
+>>>>>>>> origin/exec-dev:src/parsing/mini_envp.c
 }
