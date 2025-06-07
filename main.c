@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:07:16 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 20:16:52 by llabatut         ###   ########.ch       */
+/*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
+/*   Updated: 2025/06/07 12:22:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "parsing.h"
+
+int		g_exit_status = 0;
 
 // Affiche le contenu de la structure t_cmd pour debug
 void	print_cmd(t_cmd *cmd)
@@ -36,100 +39,43 @@ void	print_cmd(t_cmd *cmd)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
-	t_cmd	*cmds;
-	int		last_exit_code = 0;
+	t_cmd	*cmd;
+	char	*input;
+	char	**my_envp;
 
 	(void)argc;
 	(void)argv;
-
+	my_envp = copy_envp(envp);
 	while (1)
 	{
-		line = get_user_input();
-		if (!line)
-			continue;
-
-		cmds = parse_line(line, envp, last_exit_code);
-		if (!cmds)
-			continue;
-
-		t_cmd *tmp = cmds;
-		while (tmp)
+		input = readline("minishell$ ");
+		if (!input)
+			break ;
+		if (input[0] != '\0')
+			add_history(input);
+		else
 		{
-			print_cmd(tmp);
-			printf("--------\n");
-			tmp = tmp->next;
+			free(input);
+			continue ;
 		}
-
-		free_cmd_list(cmds);
+		// Simulación del parser — à remplacer plus tard
+		cmd = malloc(sizeof(t_cmd));
+		if (!cmd)
+			return (free(input), 1);
+		cmd->args = ft_split(input, ' ');
+		cmd->infile = NULL;
+		cmd->outfile = NULL;
+		cmd->append = -1;
+		cmd->heredoc = 0;
+		cmd->delimiter = NULL;
+		cmd->next = NULL;
+		cmd->prev = NULL;
+//		printf("comando recibido: [%s]\n", cmd->args[0]);
+		execute(cmd, &my_envp);
+		free_cmd(cmd);
+		free(input);
 	}
+	clear_history();
+	rl_clear_history();
 	return (0);
 }
-
-
-/*int	main(int argc, char **argv, char **envp)
-{
-	char	*line;
-	t_token	*tokens;
-	t_cmd	*cmds;
-	int		last_exit_code;
-
-	(void)argc;
-	(void)argv;
-	last_exit_code = 0;
-
-	while (1)
-	{
-		line = get_user_input();
-		if (!line)
-			continue;
-
-		if (!line[0])
-		{
-			free(line);
-			continue;
-		}
-
-		if (check_unclosed_quotes(line))
-		{
-			printf("Syntax error: unclosed quote\n");
-			free(line);
-			continue;
-		}
-
-		tokens = tokenize(line);
-		if (!tokens)
-		{
-			free(line);
-			continue;
-		}
-
-		if (!syntax_is_valid(tokens))
-		{
-			free_all(line, tokens, NULL);
-			continue;
-		}
-
-		expand_tokens(tokens, envp, last_exit_code);
-		remove_quotes_from_tokens(tokens);
-
-		cmds = build_cmd_list_from_tokens(tokens);
-		if (!cmds)
-		{
-			printf("Parsing failed.\n");
-			free_all(line, tokens, NULL);
-			continue;
-		}
-
-		t_cmd *tmp = cmds;
-		while (tmp)
-		{
-			print_cmd(tmp);
-			printf("--------\n");
-			tmp = tmp->next;
-		}
-
-		free_all(line, tokens, cmds); 
-	}
-	return (0);
-}*/
