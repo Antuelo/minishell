@@ -6,7 +6,7 @@
 /*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:22:38 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:22:49 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/07 15:01:39 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,4 @@ char	**copy_envp(char **envp)
 	}
 	copy[i] = NULL;
 	return (copy);
->>>>>>>> origin/exec-dev:src/parsing/mini_envp.c
 }

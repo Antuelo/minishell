@@ -6,7 +6,7 @@
 /*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:47:01 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 14:32:02 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/07 15:18:01 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # include <string.h>
 # include <ctype.h>
 
--/* il est deja dans minishell.h
+typedef struct s_cmd t_cmd;
+
+/* il est deja dans minishell.h
 typedef struct s_cmd
 {
 	char			**args;
@@ -134,16 +136,5 @@ void	link_cmd(t_cmd **head, t_cmd **last, t_cmd *new);
 
 void	free_cmd(t_cmd *cmd);
 void	free_cmd_list(t_cmd *cmd);
-
-// libft, à supprimer
-char	*ft_itoa(int n);
-int		ft_isalnum(int n);
-size_t	ft_strlen(const char *s);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_strcpy(char *dst, const char *src);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-char	*ft_strdup(const char *s1);
-char	*ft_strchr(const char *s, int c);
-void	*ft_calloc(size_t count, size_t size);
 
 #endif
