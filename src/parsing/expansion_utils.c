@@ -14,11 +14,11 @@
 # include "parsing.h"
 
 // Remplace $? par la valeur du dernier code de sortie dans buffer
-void	handle_exit_code(char *buffer, int *j, int *i, int exit_status)
+void	handle_exit_code(char *buffer, int *j, int *i, int g_exit_status)
 {
 	char	*val;
 
-	val = ft_itoa(exit_status);
+	val = ft_itoa(g_exit_status);
 	ft_strcpy(&buffer[*j], val);
 	*j += ft_strlen(val);
 	free(val);

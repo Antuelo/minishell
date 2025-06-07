@@ -129,7 +129,7 @@ int	main(int argc, char **argv, char **envp)
 			tmp = tmp->next;
 		}
 
-		free_all(line, tokens, cmds); 
+		free_all(line, tokens, cmds);
 	}
 	return (0);
 }*/

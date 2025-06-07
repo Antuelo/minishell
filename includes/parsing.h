@@ -101,10 +101,10 @@ void	remove_quotes_from_tokens(t_token *tokens);
 /*                                 EXPANSION                                  */
 /* ************************************************************************** */
 
-void	expand_tokens(t_token *tokens, char **envp, int exit_status);
+void	expand_tokens(t_token *tokens, char **envp, int g_exit_status);
 char	*get_env_value(char *name, char **envp);
 void	handle_escaped_dollar(char *buffer, int *j, int *i);
-void	handle_exit_code(char *buffer, int *j, int *i, int exit_status);
+void	handle_exit_code(char *buffer, int *j, int *i, int g_exit_status);
 void	handle_env_variable(t_expand_ctx *ctx, const char *str);
 
 /* ************************************************************************** */
