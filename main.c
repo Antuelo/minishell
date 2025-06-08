@@ -6,14 +6,14 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 20:13:51 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/08 22:06:33 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-int		g_exit_status = 0;
+int		g_exit_status;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 	char	**my_envp;
 
-
+	g_exit_status = 0;
 	(void)argc;
 	(void)argv;
 	my_envp = copy_envp(envp);
