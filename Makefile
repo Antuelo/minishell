@@ -10,7 +10,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 # Source files 'src/executions'
 
-SRCS := ./main.c $(shell find src/parsing -name '*.c')
+SRCS := ./main.c $(shell find src/parsing src/execution -name '*.c')
 OBJS := $(SRCS:.c=.o)
 
 RM = rm -f
@@ -21,7 +21,7 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 	@echo "✅ MINISHELL completed successfully!"
 
 %.o: %.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 16:47:17 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/07 22:43:01 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,40 @@
 
 extern int			g_exit_status;
 
+/*
+**args;			// ["grep", "foo", NULL]
+*infile;		// NULL si pas de <
+*outfile;		// NULL si pas de > ou >>
+append;			// 1 si >>, 0 si >, -1 si aucune redirection
+heredoc;		// 1 si heredoc, 0 sinon
+*delimiter;		// Pour heredoc : ex. "EOF, end, finish ..."
+hdoc_pipe[2];	// Pipe pour le heredoc
+*/
 typedef struct s_cmd
 {
-	char			**args;      // ["grep", "foo", NULL]
-	char			*infile;     // NULL si pas de <
-	char			*outfile;    // NULL si pas de > ou >>
-	int				append;       // 1 si >>, 0 si >, -1 si aucune redirection
-	int				heredoc;      // 1 si heredoc, 0 sinon
-	char			*delimiter;  // Pour heredoc : ex. "EOF, end, finish ..."
-	int				hdoc_pipe[2]; // Pipe pour le heredoc
+	char			**args;
+	char			*infile;
+	char			*outfile;
+	int				append;
+	int				heredoc;
+	char			*delimiter;
+	int				hdoc_pipe[2];
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;
 
+/*
+pipe_fd[2];		// pour le pipe actuel
+fd_in;			// fd d entrée pour le procces actuel
+*pid;			// array pour les procces fils
+cmd_count;		// cantité de commandes
+*/
 typedef struct s_exec
 {
-	int				pipe_fd[2]; // pour le pipe actuel
-	int				fd_in;      // fd d entrée pour le procces actuel
-	pid_t			*pid;     // array pour les procces fils
-	int				cmd_count;  // cantité de commandes
+	int				pipe_fd[2];
+	int				fd_in;
+	pid_t			*pid;
+	int				cmd_count;
 }					t_exec;
 
 /*execution, main ...*/

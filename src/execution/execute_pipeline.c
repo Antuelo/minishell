@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:15:06 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/08 13:34:13 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 # include "parsing.h"
 
+/*	if (cmd->next) //s'il existe prochain cmd → redirection stdout*/
 void	setup_redirections(t_cmd *cmd, t_exec *exec)
 {
-	if (exec->fd_in != 0)
+	if (exec->fd_in != STDIN_FILENO)
 	{
 		dup2(exec->fd_in, STDIN_FILENO);
 		close(exec->fd_in);
@@ -23,25 +24,29 @@ void	setup_redirections(t_cmd *cmd, t_exec *exec)
 	if (cmd->next)
 	{
 		dup2(exec->pipe_fd[1], STDOUT_FILENO);
-		close(exec->pipe_fd[0]);
 		close(exec->pipe_fd[1]);
 	}
+	close(exec->pipe_fd[0]);
+	fprintf(stderr, "[CHILD %d] dup2(fd_in=%d -> STDIN)\n", getpid(), exec->fd_in);//debug
 }
 
 void	parent_process(t_exec *exec, t_cmd *cmd, int i)
 {
 	waitpid(exec->pid[i], NULL, 0);
-	if (exec->fd_in != 0)
+	if (exec->fd_in != STDIN_FILENO)
 		close(exec->fd_in);
 	if (cmd->next)
 	{
 		close(exec->pipe_fd[1]);
 		exec->fd_in = exec->pipe_fd[0];
 	}
+	else
+		close(exec->pipe_fd[0]); // si no hay próximo comando, cerrá también
+	fprintf(stderr, "[PARENT %d] fd_in antes de actualizar: %d\n", getpid(), exec->fd_in);//debug
 }
 
-/*if (cmd->outfile != NULL && cmd->append != -1)	si parsing ">" or ">>"
-** if (cmd->infile)									si parsing "<"*/
+/*	if (cmd->outfile != NULL && cmd->append != -1)		si parsing ">" or ">>"
+**	if (cmd->infile)									si parsing "<"*/
 void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 {
 	char	*fullpath;
@@ -103,6 +108,7 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 		return (0);
 	while (cmd)
 	{
+		fprintf(stderr, "Executing command %d: %s\n", i, cmd->args[0]);//debug
 		control = control_fork_pipe(cmd, &exec, i);
 		if (control == -1)
 			return (free(exec.pid), 1);

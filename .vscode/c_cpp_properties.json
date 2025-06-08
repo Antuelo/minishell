@@ -1,16 +1,13 @@
 {
   "configurations": [
     {
-      "name": "Linux",
+      "name": "linux-gcc-x64",
       "includePath": [
-        "${workspaceFolder}/includes",
-        "${workspaceFolder}/libft",
-        "${workspaceFolder}/src",
-        "${workspaceFolder}/src/**"
+        "${workspaceFolder}/**"
       ],
       "compilerPath": "/usr/bin/gcc",
-      "cStandard": "gnu11",
-      "cppStandard": "c++17",
+      "cStandard": "${default}",
+      "cppStandard": "${default}",
       "intelliSenseMode": "linux-gcc-x64"
     }
   ],
