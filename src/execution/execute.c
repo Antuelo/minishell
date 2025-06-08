@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 23:08:57 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/08 21:59:35 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 
 int	init_exec(t_exec *exec, int count)
 {
+	int	i;
+
+	i = 0;
 	exec->cmd_count = count;
 	exec->pid = malloc(sizeof(pid_t) * count);
 	if (!exec->pid)
 		return (perror("malloc"), 1);
+	while (i < count)
+		exec->pid[i++] = -1;
 	exec->fd_in = STDIN_FILENO;
 	return (0);
 }

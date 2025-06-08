@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 14:40:59 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/08 22:00:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	wait_all_processes(t_exec *exec)
 	int	status;
 
 	j = 0;
+	status = 0;
 	while (j < exec->cmd_count)
 	{
 		waitpid(exec->pid[j], &status, 0);
