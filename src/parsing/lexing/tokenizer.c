@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:17:10 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 21:18:33 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/10 18:07:13 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/10 18:07:13 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_token	*process_token_segment(char *line, int *i)
 	{
 		return (NULL);
 	}
-	if (!token->value || !*token->value)
+	if (!token->value)
 	{
 		free_single_token(token);
 		return (NULL);

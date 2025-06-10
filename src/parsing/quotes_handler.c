@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:32:24 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/03 19:32:24 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/10 18:07:21 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/10 18:07:21 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,12 @@ void	remove_quotes_from_tokens(t_token *tokens)
 		if (tokens->type == T_WORD && tokens->value
 			&& (strchr(tokens->value, '"') || strchr(tokens->value, '\'')))
 		{
-			clean = remove_quotes(tokens->value);
-			free(tokens->value);
-			tokens->value = clean;
+			if (!tokens->in_double_quote)
+			{
+				clean = remove_quotes(tokens->value);
+				free(tokens->value);
+				tokens->value = clean;
+			}
 		}
 		tokens = tokens->next;
 	}
