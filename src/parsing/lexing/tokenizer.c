@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:17:10 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:17:44 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/06/10 18:02:40 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/10 18:02:40 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_token	*process_token_segment(char *line, int *i)
 	{
 		return (NULL);
 	}
-	if (!token->value || !*token->value)
+	if (!token->value)
 	{
 		free_single_token(token);
 		return (NULL);
