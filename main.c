@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/08 22:06:33 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:42:22 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!input)
 		break ;
 		if (input[0] != '\0')
-		add_history(input);
+			add_history(input);
 		else
 		{
 			free(input);

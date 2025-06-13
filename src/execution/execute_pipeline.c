@@ -6,33 +6,39 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/08 22:01:34 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:20:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
-/*	if (cmd->next) //s'il existe prochain cmd → redirection stdout*/
+/*	ça assure que on ferme le dernier dans un processus fils fd
+	if (!cmd->next)
+		close(exec->pipe_fd[0]);
+	1) Si heredamos un fd distinto de STDIN, redirígelo a STDIN_FILENO
+	2) Si hay un siguiente comando, redirige STDOUT al pipe
+	3) Cierra siempre el extremo de lectura del pipe en el hijo
+*/
 void	setup_redirections(t_cmd *cmd, t_exec *exec)
 {
 	if (exec->fd_in != STDIN_FILENO)
 	{
-		dup2(exec->fd_in, STDIN_FILENO);
+		if (dup2(exec->fd_in, STDIN_FILENO) == -1)
+			perror("dup2 stdin");
 		close(exec->fd_in);
 	}
 	if (cmd->next)
 	{
-		dup2(exec->pipe_fd[1], STDOUT_FILENO);
+		if (dup2(exec->pipe_fd[1], STDOUT_FILENO) == -1)
+			perror("dup2 stdout");
 		close(exec->pipe_fd[1]);
-		close(exec->pipe_fd[0]);
 	}
-	fprintf(stderr, "[CHILD %d] dup2(fd_in=%d -> STDIN)\n", getpid(), exec->fd_in);//debug
+	close(exec->pipe_fd[0]);
 }
 
-void	parent_process(t_exec *exec, t_cmd *cmd, int i)
+void	parent_process(t_exec *exec, t_cmd *cmd)
 {
-	waitpid(exec->pid[i], NULL, 0);
 	if (exec->fd_in != STDIN_FILENO)
 		close(exec->fd_in);
 	if (cmd->next)
@@ -40,7 +46,6 @@ void	parent_process(t_exec *exec, t_cmd *cmd, int i)
 		close(exec->pipe_fd[1]);
 		exec->fd_in = exec->pipe_fd[0];
 	}
-	fprintf(stderr, "[PARENT %d] fd_in antes de actualizar: %d\n", getpid(), exec->fd_in);//debug
 }
 
 /*	if (cmd->outfile != NULL && cmd->append != -1)		si parsing ">" or ">>"
@@ -54,7 +59,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 	if (exec->pid[i] == 0)
 	{
 		setup_redirections(cmd, exec);
-		if (id_builtin <= 0)
+		if (id_builtin == 0)
 		{
 			fullpath = get_cmd_path(cmd->args[0], envp);
 			controlpath(fullpath, cmd);
@@ -69,7 +74,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 			execute_execve(fullpath, cmd, envp);
 	}
 	else
-		parent_process(exec, cmd, i);
+		parent_process(exec, cmd);
 }
 
 /*control pour savoir si c'est un built or proccess fils
@@ -106,7 +111,6 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 		return (0);
 	while (cmd)
 	{
-		fprintf(stderr, "Executing command %d: %s\n", i, cmd->args[0]);//debug control
 		control = control_fork_pipe(cmd, &exec, i);
 		if (control == -1)
 			return (free(exec.pid), 1);
@@ -115,6 +119,8 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 		cmd = cmd->next;
 	}
 	wait_all_processes(&exec);
+	if (exec.fd_in != STDIN_FILENO)
+		close(exec.fd_in);
 	free(exec.pid);
 	return (0);
 }
