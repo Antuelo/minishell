@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:10:39 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:17:19 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/06/10 18:02:18 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/10 18:02:30 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 

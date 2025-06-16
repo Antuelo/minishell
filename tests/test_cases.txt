@@ -54,4 +54,6 @@ echo test > file1 file2
 cat << EOF | grep hello
 echo "$UNDEFINED"
 echo hello '>' file
-
+echo " $USER '$USER' '' '' '''''' "
+echo ""test""
+echo '$USER' "$USER" "'$USER'" "\"$USER\""
