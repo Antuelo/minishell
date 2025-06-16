@@ -6,29 +6,12 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/08 22:00:45 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:39:59 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
-
-/*ON UTILISE L AUTRE DANS FREE_PARS
-void	free_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (!cmd)
-		return ;
-	if (cmd->args)
-	{
-		while (cmd->args[i])
-			free(cmd->args[i++]);
-		free(cmd->args);
-	}
-	free(cmd);
-}*/
 
 void	freepath(char **patch)
 {
