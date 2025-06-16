@@ -1,0 +1,86 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/01 20:46:10 by anoviedo          #+#    #+#             */
+/*   Updated: 2025/06/07 11:23:36 by anoviedo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include "minishell.h"
+# include "parsing.h"
+
+void	controlpath(char *path, t_cmd *cmd)
+{
+	if (!path)
+	{
+		free_cmd(cmd);
+		perror("error: command not found");
+		exit(127);
+	}
+}
+
+char	**extract_paths(char **envp)
+{
+	int		i;
+	char	**path;
+
+	i = 0;
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+		i++;
+	if (!envp[i])
+		return (NULL);
+	path = ft_split(envp[i] + 5, ':');
+	return (path);
+}
+
+char	*get_cmd_path(char *cmd, char **envp)
+{
+	char	**path;
+	char	*temp;
+	char	*full_path;
+	int		j;
+
+	path = extract_paths(envp);
+	if (!path)
+		return (NULL);
+	j = 0;
+	while (path[j])
+	{
+		temp = ft_strjoin(path[j], "/");
+		full_path = ft_strjoin(temp, cmd);
+		free(temp);
+		if (access(full_path, X_OK) == 0)
+			return (freepath(path), full_path);
+		free(full_path);
+		j++;
+	}
+	freepath(path);
+	return (NULL);
+}
+
+int	countcmds(t_cmd *cmd)
+{
+	int	count;
+
+	count = 0;
+	while (cmd)
+	{
+		count++;
+		cmd = cmd->next;
+	}
+	return (count);
+}
+
+void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
+{
+	execve(fullpath, cmd->args, envp);
+	perror("execve");
+	free(fullpath);
+	free_cmd(cmd);
+	free_envp(envp, count_env(envp));
+	exit(1);
+}
