@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:18:46 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:28:38 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,35 @@ int	ft_env(char **envp)
 	return (0);
 }
 
-int	ft_echo(char **args)
-{
-	int	i;
-	int	control;
+/* pour la norminette j'ai du eliminer ça, et les declarer avec la fonction
+int	i;
+	int	j;
+	int	new_line;
 
-	i = 0;
-	control = 0;
-	if (!args || !args[i])
-		return (write(1, "\n", 1), 0);
 	i = 1;
-	while (args[i] && ft_strncmp(args[i], "-n", 3) == 0)
-		control = i++;
+	new_line = 1;*/
+int	ft_echo(char **args, int i, int j, int new_line)
+{
+	while (args[i][0] == '-' && args[i][1] == 'n')
+	{
+		j = 2;
+		while (args[i][j] == 'n')
+			j++;
+		if (!args[i][j])
+		{
+			new_line = 0;
+			i++;
+		}
+		else
+			break ;
+	}
 	while (args[i])
 	{
 		ft_putstr_fd(args[i++], 1);
 		if (args[i])
 			write(1, " ", 1);
 	}
-	if (control == 0)
+	if (new_line)
 		write(1, "\n", 1);
 	return (0);
 }
@@ -54,7 +64,7 @@ int	exec_builtin(t_cmd *cmd, char ***envp)
 	if (builtin_id == 0)
 		return (0);
 	else if (builtin_id == 1)
-		return (ft_echo(cmd->args));
+		return (ft_echo(cmd->args, 1, 1, 1));
 	else if (builtin_id == 2)
 		return (ft_env(*envp));
 	else if (builtin_id == 3)

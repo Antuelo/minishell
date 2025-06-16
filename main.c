@@ -6,12 +6,15 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/10 15:42:22 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:31:39 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+
+#define COLOR_GREEN   "\033[1;32m"
+#define COLOR_RESET   "\033[0m"
 
 int		g_exit_status;
 
@@ -27,9 +30,9 @@ int	main(int argc, char **argv, char **envp)
 	my_envp = copy_envp(envp);
 	while (1)
 	{
-		input = readline("minishell$ ");
+		input = readline(COLOR_GREEN "minishell$ " COLOR_RESET);
 		if (!input)
-		break ;
+			break ;
 		if (input[0] != '\0')
 			add_history(input);
 		else

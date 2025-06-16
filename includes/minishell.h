@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/13 08:44:38 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:26:30 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int					is_builtin(char *cmd);
 char				**copy_envp(char **envp);
 int					count_env(char **envp);
 int					exec_builtin(t_cmd *cmd, char ***envp);
-int					ft_echo(char **args);
+int					ft_echo(char **args, int i, int j, int new_line);
 int					ft_env(char **envp);
 int					ft_pwd(void);
 int					ft_unset(char **args, char ***envp);
