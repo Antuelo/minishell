@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:55:04 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:18:57 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:29:38 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 /*comparation de l'argument(ex USER) plus le "=" pour chercher considences*/
 int	comparison_envp(char **args, char **envp, int i, int j)

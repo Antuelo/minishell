@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 19:29:59 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:16:50 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:28:56 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Met à jour les pointeurs head/last pour chaîner
 // la nouvelle commande dans la liste

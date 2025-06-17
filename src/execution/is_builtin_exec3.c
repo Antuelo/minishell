@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:20:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 14:37:38 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:30:17 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 /*fonction pour export, imitation print de bash*/
 void	print_export_format(char *line)

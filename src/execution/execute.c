@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 09:48:51 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:32:04 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 	}
 	return (0);
 }
-
