@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/13 23:43:18 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 09:48:51 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	init_exec(t_exec *exec, int count)
 	while (i < count)
 		exec->pid[i++] = -1;
 	exec->fd_in = STDIN_FILENO;
+	exec->pipe_fd[0] = -1;
+	exec->pipe_fd[1] = -1;
 	return (0);
 }
 
@@ -50,20 +52,3 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 	return (0);
 }
 
-t_cmd	**list_to_array(t_cmd *cmd, int count)
-{
-	t_cmd	**array;
-	int		i;
-
-	array = malloc(sizeof(t_cmd *) * count);
-	if (!array)
-		return (NULL);
-	i = 0;
-	while (cmd)
-	{
-		array[i] = cmd;
-		cmd = cmd->next;
-		i++;
-	}
-	return (array);
-}

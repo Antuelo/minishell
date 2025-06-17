@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/16 23:26:30 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 09:48:44 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ int					ft_cd(char **args, char ***envp);
 char				*get_env_value(char *name, char **envp);
 void				update_pwd_vars(char ***envp);
 void				print_in_case(char *arg, char *path);
-t_cmd				*cmd_inverse(t_cmd *cmd, t_exec *exec);
-t_cmd				**list_to_array(t_cmd *cmd, int count);
 
 /*utils*/
 int					countcmds(t_cmd *cmd);

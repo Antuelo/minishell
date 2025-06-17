@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/16 23:31:39 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:11:38 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 	my_envp = copy_envp(envp);
 	while (1)
 	{
-		input = readline(COLOR_GREEN "minishell$ " COLOR_RESET);
+		input = readline("minishell$ ");
 		if (!input)
 			break ;
 		if (input[0] != '\0')
@@ -47,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		execute(cmds, &my_envp);
-		free_cmd(cmds);
+		free_cmd_list(cmds);
 		free(input);
 	}
 	clear_history();

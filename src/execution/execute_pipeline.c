@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/13 23:20:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:06:55 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,15 @@ void	setup_redirections(t_cmd *cmd, t_exec *exec)
 			perror("dup2 stdin");
 		close(exec->fd_in);
 	}
-	if (cmd->next)
+	if (cmd->next && exec->pipe_fd[1] != -1)
 	{
 		if (dup2(exec->pipe_fd[1], STDOUT_FILENO) == -1)
 			perror("dup2 stdout");
-		close(exec->pipe_fd[1]);
+		if (exec->pipe_fd[0] != -1)
+			close(exec->pipe_fd[0]);
+		if (exec->pipe_fd[1] != -1)
+			close(exec->pipe_fd[1]);
 	}
-	close(exec->pipe_fd[0]);
 }
 
 void	parent_process(t_exec *exec, t_cmd *cmd)
@@ -69,9 +71,10 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		if (cmd->infile)
 			handle_infile(cmd);
 		if (id_builtin >= 1 && id_builtin <= 3)
-			exec_builtin(cmd, &envp);
+			exit (exec_builtin(cmd, &envp));
 		else
 			execute_execve(fullpath, cmd, envp);
+		exit (1);
 	}
 	else
 		parent_process(exec, cmd);
@@ -105,10 +108,10 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 
 	i = 0;
 	cmd = cmd_list;
-	if (init_exec(&exec, countcmds(cmd_list)))
-		return (1);
 	if (control_builtin(cmd, envp))
 		return (0);
+	if (init_exec(&exec, countcmds(cmd_list)))
+		return (1);
 	while (cmd)
 	{
 		control = control_fork_pipe(cmd, &exec, i);
