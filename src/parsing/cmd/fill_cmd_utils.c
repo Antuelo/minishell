@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:04:11 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:17:02 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:36:15 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Compte le nombre d'arguments valides
 static int	count_args(t_token *tokens)
@@ -25,8 +25,7 @@ static int	count_args(t_token *tokens)
 	{
 		if (curr->type == T_WORD)
 		{
-			if (curr->prev
-				&& (curr->prev->type == T_REDIR_IN
+			if (curr->prev && (curr->prev->type == T_REDIR_IN
 					|| curr->prev->type == T_REDIR_OUT
 					|| curr->prev->type == T_REDIR_APPEND
 					|| curr->prev->type == T_HEREDOC))

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 11:06:55 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:17 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ void	parent_process(t_exec *exec, t_cmd *cmd)
 }
 
 /*	if (cmd->outfile != NULL && cmd->append != -1)		si parsing ">" or ">>"
-**	if (cmd->infile)									si parsing "<"*/
+**	if (cmd->infile)									si parsing "<"
+**	signal(SIGINT, SIG_DFL); pour tuer le processus avec ctrl + c
+*/
 void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 {
 	char	*fullpath;
@@ -70,6 +72,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 			handle_outfile(cmd);
 		if (cmd->infile)
 			handle_infile(cmd);
+		signal(SIGINT, SIG_DFL);
 		if (id_builtin >= 1 && id_builtin <= 3)
 			exit (exec_builtin(cmd, &envp));
 		else
