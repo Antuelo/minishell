@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 15:23:06 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:34:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,15 @@ void	wait_all_processes(t_exec *exec)
 {
 	int	j;
 	int	status;
+	int	saw_sigint;
 
 	j = 0;
+	saw_sigint = 0;
 	status = 0;
 	while (j < exec->cmd_count)
 	{
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			saw_sigint = 1;
 		waitpid(exec->pid[j], &status, 0);
 		if (j == exec->cmd_count -1)
 		{
@@ -83,9 +87,9 @@ void	wait_all_processes(t_exec *exec)
 				g_exit_status = 128 + WTERMSIG(status);
 		}
 		j++;
-		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			write(1, "\n", 1);
 	}
+	if (saw_sigint)
+		write(1, "\n", 1);
 }
 
 /*

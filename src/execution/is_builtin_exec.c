@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 11:29:54 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:43:40 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	ft_echo(char **args, int i, int j, int new_line)
 		{
 			new_line = 0;
 			i++;
+			if (!args[i])
+				return (0);
 		}
 		else
 			break ;
