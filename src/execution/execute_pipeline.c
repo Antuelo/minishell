@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/18 19:57:44 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 23:13:55 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		{
 			fullpath = get_cmd_path(cmd->args[0], envp);
 			controlpath(fullpath, cmd);
+			if (g_exit_status == 127)
+				exit(127);
 		}
-		if (cmd->outfile != NULL && cmd->append != -1)
-			handle_outfile(cmd);
-		if (cmd->infile)
-			handle_infile(cmd);
+		if (control_infiles(cmd))
+			exit(1);
 		signal(SIGINT, SIG_DFL);
 		if (id_builtin >= 1 && id_builtin <= 3)
 			exit (exec_builtin(cmd, &envp));
 		else
 			execute_execve(fullpath, cmd, envp);
-		exit (1);
+		exit (g_exit_status);
 	}
 	else
 		parent_process(exec, cmd);

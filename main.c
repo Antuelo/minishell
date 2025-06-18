@@ -6,33 +6,23 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 15:14:48 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 21:33:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-#define COLOR_GREEN   "\033[1;32m"
-#define COLOR_RESET   "\033[0m"
+#define COLOR_GREEN "\033[1;32m"
+#define COLOR_RESET "\033[0m"
 
-int		g_exit_status;
-
-/*	rl_replace_line("", 0) nettoie ce qui a fait l utilisateur
-** 	rl_on_new_line(); c'est pour informer que on es dans une nouvelle ligne
-	rl_redisplay(); pour reimprimer le prompt
-*/
-void	handle_signs(int sign)
-{
-	(void)sign;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+int	g_exit_status;
 
 /* rl_catch_signals = 0; c'est pour pouvoir controler moi même
-** le hendler, c'est à dire, les signals...
+** le hendler, c'est à dire, les signals... EN REALITé DESACTIVE
+** LES HANDLERS INTERNES
+
+** 	signal(SIGINT, handle_signs) = installe mon prope handler pour SIGINT
 */
 int	main(int argc, char **argv, char **envp)
 {
@@ -51,22 +41,19 @@ int	main(int argc, char **argv, char **envp)
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
-		if (input[0] == '\0')
+		if (input[0] != '\0')
 		{
-			free(input);
-			continue ;
+			add_history(input);
+			cmds = parse_line(input, my_envp, g_exit_status);
+			if (cmds)
+			{
+				signal(SIGINT, SIG_IGN);
+				execute_pipeline(cmds, &my_envp);
+				signal(SIGINT, handle_signs);
+				free_cmd_list(cmds);
+//				continue ;
+			}
 		}
-		add_history(input);
-		cmds = parse_line(input, my_envp, g_exit_status);
-		if (!cmds)
-		{
-			free(input);
-			continue ;
-		}
-		signal(SIGINT, SIG_IGN);
-		execute(cmds, &my_envp);
-		signal(SIGINT, handle_signs);
-		free_cmd_list(cmds);
 		free(input);
 	}
 	clear_history();
@@ -95,4 +82,3 @@ int	main(int argc, char **argv, char **envp)
 		printf("\n");
 	}
 }*/
-

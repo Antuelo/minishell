@@ -6,18 +6,12 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 11:32:04 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 23:05:41 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
-
-int	execute(t_cmd *cmd, char ***envp)
-{
-	g_exit_status = execute_pipeline(cmd, envp);
-	return (g_exit_status);
-}
 
 int	init_exec(t_exec *exec, int count)
 {
@@ -49,5 +43,16 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 			g_exit_status = exec_builtin(cmd_list, envp);
 		return (1);
 	}
+	return (0);
+}
+
+int	control_infiles(t_cmd *cmd)
+{
+	if (cmd->outfile != NULL && cmd->append != -1)
+		handle_outfile(cmd);
+	if (cmd->infile)
+		handle_infile(cmd);
+	if (g_exit_status == 1)
+		return (1);
 	return (0);
 }
