@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:20:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 11:30:17 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 23:46:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,23 +106,3 @@ int	add_or_replace_var(char ***envp, char *new_var)
 	free(key);
 	return (0);
 }
-
-/*
-J UTILISE L AUTRE
-fonction pour cd ... charche dans env ce qui est apres le "="
-ex. key = "PWD" et le return = /home/user
-char	*get_env_value(char **envp, char *key)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(key);
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], key, len) == 0 && envp[i][len] == '=')
-			return (envp[i] + len + 1);
-		i++;
-	}
-	return (NULL);
-}*/

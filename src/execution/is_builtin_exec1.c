@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 11:30:04 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 23:48:27 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	ft_cd(char **args, char ***envp)
 	}
 	if (chdir(path) != 0)
 	{
-		printf("minishell: cd: %s: ", path);
+		printf("minishell: cd: %s: \n", path);
 		return (perror(""), 1);
 	}
 	else
