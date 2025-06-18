@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 09:43:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:23:06 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ normalement avec exit().
 ** WEXITSTATUS(status)
 ** → "Wait Exit Status" : Donne le code de retour passé à exit() (ex :
 exit(1) → 1).
-**   ⚠️ À utiliser seulement si WIFEXITED(status) est vrai.
+**   À utiliser seulement si WIFEXITED(status) est vrai.
 **
 ** WIFSIGNALED(status)
 ** → "Wait If Signaled" : Retourne true
@@ -59,7 +59,11 @@ si le processus a été terminé par un signal (ex: Ctrl+C).
 signal ayant tué le processus.
 **   (ex : SIGINT = 2 → Bash retourne 130, car 128 + 2).
 **
-** 💡 Ces macros permettent de simuler le comportement de Bash dans une minishell.
+** Ces macros permettent de simuler le comportement de Bash dans une minishell.
+
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	c'est pour faire un saute de ligne si ctrl + c, s est fait dasn le fils
+	et il doit pas se répeter dans le père
 */
 void	wait_all_processes(t_exec *exec)
 {
@@ -79,6 +83,8 @@ void	wait_all_processes(t_exec *exec)
 				g_exit_status = 128 + WTERMSIG(status);
 		}
 		j++;
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			write(1, "\n", 1);
 	}
 }
 

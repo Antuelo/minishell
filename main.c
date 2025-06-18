@@ -6,16 +6,12 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 13:53:26 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:14:48 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <unistd.h>
 
 #define COLOR_GREEN   "\033[1;32m"
 #define COLOR_RESET   "\033[0m"
@@ -67,7 +63,9 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			continue ;
 		}
+		signal(SIGINT, SIG_IGN);
 		execute(cmds, &my_envp);
+		signal(SIGINT, handle_signs);
 		free_cmd_list(cmds);
 		free(input);
 	}
