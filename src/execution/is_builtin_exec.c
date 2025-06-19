@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/18 20:43:40 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:24:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	i;
 	new_line = 1;*/
 int	ft_echo(char **args, int i, int j, int new_line)
 {
-	while (args[i][0] == '-' && args[i][1] == 'n')
+	while (args[1] && args[i][0] == '-' && args[i][1] == 'n')
 	{
 		j = 2;
 		while (args[i][j] == 'n')

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/18 23:48:27 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:43:48 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	ft_cd(char **args, char ***envp)
 		path = get_env_value("OLDPWD", *envp);
 	else
 		path = args[1];
-	if (!path)
+	if (!path || path[0] == '\0')
 	{
 		if (!args[1] || ft_strncmp(args[1], "-", 2) != 0)
 			printf("minishell: cd: HOME not set\n");
