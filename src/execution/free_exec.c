@@ -6,7 +6,7 @@
 /*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/20 17:02:19 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:21:00 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ int	control_signs(int status, t_exec *exec, int j)
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
 	{
 		if (WCOREDUMP(status))
+		{
 			write(1, "Quit (core dumped)\n", 19);
-		else
-			write (1, "Quit\n", 5);
+			g_exit_status = 131;
+		}
 		return (0);
 	}
 	if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT))
