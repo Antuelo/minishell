@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mini_envp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:22:38 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 15:01:39 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/17 11:30:31 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Affiche le prompt, lit l'entrée utilisateur, gère l'historique
 char	*get_user_input(void)

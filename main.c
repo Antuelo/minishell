@@ -6,18 +6,24 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/16 23:31:39 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 21:33:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-#define COLOR_GREEN   "\033[1;32m"
-#define COLOR_RESET   "\033[0m"
+#define COLOR_GREEN "\033[1;32m"
+#define COLOR_RESET "\033[0m"
 
-int		g_exit_status;
+int	g_exit_status;
 
+/* rl_catch_signals = 0; c'est pour pouvoir controler moi même
+** le hendler, c'est à dire, les signals... EN REALITé DESACTIVE
+** LES HANDLERS INTERNES
+
+** 	signal(SIGINT, handle_signs) = installe mon prope handler pour SIGINT
+*/
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd	*cmds;
@@ -28,26 +34,26 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	my_envp = copy_envp(envp);
+	rl_catch_signals = 0;
+	signal(SIGINT, handle_signs);
 	while (1)
 	{
-		input = readline(COLOR_GREEN "minishell$ " COLOR_RESET);
+		input = readline("minishell$ ");
 		if (!input)
 			break ;
 		if (input[0] != '\0')
+		{
 			add_history(input);
-		else
-		{
-			free(input);
-			continue ;
+			cmds = parse_line(input, my_envp, g_exit_status);
+			if (cmds)
+			{
+				signal(SIGINT, SIG_IGN);
+				execute_pipeline(cmds, &my_envp);
+				signal(SIGINT, handle_signs);
+				free_cmd_list(cmds);
+//				continue ;
+			}
 		}
-		cmds = parse_line(input, my_envp, g_exit_status);
-		if (!cmds)
-		{
-			free(input);
-			continue ;
-		}
-		execute(cmds, &my_envp);
-		free_cmd(cmds);
 		free(input);
 	}
 	clear_history();
@@ -76,4 +82,3 @@ int	main(int argc, char **argv, char **envp)
 		printf("\n");
 	}
 }*/
-

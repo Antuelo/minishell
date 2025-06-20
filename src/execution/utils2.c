@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 10:52:26 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:23:48 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 23:50:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 void	handle_infile(t_cmd *cmd)
 {
@@ -21,6 +21,7 @@ void	handle_infile(t_cmd *cmd)
 	if (fd_in < 0)
 	{
 		perror("open infile");
+		g_exit_status = 1;
 		exit(1);
 	}
 	dup2(fd_in, STDIN_FILENO);
@@ -43,47 +44,50 @@ void	handle_outfile(t_cmd *cmd)
 		if (fd_out < 0)
 		{
 			perror("open outfile");
+			g_exit_status = 1;
 			exit(1);
 		}
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
 	}
 }
-
-void	execute_path(char *path, char **envp, char **args, char *cmd)
+/*dans ce cas 		if (access(cmd, X_OK) == 0)
+** X_OK C'est pour savoir si il est executable
+*/
+char	*control_slash(char *cmd)
 {
-	int	i;
-
-	i = 0;
-	if (path)
+	if (ft_strchr(cmd, '/'))
 	{
-		execve(path, args, envp);
-		perror("execve");
-		free(path);
-		freepath(args);
-		exit(1);
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
 	}
-	else
-	{
-		while (cmd[i])
-			write(2, &cmd[i++], 1);
-		write(2, ": command not found\n", 20);
-		freepath(args);
-		exit(1);
-	}
+	return (NULL);
 }
 
-void	run_command(char *cmd, char **envp)
+char	*get_cmd_path(char *cmd, char **envp)
 {
-	char	**args;
-	char	*path;
+	char	**path;
+	char	*temp;
+	char	*full_path;
+	int		j;
 
-	args = ft_split(cmd, ' ');
-	if (!args)
+	temp = control_slash(cmd);
+	if (temp)
+		return (temp);
+	path = extract_paths(envp);
+	if (!path)
+		return (NULL);
+	j = 0;
+	while (path[j])
 	{
-		perror("split");
-		exit(1);
+		temp = ft_strjoin(path[j], "/");
+		full_path = ft_strjoin(temp, cmd);
+		free(temp);
+		if (access(full_path, X_OK) == 0)
+			return (freepath(path), full_path);
+		free(full_path);
+		j++;
 	}
-	path = get_cmd_path(args[0], envp);
-	execute_path (path, envp, args, cmd);
+	freepath(path);
+	return (NULL);
 }

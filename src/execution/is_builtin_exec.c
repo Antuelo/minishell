@@ -6,12 +6,12 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/16 23:28:38 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:24:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 int	ft_env(char **envp)
 {
@@ -32,7 +32,7 @@ int	i;
 	new_line = 1;*/
 int	ft_echo(char **args, int i, int j, int new_line)
 {
-	while (args[i][0] == '-' && args[i][1] == 'n')
+	while (args[1] && args[i][0] == '-' && args[i][1] == 'n')
 	{
 		j = 2;
 		while (args[i][j] == 'n')
@@ -41,6 +41,8 @@ int	ft_echo(char **args, int i, int j, int new_line)
 		{
 			new_line = 0;
 			i++;
+			if (!args[i])
+				return (0);
 		}
 		else
 			break ;

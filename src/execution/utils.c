@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 20:46:10 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 11:23:36 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 23:31:17 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
+/* je fais 	g_exit_status = 0;
+** pour éviter que un erreur d auparavant reste "collé" aux
+** futurs procesus */
 void	controlpath(char *path, t_cmd *cmd)
 {
+	g_exit_status = 0;
 	if (!path)
 	{
+		g_exit_status = 127;
 		free_cmd(cmd);
 		perror("error: command not found");
 		exit(127);
@@ -35,31 +40,6 @@ char	**extract_paths(char **envp)
 		return (NULL);
 	path = ft_split(envp[i] + 5, ':');
 	return (path);
-}
-
-char	*get_cmd_path(char *cmd, char **envp)
-{
-	char	**path;
-	char	*temp;
-	char	*full_path;
-	int		j;
-
-	path = extract_paths(envp);
-	if (!path)
-		return (NULL);
-	j = 0;
-	while (path[j])
-	{
-		temp = ft_strjoin(path[j], "/");
-		full_path = ft_strjoin(temp, cmd);
-		free(temp);
-		if (access(full_path, X_OK) == 0)
-			return (freepath(path), full_path);
-		free(full_path);
-		j++;
-	}
-	freepath(path);
-	return (NULL);
 }
 
 int	countcmds(t_cmd *cmd)
@@ -82,5 +62,8 @@ void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 	free(fullpath);
 	free_cmd(cmd);
 	free_envp(envp, count_env(envp));
-	exit(1);
+	if (errno == ENOENT || errno == ENOTDIR)
+		exit(127);
+	else
+		exit(1);
 }

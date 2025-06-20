@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/16 23:26:30 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:29:54 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <fcntl.h>
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
@@ -90,8 +91,7 @@ int					ft_cd(char **args, char ***envp);
 char				*get_env_value(char *name, char **envp);
 void				update_pwd_vars(char ***envp);
 void				print_in_case(char *arg, char *path);
-t_cmd				*cmd_inverse(t_cmd *cmd, t_exec *exec);
-t_cmd				**list_to_array(t_cmd *cmd, int count);
+int					control_infiles(t_cmd *cmd);
 
 /*utils*/
 int					countcmds(t_cmd *cmd);
@@ -102,6 +102,7 @@ void				controlpath(char *path, t_cmd *cmd);
 void				execute_execve(char *fullpath, t_cmd *cmd, char **envp);
 void				handle_infile(t_cmd *cmd);
 void				handle_outfile(t_cmd *cmd);
+void				handle_signs(int sign);
 
 /*free everythings*/
 void				freepath(char **patch);
