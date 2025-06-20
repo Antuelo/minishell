@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/18 21:33:45 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:48:11 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,25 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	my_envp = copy_envp(envp);
 	rl_catch_signals = 0;
-	signal(SIGINT, handle_signs);
 	while (1)
 	{
+		signal(SIGINT, handle_signs);
+		signal(SIGQUIT, SIG_IGN);
 		input = readline("minishell$ ");
 		if (!input)
-			break ;
+		{
+			free_envp(my_envp, count_env(my_envp));
+			write(1, "exit\n", 5);
+			return (0);
+		}
 		if (input[0] != '\0')
 		{
 			add_history(input);
 			cmds = parse_line(input, my_envp, g_exit_status);
 			if (cmds)
 			{
-				signal(SIGINT, SIG_IGN);
 				execute_pipeline(cmds, &my_envp);
-				signal(SIGINT, handle_signs);
 				free_cmd_list(cmds);
-//				continue ;
 			}
 		}
 		free(input);

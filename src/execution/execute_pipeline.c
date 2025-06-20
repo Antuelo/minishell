@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/18 23:13:55 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:50:58 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		if (control_infiles(cmd))
 			exit(1);
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (id_builtin >= 1 && id_builtin <= 3)
 			exit (exec_builtin(cmd, &envp));
 		else
@@ -80,7 +81,9 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		exit (g_exit_status);
 	}
 	else
-		parent_process(exec, cmd);
+	parent_process(exec, cmd);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 /*control pour savoir si c'est un built or proccess fils
