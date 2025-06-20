@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/20 14:48:11 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/06/20 19:02:35 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/20 19:02:35 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	main(int argc, char **argv, char **envp)
 				execute_pipeline(cmds, &my_envp);
 				free_cmd_list(cmds);
 			}
+			else
+				g_exit_status = 2;
 		}
 		free(input);
 	}
@@ -62,6 +64,7 @@ int	main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	return (0);
 }
+
 
 // Affiche le contenu de la structure t_cmd pour debug
 /*void	print_cmd(t_cmd *cmd)

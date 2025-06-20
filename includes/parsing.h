@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:47:01 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 15:18:01 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/06/20 19:51:03 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/20 19:51:07 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int		syntax_is_valid(t_token *tokens);
 int		check_syntax_errors(t_token *tokens);
 int		check_unclosed_quotes(const char *line);
 void	remove_quotes_from_tokens(t_token *tokens);
+int		contains_forbidden_chars(char *line);
 
 /* ************************************************************************** */
 /*                                 EXPANSION                                  */
