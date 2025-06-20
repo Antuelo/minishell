@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 21:25:05 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:23:30 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/20 09:34:17 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	syntax_is_valid(t_token *tokens)
 			if (!curr->next || curr->next->type != T_WORD)
 			{
 				printf("Syntax error: expected filename after redirection\n");
-				return (0);
+				return (2);
 			}
 		}
 		curr = curr->next;
