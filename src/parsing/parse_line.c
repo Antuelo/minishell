@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:23:44 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:23:06 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/06/20 20:34:58 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/20 20:36:11 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 static int	sanitize_input(char *line)
 {
 	if (!line || !line[0])
+		return (0);
+	if (contains_forbidden_chars(line))
 		return (0);
 	if (check_unclosed_quotes(line))
 	{
