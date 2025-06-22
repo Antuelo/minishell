@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 20:46:10 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/20 11:41:09 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:27:40 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ int	countcmds(t_cmd *cmd)
 
 void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 {
+	if (!fullpath || !cmd || !envp)
+	{
+		perror("something is NULL before exceve");
+		exit (1);
+	}
 	execve(fullpath, cmd->args, envp);
 	perror("execve");
 	free(fullpath);
