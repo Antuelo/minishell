@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 19:51:03 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/20 19:51:07 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/25 17:08:11 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/25 17:08:11 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int		contains_forbidden_chars(char *line);
 /*                                 EXPANSION                                  */
 /* ************************************************************************** */
 
-void	expand_tokens(t_token *tokens, char **envp, int g_exit_status);
+t_token	*expand_tokens(t_token *tokens, char **envp, int g_exit_status);
 char	*get_env_value(char *name, char **envp);
 void	handle_escaped_dollar(char *buffer, int *j, int *i);
 void	handle_exit_code(char *buffer, int *j, int *i, int g_exit_status);

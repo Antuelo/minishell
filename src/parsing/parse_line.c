@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 20:34:58 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/20 20:36:11 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/25 17:09:33 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/25 17:09:33 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ t_cmd	*parse_line(char *line, char **envp, int exit_code)
 		free_tokens(tokens);
 		return (NULL);
 	}
-	expand_tokens(tokens, envp, exit_code);
+	tokens = expand_tokens(tokens, envp, exit_code);
+	if (!tokens)
+		return (NULL);
 	remove_quotes_from_tokens(tokens);
 	cmds = build_cmd_list_from_tokens(tokens);
 	free_tokens(tokens);

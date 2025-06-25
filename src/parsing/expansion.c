@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:43:45 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/19 13:35:25 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/06/25 17:07:56 by llabatut          #+#    #+#             */
+/*   Updated: 2025/06/25 17:07:56 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*expand_var(const char *str, char **envp, int g_exit_status)
 }
 
 // Applique l’expansion des variables à chaque token, sauf en single quotes
-void	expand_tokens(t_token *tokens, char **envp, int g_exit_status)
+t_token	*expand_tokens(t_token *tokens, char **envp, int g_exit_status)
 {
 	t_token	*curr;
 	t_token	*next;
@@ -90,4 +90,6 @@ void	expand_tokens(t_token *tokens, char **envp, int g_exit_status)
 		}
 		curr = next;
 	}
+	return (tokens);
 }
+
