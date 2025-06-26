@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/26 11:59:50 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:01:58 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	init_exec(t_exec *exec, int count)
 	exec->pipe_fd[1] = -1;
 	return (0);
 }
-/*
+
 static int	heredoc(char *delim)
 {
 	int		pipefd[2];
@@ -80,9 +80,9 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 		return (1);
 	}
 	return (0);
-}*/
+}
 
-int	control_builtin(t_cmd *cmd_list, char ***envp)
+/*int	control_builtin(t_cmd *cmd_list, char ***envp)
 {
 	int	id;
 
@@ -96,7 +96,7 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 		return (1);
 	}
 	return (0);
-}
+}*/
 
 int	control_infiles(t_cmd *cmd)
 {
