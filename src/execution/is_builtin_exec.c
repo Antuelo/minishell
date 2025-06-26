@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/20 10:44:40 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/26 09:01:25 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,7 @@ int	is_builtin(char *cmd)
 		return (6);
 	if (ft_strncmp(cmd, "cd", 3) == 0)
 		return (7);
+	if (ft_strncmp(cmd, ">>", 4) == 0)
+		return (8);
 	return (0);
 }

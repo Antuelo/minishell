@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/20 11:50:58 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/25 00:29:11 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 	if (exec->pid[i] == 0)
 	{
 		setup_redirections(cmd, exec);
+		if (control_infiles(cmd))
+			exit(1);
+		else if (!cmd->args || !cmd->args[0])
+			exit (0);
 		if (id_builtin == 0)
 		{
 			fullpath = get_cmd_path(cmd->args[0], envp);
@@ -70,8 +74,6 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 			if (g_exit_status == 127)
 				exit(127);
 		}
-		if (control_infiles(cmd))
-			exit(1);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (id_builtin >= 1 && id_builtin <= 3)
