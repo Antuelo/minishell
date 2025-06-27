@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/25 01:39:57 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/27 14:17:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char				*get_cmd_path(char *cmd, char **envp);
 int					control_builtin(t_cmd *cmd_list, char ***envp);
 int					init_exec(t_exec *exec, int count);
 
-/*builtins*/
+/*builtins fork et pipes*/
 int					is_builtin(char *cmd);
 char				**copy_envp(char **envp);
 int					count_env(char **envp);
@@ -92,6 +92,7 @@ char				*get_env_value(char *name, char **envp);
 void				update_pwd_vars(char ***envp);
 void				print_in_case(char *arg, char *path);
 int					control_infiles(t_cmd *cmd);
+void				preparing_heredoc(t_cmd *cmds);
 
 /*utils*/
 int					countcmds(t_cmd *cmd);
