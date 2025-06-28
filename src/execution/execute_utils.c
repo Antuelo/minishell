@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/27 14:19:32 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/28 11:10:24 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,59 +57,3 @@ int	control_infiles(t_cmd *cmd)
 	return (0);
 }
 
-void	preparing_heredoc(t_cmd *cmd)
-{
-	char	*line;
-
-	if (pipe(cmd->hdoc_pipe) == -1)
-	{
-		perror("pipe heredoc");
-		return ;
-	}
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-		{
-			perror("here-document need delimited by end-of-file");
-			break ;
-		}
-		if (ft_strncmp(line, cmd->delimiter, ft_strlen(cmd->delimiter)) == 0)
-		{
-			free(line);
-			break ;
-		}
-		ft_putstr_fd(line, cmd->hdoc_pipe[1]);
-		ft_putchar_fd('\n', cmd->hdoc_pipe[1]);
-		free(line);
-	}
-	close(cmd->hdoc_pipe[1]);
-}
-
-/*int	preparing_heredoc(t_cmd *cmds)
-{
-	char	*line;
-
-	while (cmds)
-	{
-		if (cmds->heredoc)
-		{
-			if (pipe(cmds->hdoc_pipe) == -1)
-				return (perror("pipe"), 1);
-			while (1)
-			{
-				line = readline("> ");
-				if (!line || ft_strncmp(line, cmds->delimiter,
-						ft_strlen(cmds->delimiter)) == 0)
-					break ;
-				write(cmds->hdoc_pipe[1], line, ft_strlen(line));
-				write(cmds->hdoc_pipe[1], "\n", 1);
-				free(line);
-			}
-			free(line);
-			close(cmds->hdoc_pipe[1]);
-		}
-		cmds = cmds->next;
-	}
-	return (0);
-}*/

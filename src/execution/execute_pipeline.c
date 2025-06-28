@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/27 14:17:32 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/28 13:27:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,16 +117,18 @@ int	control_fork_pipe(t_cmd *cmd, t_exec *exec, int i)
 int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 {
 	t_exec	exec;
+	t_cmd	*cmd;
 	int		i;
 	int		control;
-	t_cmd	*cmd;
+	int		status;
 
 	i = 0;
 	cmd = cmd_list;
+	status = heredoc(cmd_list);
+	if (status)
+		return (g_exit_status = status, 0);
 	if (control_builtin(cmd, envp))
 		return (0);
-	if (cmd->heredoc)
-		preparing_heredoc(cmd);
 	if (init_exec(&exec, countcmds(cmd_list)))
 		return (1);
 	while (cmd)
