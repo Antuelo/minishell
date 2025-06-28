@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/28 13:27:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:56:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 	cmd = cmd_list;
 	status = heredoc(cmd_list);
 	if (status)
-		return (g_exit_status = status, 0);
+		return (g_exit_status = status);
 	if (control_builtin(cmd, envp))
 		return (0);
 	if (init_exec(&exec, countcmds(cmd_list)))

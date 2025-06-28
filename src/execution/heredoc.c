@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/28 16:05:43 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:55:30 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,11 @@ int	heredoc(t_cmd *cmd_list)
 	{
 		if (cmd->heredoc)
 		{
-			status = execute_heredoc(cmd);
-			if (status)
-				return (status);
+			if (!cmd->delimiter)
+				return (2);
+			else
+				status = execute_heredoc(cmd);
+			return (status);
 		}
 		cmd = cmd->next;
 	}
