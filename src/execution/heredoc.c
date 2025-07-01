@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/28 16:55:30 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:12:24 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void	child_heredoc(t_cmd *cmd)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putstr_fd("minishell: warning: here-document delimited by end-of-file\n",
+			ft_putstr_fd("\
+				minishell: warning: here-document delimited by end-of-file\n",
 				STDERR_FILENO);
 			break ;
 		}
