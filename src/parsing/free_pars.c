@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   free_pars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:09:53 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/02 00:20:00 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+
+void	ft_free_strarray(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
 
 // Libère chaque argument d’un tableau de strings (args)
 static void	free_cmd_args(char **args)

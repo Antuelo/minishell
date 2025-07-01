@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:14:34 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:14:41 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/02 00:18:01 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,26 @@ static int	set_outfile(t_cmd *cmd, t_token *token, int append)
 // Stocke uniquement le délimiteur pour traitement plus tard
 static int	set_heredoc(t_cmd *cmd, t_token *token)
 {
+	int		n;
+	int		i;
+	char	**tmp;
+
+	n = 0;
+	i = -1;
 	if (!cmd || !token || !token->value)
 		return (0);
-	cmd->heredoc = 1;
-	if (cmd->delimiter)
-	{
-		free(cmd->delimiter);
-		cmd->delimiter = NULL;
-	}
-	cmd->delimiter = strdup(token->value);
-	if (!cmd->delimiter)
+	while (cmd->delimiter && cmd->delimiter[n])
+		n++;
+	tmp = malloc(sizeof(char *) * (n + 2));
+	if (!tmp)
 		return (0);
+	while (++i < n)
+		tmp[i] = cmd->delimiter[i];
+	tmp[n] = ft_strdup(token->value);
+	tmp[n + 1] = NULL;
+	free(cmd->delimiter);
+	cmd->delimiter = tmp;
+	cmd->heredoc = 1;
 	return (1);
 }
 
@@ -73,3 +82,19 @@ int	handle_redirection(t_cmd *cmd, t_token *curr)
 		return (set_heredoc(cmd, next));
 	return (1);
 }
+
+/*static int	set_heredoc(t_cmd *cmd, t_token *token)
+{
+	if (!cmd || !token || !token->value)
+		return (0);
+	cmd->heredoc = 1;
+	if (cmd->delimiter)
+	{
+		free(cmd->delimiter);
+		cmd->delimiter = NULL;
+	}
+	cmd->delimiter = strdup(token->value);
+	if (!cmd->delimiter)
+		return (0);
+	return (1);
+}*/

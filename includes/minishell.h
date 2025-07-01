@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/01 23:53:10 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/02 00:38:07 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char					*get_env_value(char *name, char **envp);
 void					update_pwd_vars(char ***envp);
 void					print_in_case(char *arg, char *path);
 int						control_infiles(t_cmd *cmd);
-int						heredoc(t_cmd *cmds);
+int						heredoc(t_cmd *cmds, int status);
 int						control_fork_pipe(t_cmd *cmd, t_exec *exec, int i);
 void					execute_fork(t_cmd *cmd, t_exec *exec, char **envp,
 							int i);

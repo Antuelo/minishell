@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_.c                                         :+:      :+:    :+:   */
+/*   execute_begin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:05:04 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/01 20:21:49 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/02 00:37:53 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	prepare_pipeline(t_cmd *cmd_list, char ***envp, t_exec *exec)
 {
 	int	status;
 
-	status = heredoc(cmd_list);
+	status = heredoc(cmd_list, 0);
 	if (status)
 		return (g_exit_status = status, -1);
 	if (control_builtin(cmd_list, envp))
