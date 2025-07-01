@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:14:03 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:17:29 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 19:09:13 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:09:17 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Extrait un mot (commande, argument) jusqu’à un espace ou un caractère spécial
 static char	*extract_word(char *line, int *i)

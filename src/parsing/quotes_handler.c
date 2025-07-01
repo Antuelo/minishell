@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 18:02:49 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/10 18:02:49 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/01 19:10:06 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:10:10 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Vérifie s'il y a des quotes non fermées dans la ligne
 int	check_unclosed_quotes(const char *line)

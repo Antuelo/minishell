@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:47:01 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 17:52:48 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 19:11:48 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:12:30 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <string.h>
 # include <ctype.h>
 
-typedef struct s_cmd t_cmd;
+typedef struct s_cmd	t_cmd;
 
 /* il est deja dans minishell.h
 typedef struct s_cmd

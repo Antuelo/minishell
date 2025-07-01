@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 17:07:56 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 18:00:15 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/01 19:15:11 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:16:59 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Cherche la valeur d'une variable d'environnement dans envp
 char	*get_env_value(char *name, char **envp)
@@ -31,7 +31,9 @@ char	*get_env_value(char *name, char **envp)
 }
 
 // Boucle principale d’expansion des variables dans une string
-static void	expansion_loop(const char *str, t_expand_ctx *ctx, int g_exit_status)
+static void	expansion_loop(
+	const char *str, t_expand_ctx *ctx, int g_exit_status
+)
 {
 	while (str[*ctx->i] && ctx->buffer)
 	{
@@ -92,4 +94,3 @@ t_token	*expand_tokens(t_token *tokens, char **envp, int g_exit_status)
 	}
 	return (tokens);
 }
-

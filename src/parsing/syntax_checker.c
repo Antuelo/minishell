@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 19:53:50 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/20 19:56:35 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/01 19:10:33 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:10:33 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Vérifie si un token est un pipe
 static int	is_pipe(t_token *token)

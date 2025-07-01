@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   free_pars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:22:34 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:18:25 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:09:53 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Libère chaque argument d’un tableau de strings (args)
 static void	free_cmd_args(char **args)

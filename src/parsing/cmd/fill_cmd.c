@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 18:00:33 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 18:01:53 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/01 19:20:04 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:23:19 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	process_redirection(t_token **curr, t_cmd *cmd)
 	return (1);
 }
 
-// Copie un mot dans la liste d'arguments si ce n’est pas une cible de redirection
+// Copie un mot dans la liste d'arguments if not une cible de redirection
 static int	process_word(t_token *curr, t_cmd *cmd, int *i)
 {
 	if (!(curr->prev && is_redir(curr->prev)))
@@ -59,7 +59,7 @@ int	fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd)
 		curr = curr->next;
 	}
 	cmd->args[i] = NULL;
-	if (!cmd->args[0] && !cmd->infile && !cmd->outfile)
+	if (!cmd->args[0] && !cmd->infile && !cmd->outfile && !cmd->heredoc)
 		return (printf("Syntax error: empty command\n"), 0);
 	return (1);
 }
