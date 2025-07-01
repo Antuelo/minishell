@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/28 16:58:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:53:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	main(int argc, char **argv, char **envp)
 				execute_pipeline(cmds, &my_envp);
 				free_cmd_list(cmds);
 			}
+			else
+				g_exit_status = 2;
 		}
 		free(input);
 	}
@@ -62,6 +64,7 @@ int	main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	return (0);
 }
+
 
 // Affiche le contenu de la structure t_cmd pour debug
 /*void	print_cmd(t_cmd *cmd)

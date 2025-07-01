@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:25:05 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/20 09:34:17 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 19:10:33 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:10:33 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Vérifie si un token est un pipe
 static int	is_pipe(t_token *token)
@@ -101,4 +101,30 @@ int	syntax_is_valid(t_token *tokens)
 		curr = curr->next;
 	}
 	return (1);
+}
+
+int	contains_forbidden_chars(char *line)
+{
+	int	i;
+
+	if (!line)
+		return (0);
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == ';' || line[i] == '\\'
+			|| line[i] == '(' || line[i] == ')')
+		{
+			printf("Syntax error near unexpected token `%c'\n", line[i]);
+			return (1);
+		}
+		if ((line[i] == '&' && line[i + 1] == '&')
+			|| (line[i] == '|' && line[i + 1] == '|'))
+		{
+			printf("Syntax error near unexpected token `%.2s'\n", &line[i]);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }

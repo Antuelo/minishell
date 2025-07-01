@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 18:02:18 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/10 18:02:30 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/01 19:08:58 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:08:58 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Gère les caractères échappés dans les quotes doubles (ex: \" ou \\)
 static void	handle_double_quote_escape(char *line, int *i, char *res, int *j)

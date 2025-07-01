@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:47:01 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 15:18:01 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 19:11:48 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:12:30 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <string.h>
 # include <ctype.h>
 
-typedef struct s_cmd t_cmd;
+typedef struct s_cmd	t_cmd;
 
 /* il est deja dans minishell.h
 typedef struct s_cmd
@@ -96,12 +96,13 @@ int		syntax_is_valid(t_token *tokens);
 int		check_syntax_errors(t_token *tokens);
 int		check_unclosed_quotes(const char *line);
 void	remove_quotes_from_tokens(t_token *tokens);
+int		contains_forbidden_chars(char *line);
 
 /* ************************************************************************** */
 /*                                 EXPANSION                                  */
 /* ************************************************************************** */
 
-void	expand_tokens(t_token *tokens, char **envp, int g_exit_status);
+t_token	*expand_tokens(t_token *tokens, char **envp, int g_exit_status);
 char	*get_env_value(char *name, char **envp);
 void	handle_escaped_dollar(char *buffer, int *j, int *i);
 void	handle_exit_code(char *buffer, int *j, int *i, int g_exit_status);
@@ -114,7 +115,7 @@ void	handle_env_variable(t_expand_ctx *ctx, const char *str);
 t_cmd	*init_cmd(void);
 int		fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd);
 int		handle_redirection(t_cmd *cmd, t_token *curr);
-int		handle_redir_fail(t_cmd *cmd, t_token *curr, int i);
+int		handle_redir_fail(t_cmd *cmd, t_token *curr);
 int		allocate_args_array(t_token *tokens, t_cmd *cmd);
 void	init_cmd_fields(t_cmd *cmd);
 int		copy_argument(t_cmd *cmd, char *value, int *i);

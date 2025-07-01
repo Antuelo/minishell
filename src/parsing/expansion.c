@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:43:45 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/23 22:22:10 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 19:15:11 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:16:59 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Cherche la valeur d'une variable d'environnement dans envp
 char	*get_env_value(char *name, char **envp)
@@ -31,7 +31,9 @@ char	*get_env_value(char *name, char **envp)
 }
 
 // Boucle principale d’expansion des variables dans une string
-static void	expansion_loop(const char *str, t_expand_ctx *ctx, int g_exit_status)
+static void	expansion_loop(
+	const char *str, t_expand_ctx *ctx, int g_exit_status
+)
 {
 	while (str[*ctx->i] && ctx->buffer)
 	{
@@ -69,7 +71,7 @@ static char	*expand_var(const char *str, char **envp, int g_exit_status)
 }
 
 // Applique l’expansion des variables à chaque token, sauf en single quotes
-void	expand_tokens(t_token *tokens, char **envp, int g_exit_status)
+t_token	*expand_tokens(t_token *tokens, char **envp, int g_exit_status)
 {
 	t_token	*curr;
 	t_token	*next;
@@ -90,4 +92,5 @@ void	expand_tokens(t_token *tokens, char **envp, int g_exit_status)
 		}
 		curr = next;
 	}
+	return (tokens);
 }

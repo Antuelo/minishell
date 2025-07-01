@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_operator.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:11:17 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:17:13 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 19:08:48 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:08:48 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Retourne le type de token correspondant à la chaîne donnée
 static t_token_type	get_token_type(char *str)

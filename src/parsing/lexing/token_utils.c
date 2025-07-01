@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:12:31 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:17:24 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 19:09:04 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:09:08 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Alloue et initialise un nouveau token avec sa valeur et son type
 t_token	*new_token(char *value, t_token_type type)

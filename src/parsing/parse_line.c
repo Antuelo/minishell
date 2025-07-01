@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:23:44 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:23:06 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 19:10:01 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 19:10:01 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# include "parsing.h"
+#include "minishell.h"
+#include "parsing.h"
 
 // Vérifie que l’entrée est non vide et sans quotes non fermées
 static int	sanitize_input(char *line)
 {
 	if (!line || !line[0])
+		return (0);
+	if (contains_forbidden_chars(line))
 		return (0);
 	if (check_unclosed_quotes(line))
 	{
@@ -42,7 +44,9 @@ t_cmd	*parse_line(char *line, char **envp, int exit_code)
 		free_tokens(tokens);
 		return (NULL);
 	}
-	expand_tokens(tokens, envp, exit_code);
+	tokens = expand_tokens(tokens, envp, exit_code);
+	if (!tokens)
+		return (NULL);
 	remove_quotes_from_tokens(tokens);
 	cmds = build_cmd_list_from_tokens(tokens);
 	free_tokens(tokens);
