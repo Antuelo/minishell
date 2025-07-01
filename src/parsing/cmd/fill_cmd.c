@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:04:58 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/17 11:32:48 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 17:34:10 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 17:34:10 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd)
 				curr->value, &i))
 			return (0);
 		if (curr->type >= T_REDIR_IN && curr->type <= T_HEREDOC
-			&& !handle_redir_fail(cmd, curr, i))
+			&& !handle_redir_fail(cmd, curr))
 			return (0);
 		if (curr->type >= T_REDIR_IN && curr->type <= T_HEREDOC)
 			curr = curr->next;

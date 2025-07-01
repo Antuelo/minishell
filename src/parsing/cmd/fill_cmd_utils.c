@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 21:04:11 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/17 11:36:15 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 17:32:31 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 17:32:58 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	copy_argument(t_cmd *cmd, char *value, int *i)
 
 // Appelle handle_redirection et libère les ressources cmd en cas d'échec
 // fonction utilitaire de fill_cmd_from_tokens
-int	handle_redir_fail(t_cmd *cmd, t_token *curr, int i)
+int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 {
 	if (!handle_redirection(cmd, curr))
 	{
@@ -99,12 +99,6 @@ int	handle_redir_fail(t_cmd *cmd, t_token *curr, int i)
 			free(cmd->delimiter);
 			cmd->delimiter = NULL;
 		}
-		while (i > 0)
-		{
-			i--;
-			free(cmd->args[i]);
-		}
-		free(cmd->args);
 		return (0);
 	}
 	return (1);
