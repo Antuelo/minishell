@@ -6,15 +6,15 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 22:50:01 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/02/25 22:50:10 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/02 00:50:11 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 long	ft_atol(const char *str)
 {
-	int i;
-	long num;
-	int sign;
+	int		i;
+	long	num;
+	int		sign;
 
 	i = 0;
 	num = 0;

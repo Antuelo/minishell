@@ -3,25 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/01 17:53:45 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/02 01:08:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-#define COLOR_GREEN "\033[1;32m"
-#define COLOR_RESET "\033[0m"
+#define CLR_GREEN "\001\033[1;32m\002"
+#define CLR_RESET "\001\033[0m\002"
 
-int	g_exit_status;
+int			g_exit_status;
+
+static void	second_control(t_cmd *cmds, char ***my_envp)
+{
+	if (cmds)
+	{
+		execute_pipeline(cmds, my_envp);
+		free_cmd_list(cmds);
+	}
+	else
+		g_exit_status = 2;
+}
+
+static char	*first_control(char *input, char **my_envp)
+{
+	char	*prompt;
+
+	prompt = CLR_GREEN "minishell$ " CLR_RESET;
+	input = readline(prompt);
+	signal(SIGINT, handle_signs);
+	signal(SIGQUIT, SIG_IGN);
+	if (!input)
+	{
+		free_envp(my_envp, count_env(my_envp));
+		write(1, "exit\n", 5);
+		return (NULL);
+	}
+	return (input);
+}
 
 /* rl_catch_signals = 0; c'est pour pouvoir controler moi même
 ** le hendler, c'est à dire, les signals... EN REALITé DESACTIVE
 ** LES HANDLERS INTERNES
-
 ** 	signal(SIGINT, handle_signs) = installe mon prope handler pour SIGINT
 */
 int	main(int argc, char **argv, char **envp)
@@ -37,26 +64,14 @@ int	main(int argc, char **argv, char **envp)
 	rl_catch_signals = 0;
 	while (1)
 	{
-		signal(SIGINT, handle_signs);
-		signal(SIGQUIT, SIG_IGN);
-		input = readline("minishell$ ");
+		input = first_control(input, my_envp);
 		if (!input)
-		{
-			free_envp(my_envp, count_env(my_envp));
-			write(1, "exit\n", 5);
-			return (0);
-		}
-		if (input[0] != '\0')
+			break ;
+		if (*input)
 		{
 			add_history(input);
 			cmds = parse_line(input, my_envp, g_exit_status);
-			if (cmds)
-			{
-				execute_pipeline(cmds, &my_envp);
-				free_cmd_list(cmds);
-			}
-			else
-				g_exit_status = 2;
+			second_control(cmds, &my_envp);
 		}
 		free(input);
 	}
@@ -64,7 +79,6 @@ int	main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	return (0);
 }
-
 
 // Affiche le contenu de la structure t_cmd pour debug
 /*void	print_cmd(t_cmd *cmd)
