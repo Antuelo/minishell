@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 14:35:48 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/07 20:11:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/28 13:12:18 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

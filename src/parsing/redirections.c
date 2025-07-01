@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:32:31 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/07 11:23:24 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/01 17:29:18 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 17:29:24 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ static int	set_outfile(t_cmd *cmd, t_token *token, int append)
 // Stocke uniquement le délimiteur pour traitement plus tard
 static int	set_heredoc(t_cmd *cmd, t_token *token)
 {
+	if (!cmd || !token || !token->value)
+		return (0);
+
 	cmd->heredoc = 1;
 	if (cmd->delimiter)
 	{

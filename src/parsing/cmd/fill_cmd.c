@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 21:03:59 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/20 21:05:37 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/01 18:00:33 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 18:01:53 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static int	is_redir(t_token *t)
 }
 
 // Traite une redirection : vérifie la présence d'un mot après et l'applique
-static int	process_redirection(t_token **curr, t_cmd *cmd, int i)
+static int	process_redirection(t_token **curr, t_cmd *cmd)
 {
 	if (!(*curr)->next || (*curr)->next->type != T_WORD)
 		return (0);
-	if (!handle_redir_fail(cmd, *curr, i))
+	if (!handle_redir_fail(cmd, *curr))
 		return (0);
 	*curr = (*curr)->next;
 	return (1);
@@ -54,7 +54,7 @@ int	fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd)
 	{
 		if (curr->type == T_WORD && !process_word(curr, cmd, &i))
 			return (0);
-		else if (is_redir(curr) && !process_redirection(&curr, cmd, i))
+		else if (is_redir(curr) && !process_redirection(&curr, cmd))
 			return (0);
 		curr = curr->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/20 10:45:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:52:26 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include <fcntl.h>
 # include <errno.h>
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <termio.h>
 # include <unistd.h>
-# include <signal.h>
 
-extern int			g_exit_status;
+extern int				g_exit_status;
 
 /*
 **args;			// ["grep", "foo", NULL]
@@ -39,16 +40,16 @@ hdoc_pipe[2];	// Pipe pour le heredoc
 */
 typedef struct s_cmd
 {
-	char			**args;
-	char			*infile;
-	char			*outfile;
-	int				append;
-	int				heredoc;
-	char			*delimiter;
-	int				hdoc_pipe[2];
-	struct s_cmd	*next;
-	struct s_cmd	*prev;
-}					t_cmd;
+	char				**args;
+	char				*infile;
+	char				*outfile;
+	int					append;
+	int					heredoc;
+	char				*delimiter;
+	int					hdoc_pipe[2];
+	struct s_cmd		*next;
+	struct s_cmd		*prev;
+}						t_cmd;
 
 /*
 pipe_fd[2];		// pour le pipe actuel
@@ -58,56 +59,66 @@ cmd_count;		// cantité de commandes
 */
 typedef struct s_exec
 {
-	int				pipe_fd[2];
-	int				fd_in;
-	pid_t			*pid;
-	int				cmd_count;
-}					t_exec;
+	int					pipe_fd[2];
+	int					fd_in;
+	pid_t				*pid;
+	int					cmd_count;
+}						t_exec;
+
+/*terminal variables (for heredoc and ctrl+c sings)*/
+typedef struct termios	t_termios;
+int						save_original_terminal_mode(t_termios *original);
+void					restore_original_terminal_mode(t_termios *original);
+int						wait_for_heredoc(pid_t pid, t_cmd *cmd,
+							t_termios *term);
+void					reset_readline(void);
+int						handle_heredoc_interrupt(t_cmd *cmd, t_termios *term);
 
 /*execution, main ...*/
-int					execute(t_cmd *cmd, char ***envp);
-int					execute_pipeline(t_cmd *cmd_list, char ***envp);
-char				*get_cmd_path(char *cmd, char **envp);
-int					control_builtin(t_cmd *cmd_list, char ***envp);
-int					init_exec(t_exec *exec, int count);
+int						execute(t_cmd *cmd, char ***envp);
+int						execute_pipeline(t_cmd *cmd_list, char ***envp);
+char					*get_cmd_path(char *cmd, char **envp);
+int						control_builtin(t_cmd *cmd_list, char ***envp);
+int						init_exec(t_exec *exec, int count);
 
-/*builtins*/
-int					is_builtin(char *cmd);
-char				**copy_envp(char **envp);
-int					count_env(char **envp);
-int					exec_builtin(t_cmd *cmd, char ***envp);
-int					ft_echo(char **args, int i, int j, int new_line);
-int					ft_env(char **envp);
-int					ft_pwd(void);
-int					ft_unset(char **args, char ***envp);
-char				**rebuild_envp(char **args, char **envp, int i, int j);
-int					ft_exit(char **args);
-int					ft_export(char **args, char ***envp);
-void				tryed_env(char **envp);
-void				print_export_format(char *line);
-int					is_valid_key(char *args);
-int					add_or_replace_var(char ***envp, char *new_var);
-int					ft_cd(char **args, char ***envp);
-char				*get_env_value(char *name, char **envp);
-void				update_pwd_vars(char ***envp);
-void				print_in_case(char *arg, char *path);
-int					control_infiles(t_cmd *cmd);
+/*builtins fork et pipes*/
+int						is_builtin(char *cmd);
+char					**copy_envp(char **envp);
+int						count_env(char **envp);
+int						exec_builtin(t_cmd *cmd, char ***envp);
+int						ft_echo(char **args, int i, int j, int new_line);
+int						ft_env(char **envp);
+int						ft_pwd(void);
+int						ft_unset(char **args, char ***envp);
+char					**rebuild_envp(char **args, char **envp, int i, int j);
+int						ft_exit(char **args);
+int						ft_export(char **args, char ***envp);
+void					tryed_env(char **envp);
+void					print_export_format(char *line);
+int						is_valid_key(char *args);
+int						add_or_replace_var(char ***envp, char *new_var);
+int						ft_cd(char **args, char ***envp);
+char					*get_env_value(char *name, char **envp);
+void					update_pwd_vars(char ***envp);
+void					print_in_case(char *arg, char *path);
+int						control_infiles(t_cmd *cmd);
+int						heredoc(t_cmd *cmds);
 
 /*utils*/
-int					countcmds(t_cmd *cmd);
-void				execute_path(char *path, char **envp, \
-						char **args, char *cmd);
-char				**extract_paths(char **envp);
-void				controlpath(char *path, t_cmd *cmd);
-void				execute_execve(char *fullpath, t_cmd *cmd, char **envp);
-void				handle_infile(t_cmd *cmd);
-void				handle_outfile(t_cmd *cmd);
-void				handle_signs(int sign);
+int						countcmds(t_cmd *cmd);
+void					execute_path(char *path, char **envp, char **args,
+							char *cmd);
+char					**extract_paths(char **envp);
+void					controlpath(char *path, t_cmd *cmd);
+void					execute_execve(char *fullpath, t_cmd *cmd, char **envp);
+void					handle_infile(t_cmd *cmd);
+void					handle_outfile(t_cmd *cmd);
+void					handle_signs(int signo);
 
 /*free everythings*/
-void				freepath(char **patch);
-void				free_cmd(t_cmd *cmd);
-void				free_envp(char **envp, int count);
-void				wait_all_processes(t_exec *exec);
+void					freepath(char **patch);
+void					free_cmd(t_cmd *cmd);
+void					free_envp(char **envp, int count);
+void					wait_all_processes(t_exec *exec);
 
 #endif

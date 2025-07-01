@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 17:08:11 by llabatut          #+#    #+#             */
-/*   Updated: 2025/06/25 17:08:11 by llabatut         ###   ########.ch       */
+/*   Created: 2025/06/03 20:47:01 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/01 17:52:48 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	handle_env_variable(t_expand_ctx *ctx, const char *str);
 t_cmd	*init_cmd(void);
 int		fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd);
 int		handle_redirection(t_cmd *cmd, t_token *curr);
-int		handle_redir_fail(t_cmd *cmd, t_token *curr, int i);
+int		handle_redir_fail(t_cmd *cmd, t_token *curr);
 int		allocate_args_array(t_token *tokens, t_cmd *cmd);
 void	init_cmd_fields(t_cmd *cmd);
 int		copy_argument(t_cmd *cmd, char *value, int *i);
