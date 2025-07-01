@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/28 16:56:45 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:35:26 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,49 +52,6 @@ void	parent_process(t_exec *exec, t_cmd *cmd)
 	}
 }
 
-/*	if (cmd->outfile != NULL && cmd->append != -1)		si parsing ">" or ">>"
-**	if (cmd->infile)									si parsing "<"
-**	signal(SIGINT, SIG_DFL); pour tuer le processus avec ctrl + c
-*/
-void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
-{
-	char	*fullpath;
-	int		id_builtin;
-
-	id_builtin = is_builtin(cmd->args[0]);
-	if (exec->pid[i] == 0)
-	{
-		if (cmd->heredoc)
-		{
-			dup2(cmd->hdoc_pipe[0], STDIN_FILENO);
-			close(cmd->hdoc_pipe[0]);
-		}
-		setup_redirections(cmd, exec);
-		if (control_infiles(cmd))
-			exit(1);
-		else if (!cmd->args || !cmd->args[0])
-			exit(0);
-		if (id_builtin == 0)
-		{
-			fullpath = get_cmd_path(cmd->args[0], envp);
-			controlpath(fullpath, cmd);
-			if (g_exit_status == 127)
-				exit(127);
-		}
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		if (id_builtin >= 1 && id_builtin <= 3)
-			exit(exec_builtin(cmd, &envp));
-		else
-			execute_execve(fullpath, cmd, envp);
-		exit(g_exit_status);
-	}
-	else
-		parent_process(exec, cmd);
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
-
 /*control pour savoir si c'est un built or proccess fils
 ** control "si il existe autre comande (pipe)... et pipe fonctionne" */
 int	control_fork_pipe(t_cmd *cmd, t_exec *exec, int i)
@@ -104,45 +61,5 @@ int	control_fork_pipe(t_cmd *cmd, t_exec *exec, int i)
 	exec->pid[i] = fork();
 	if (exec->pid[i] < 0)
 		return (perror("fork"), 1);
-	return (0);
-}
-
-/*fait --- >
-** initialiser exec (le struct)
-** controler si c'est un builtin hors le procesus fils exemple:
-** comme exit, unset, export et cd (parce que ils mofifient envp)
-** génerer fork et pipe (control_for_pipe)
-** executer les forks (tous les fils avec execute_fork)
-** wait_processes attends tout les procces pour eviter les bugs*/
-int	execute_pipeline(t_cmd *cmd_list, char ***envp)
-{
-	t_exec	exec;
-	t_cmd	*cmd;
-	int		i;
-	int		control;
-	int		status;
-
-	i = 0;
-	cmd = cmd_list;
-	status = heredoc(cmd_list);
-	if (status)
-		return (g_exit_status = status);
-	if (control_builtin(cmd, envp))
-		return (0);
-	if (init_exec(&exec, countcmds(cmd_list)))
-		return (1);
-	while (cmd)
-	{
-		control = control_fork_pipe(cmd, &exec, i);
-		if (control == -1)
-			return (free(exec.pid), 1);
-		execute_fork(cmd, &exec, (*envp), i);
-		i++;
-		cmd = cmd->next;
-	}
-	wait_all_processes(&exec);
-	if (exec.fd_in != STDIN_FILENO)
-		close(exec.fd_in);
-	free(exec.pid);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 20:46:10 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/25 00:16:36 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:46:35 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	countcmds(t_cmd *cmd)
 
 void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 {
-
 	execve(fullpath, cmd->args, envp);
 	perror("execve");
 	free(fullpath);
@@ -68,7 +67,3 @@ void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 	else
 		exit(1);
 }
-
-/*condition peut etre à ajouter
-
-	*/

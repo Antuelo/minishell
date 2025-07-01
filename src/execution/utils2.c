@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 10:52:26 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/18 23:50:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:46:04 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	handle_outfile(t_cmd *cmd)
 		close(fd_out);
 	}
 }
+
 /*dans ce cas 		if (access(cmd, X_OK) == 0)
 ** X_OK C'est pour savoir si il est executable
 */

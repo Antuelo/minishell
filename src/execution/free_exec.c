@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/20 17:21:00 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:44:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ void	free_envp(char **envp, int count)
 }
 
 /*
-| Nom du signal | Numéro | Signification                               | Effet typique                     |
-| ------------- | ------ | ------------------------------------------- | --------------------------------- |
-| `SIGHUP`      | 1      | Hangup (déconnexion du terminal)            | Termine le processus              |
-| `SIGINT`      | 2      | Interruption (Ctrl + C)                     | Termine le processus (130)        |
-| `SIGQUIT`     | 3      | Quitter (Ctrl + \\)                         | Termine + core dump (131)         |
-| `SIGILL`      | 4      | Instruction illégale                        | Termine + core dump               |
-| `SIGABRT`     | 6      | Abandon (abort)                             | Termine + core dump               |
-| `SIGFPE`      | 8      | Erreur arithmétique (ex: division par zéro) | Termine + core dump               |
-| `SIGKILL`     | 9      | Forcer la fin immédiate                     | Termine immédiatement             |
-| `SIGSEGV`     | 11     | Segmentation fault                          | Termine + core dump (139)         |
-| `SIGPIPE`     | 13     | Écriture sur un pipe sans lecteur           | Termine silencieusement           |
-| `SIGALRM`     | 14     | Timeout (alarme)                            | Termine le processus              |
-| `SIGTERM`     | 15     | Demande de terminaison classique            | Termine le processus (par défaut) |
+| Nom du signal | Numéro | Signification                               |
+| ------------- | ------ | ------------------------------------------- |
+| `SIGHUP`      | 1      | Hangup (déconnexion du terminal)            |
+| `SIGINT`      | 2      | Interruption (Ctrl + C)                     |
+| `SIGQUIT`     | 3      | Quitter (Ctrl + \\)                         |
+| `SIGILL`      | 4      | Instruction illégale                        |
+| `SIGABRT`     | 6      | Abandon (abort)                             |
+| `SIGFPE`      | 8      | Erreur arithmétique (ex: division par zéro) |
+| `SIGKILL`     | 9      | Forcer la fin immédiate                     |
+| `SIGSEGV`     | 11     | Segmentation fault                          |
+| `SIGPIPE`     | 13     | Écriture sur un pipe sans lecteur           |
+| `SIGALRM`     | 14     | Timeout (alarme)                            |
+| `SIGTERM`     | 15     | Demande de terminaison classique            |
 */
 int	control_signs(int status, t_exec *exec, int j)
 {
@@ -61,7 +61,7 @@ int	control_signs(int status, t_exec *exec, int j)
 	}
 	if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT))
 		ss = 1;
-	if (j == exec->cmd_count -1)
+	if (j == exec->cmd_count - 1)
 	{
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
@@ -93,4 +93,3 @@ void	wait_all_processes(t_exec *exec)
 	if (saw_sigint)
 		write(1, "\n", 1);
 }
-

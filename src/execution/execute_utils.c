@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/28 11:10:24 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:45:33 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,5 @@ int	control_infiles(t_cmd *cmd)
 		handle_outfile(cmd);
 	if (cmd->infile)
 		handle_infile(cmd);
-	if (g_exit_status == 1)
-		return (1);
 	return (0);
 }
-
