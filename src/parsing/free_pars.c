@@ -6,14 +6,14 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/02 00:20:00 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/02 01:15:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-void	ft_free_strarray(char **arr)
+static void	ft_free_strarray(char **arr)
 {
 	int	i;
 
@@ -49,7 +49,7 @@ void	free_cmd(t_cmd *cmd)
 	if (cmd->outfile)
 		free(cmd->outfile);
 	if (cmd->delimiter)
-		free(cmd->delimiter);
+		ft_free_strarray(cmd->delimiter);
 	if (cmd->args)
 		free_cmd_args(cmd->args);
 	if (cmd->heredoc)
