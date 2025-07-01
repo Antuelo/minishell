@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/01 23:37:15 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/01 23:53:10 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ extern int				g_exit_status;
 *outfile;		// NULL si pas de > ou >>
 append;			// 1 si >>, 0 si >, -1 si aucune redirection
 heredoc;		// 1 si heredoc, 0 sinon
-*delimiter;		// Pour heredoc : ex. "EOF, end, finish ..."
+**delimiter;	// Pour heredoc : ex. "EOF, end, finish ..."
 hdoc_pipe[2];	// Pipe pour le heredoc
 */
 typedef struct s_cmd
@@ -45,7 +45,7 @@ typedef struct s_cmd
 	char				*outfile;
 	int					append;
 	int					heredoc;
-	char				*delimiter;
+	char				**delimiter;
 	int					hdoc_pipe[2];
 	struct s_cmd		*next;
 	struct s_cmd		*prev;
