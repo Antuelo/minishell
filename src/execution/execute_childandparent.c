@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:29:40 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/04 21:34:39 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/04 22:31:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 
 static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 {
-	if (id_builtin >= 1 && id_builtin <= 3)
+	if ((id_builtin >= 1 && id_builtin <= 3) || id_builtin == 5)
+	{
+		if (id_builtin == 5)
+			ft_exit(cmd->args);
 		exit(exec_builtin(cmd, &envp));
+	}
 	else
 		execute_execve(fullpath, cmd, envp);
 }
