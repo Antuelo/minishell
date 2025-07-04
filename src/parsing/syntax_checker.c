@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:10:33 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:10:33 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/04 21:14:27 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	check_pipe_redirection(t_token *tokens)
 				&& (!next->value || !*next->value))
 				next = next->next;
 			if (next && (next->type == T_REDIR_IN || next->type == T_REDIR_OUT
-					|| next->type == T_REDIR_APPEND || next->type == T_HEREDOC))
+					|| next->type == T_REDIR_APPEND))
 			{
 				printf("Syntax error: unexpected redirection after pipe\n");
 				return (0);

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/01 23:44:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/04 21:42:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,6 @@ void	wait_all_processes(t_exec *exec)
 	}
 	if (saw_sigint)
 		write(1, "\n", 1);
+	signal(SIGINT, handle_signs);
+	signal(SIGQUIT, SIG_IGN);
 }
