@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:11:09 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:11:09 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/04 23:30:11 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,24 @@ int	copy_argument(t_cmd *cmd, char *value, int *i)
 // fonction utilitaire de fill_cmd_from_tokens
 int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 {
+	int	i;
+
+	i = 0;
+	if (handle_redirection(cmd, curr))
+		return (1);
+	if (cmd->delimiter)
+	{
+		while (cmd->delimiter[i])
+			free(cmd->delimiter[i++]);
+		free(cmd->delimiter);
+		cmd->delimiter = NULL;
+	}
+	cmd->heredoc = 0;
+	return (0);
+}
+
+/*int	handle_redir_fail(t_cmd *cmd, t_token *curr)
+{
 	if (!handle_redirection(cmd, curr))
 	{
 		if (cmd->delimiter)
@@ -102,4 +120,4 @@ int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 		return (0);
 	}
 	return (1);
-}
+}*/
