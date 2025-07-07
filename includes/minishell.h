@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/02 00:38:07 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:23:16 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int						ft_echo(char **args, int i, int j, int new_line);
 int						ft_env(char **envp);
 int						ft_pwd(void);
 int						ft_unset(char **args, char ***envp);
-char					**rebuild_envp(char **args, char **envp, int i, int j);
+char					**rebuild_envp(char **args, char **envp, int i);
 int						ft_exit(char **args);
 int						ft_export(char **args, char ***envp);
 void					tryed_env(char **envp);
@@ -108,6 +108,9 @@ void					execute_fork(t_cmd *cmd, t_exec *exec, char **envp,
 							int i);
 void					setup_redirections(t_cmd *cmd, t_exec *exec);
 void					parent_process(t_exec *exec, t_cmd *cmd);
+int						should_skip_var(char **args, char *env_entry);
+void					free_new_envp(char **envp, int k);
+void					cleanup_heredoc(t_cmd *cmd);
 
 /*utils*/
 int						countcmds(t_cmd *cmd);
@@ -119,6 +122,8 @@ void					execute_execve(char *fullpath, t_cmd *cmd, char **envp);
 void					handle_infile(t_cmd *cmd);
 void					handle_outfile(t_cmd *cmd);
 void					handle_signs(int signo);
+int						comparison_envp(char **args, char **envp, int i, int j);
+
 
 /*free everythings*/
 void					freepath(char **patch);

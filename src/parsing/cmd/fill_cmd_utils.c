@@ -6,7 +6,11 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:11:09 by llabatut          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/07/05 00:28:41 by anoviedo         ###   ########.fr       */
+=======
+/*   Updated: 2025/07/07 18:08:11 by anoviedo         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +113,3 @@ int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 	return (0);
 }
 
-/*int	handle_redir_fail(t_cmd *cmd, t_token *curr)
-{
-	if (!handle_redirection(cmd, curr))
-	{
-		if (cmd->delimiter)
-		{
-			free(cmd->delimiter);
-			cmd->delimiter = NULL;
-		}
-		return (0);
-	}
-	return (1);
-}*/

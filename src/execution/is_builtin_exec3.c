@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:20:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/18 23:46:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:01:44 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,17 @@ int	add_new_var(char ***envp, char *new_var)
 	new_envp = malloc(sizeof(char *) * (count + 2));
 	if (!new_envp)
 		return (1);
-	i = 0;
-	while (i < count)
+	i = -1;
+	while (++i < count)
 	{
-		new_envp[i] = (*envp)[i];
-		i++;
+		new_envp[i] = ft_strdup((*envp)[i]);
+		if (!new_envp[i])
+		{
+			while (--i >= 0)
+				free(new_envp[i]);
+			free(new_envp);
+			return (1);
+		}
 	}
 	new_envp[i++] = ft_strdup(new_var);
 	new_envp[i] = NULL;

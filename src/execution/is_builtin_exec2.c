@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 10:55:04 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 11:29:38 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:17:05 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,33 @@ int	count_to_keep(char **args, char **envp, int i, int j)
 
 /*fonction pour unset ... genère un nouveux envp modifié
 donc, si on a éliminé des paramètres*/
-char	**rebuild_envp(char **args, char **envp, int i, int j)
+char	**rebuild_envp(char **args, char **envp, int i)
+{
+	char	**new_envp;
+	int		count;
+	int		k;
+
+	count = count_to_keep(args, envp, 0, 0);
+	new_envp = malloc(sizeof(char *) * (count + 1));
+	if (!new_envp)
+		return (NULL);
+	k = 0;
+	while (envp[i])
+	{
+		if (!should_skip_var(args, envp[i]))
+		{
+			new_envp[k] = ft_strdup(envp[i]);
+			if (!new_envp[k])
+				return (free_new_envp(new_envp, k), NULL);
+			k++;
+		}
+		i++;
+	}
+	new_envp[k] = NULL;
+	return (new_envp);
+}
+
+/*char	**rebuild_envp(char **args, char **envp, int i, int j)
 {
 	char	**new_envp;
 	int		k;
@@ -79,7 +105,7 @@ char	**rebuild_envp(char **args, char **envp, int i, int j)
 	}
 	new_envp[k] = NULL;
 	return (new_envp);
-}
+}*/
 
 /*bubble sort pour imprimer de façon alphabetique le env
 demandé dans le built-in export*/

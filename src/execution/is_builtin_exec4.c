@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:54:23 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 11:30:23 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:12:55 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,25 @@ void	print_in_case(char *arg, char *path)
 		return ;
 	if (ft_strncmp(arg, "-", 2) == 0)
 		printf("%s\n", path);
+}
+
+int	should_skip_var(char **args, char *env_entry)
+{
+	int	j;
+
+	j = 1;
+	while (args[j])
+	{
+		if (comparison_envp(args, (char *[]){env_entry, NULL}, 0, j))
+			return (1);
+		j++;
+	}
+	return (0);
+}
+
+void	free_new_envp(char **envp, int k)
+{
+	while (--k >= 0)
+		free(envp[k]);
+	free(envp);
 }

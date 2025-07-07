@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/19 13:43:48 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:21:24 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	ft_unset(char **args, char ***envp)
 	if (!args || !args[1])
 		return (0);
 	count = count_env(*envp);
-	new_envp = rebuild_envp(args, *envp, 0, 0);
+	new_envp = rebuild_envp(args, *envp, 0);
 	if (!new_envp)
-		return (1);
+		return (free(new_envp), free_envp(*envp, count), 1);
 	free_envp(*envp, count);
 	*envp = new_envp;
 	return (0);
@@ -88,7 +88,8 @@ int	ft_export(char **args, char ***envp)
 			ft_putendl_fd("': not a valid identifier", 2);
 			return (1);
 		}
-		add_or_replace_var(envp, args[i]);
+		if (add_or_replace_var(envp, args[i]))
+			return (1);
 		i++;
 	}
 	return (0);

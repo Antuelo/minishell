@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/07 13:30:14 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:20:14 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,31 @@ static void	heredoc_signal_handler(int signo)
 	exit(130);
 }
 
-static void	close_pipes(int pipes[2])
+void	cleanup_heredoc(t_cmd *cmd)
+{
+	int	i;
+
+	if (cmd->hdoc_pipe[0] != -1)
+		close(cmd->hdoc_pipe[0]);
+	if (cmd->hdoc_pipe[1] != -1)
+		close(cmd->hdoc_pipe[1]);
+	if (cmd->delimiter)
+	{
+		i = 0;
+		while (cmd->delimiter[i])
+			free(cmd->delimiter[i++]);
+		free(cmd->delimiter);
+		cmd->delimiter = NULL;
+	}
+}
+
+/*static void	close_pipes(int pipes[2])
 {
 	if (pipes[0] != -1)
 		close(pipes[0]);
 	if (pipes[1] != -1)
 		close(pipes[1]);
-}
+}*/
 
 static void	child_heredoc(t_cmd *cmd, char *delim)
 {
@@ -41,7 +59,7 @@ static void	child_heredoc(t_cmd *cmd, char *delim)
 		{
 			ft_putstr_fd("\
 				minishell: warning: here-document delimited by end-of-file\n",
-				STDERR_FILENO);
+							STDERR_FILENO);
 			free(line);
 			break ;
 		}
@@ -56,7 +74,29 @@ static void	child_heredoc(t_cmd *cmd, char *delim)
 	exit(0);
 }
 
-static int	execute_heredoc(t_cmd *cmd, char *delim)
+int	execute_heredoc(t_cmd *cmd, char *delim)
+{
+	int			pid;
+	int			status;
+	t_termios	origin_termios;
+
+	if (save_original_terminal_mode(&origin_termios) == -1)
+		return (1);
+	if (pipe(cmd->hdoc_pipe) == -1)
+		return (cleanup_heredoc(cmd), 1);
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid == -1)
+		return (cleanup_heredoc(cmd), 1);
+	if (pid == 0)
+		child_heredoc(cmd, delim);
+	close(cmd->hdoc_pipe[1]);
+	status = wait_for_heredoc(pid, cmd, &origin_termios);
+	signal(SIGINT, handle_signs);
+	return (status);
+}
+
+/*static int	execute_heredoc(t_cmd *cmd, char *delim)
 {
 	int			pid;
 	int			status;
@@ -69,14 +109,15 @@ static int	execute_heredoc(t_cmd *cmd, char *delim)
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
-		return (close_pipes(cmd->hdoc_pipe), perror("fork - heredoc"), 1);
+		return (close_pipes(cmd->hdoc_pipe), free_cmd_list(cmd), \
+		perror("fork - heredoc"), 1);
 	if (pid == 0)
 		child_heredoc(cmd, delim);
 	close(cmd->hdoc_pipe[1]);
 	status = wait_for_heredoc(pid, cmd, &origin_termios);
 	signal(SIGINT, handle_signs);
 	return (status);
-}
+}*/
 
 int	heredoc(t_cmd *cmd_list, int status)
 {
@@ -89,7 +130,7 @@ int	heredoc(t_cmd *cmd_list, int status)
 		if (cmd->heredoc)
 		{
 			if (!cmd->delimiter || !cmd->delimiter[0])
-				return (2);
+				return (free_cmd_list(cmd), 2);
 			i = 0;
 			while (cmd->delimiter[i])
 			{
