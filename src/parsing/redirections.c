@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:14:34 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/02 00:18:01 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:05:57 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,3 @@ int	handle_redirection(t_cmd *cmd, t_token *curr)
 		return (set_heredoc(cmd, next));
 	return (1);
 }
-
-/*static int	set_heredoc(t_cmd *cmd, t_token *token)
-{
-	if (!cmd || !token || !token->value)
-		return (0);
-	cmd->heredoc = 1;
-	if (cmd->delimiter)
-	{
-		free(cmd->delimiter);
-		cmd->delimiter = NULL;
-	}
-	cmd->delimiter = strdup(token->value);
-	if (!cmd->delimiter)
-		return (0);
-	return (1);
-}*/

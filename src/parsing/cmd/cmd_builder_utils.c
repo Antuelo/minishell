@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:10:46 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:10:50 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/05 00:19:13 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

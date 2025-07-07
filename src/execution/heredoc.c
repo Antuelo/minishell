@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/02 00:44:24 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:30:14 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	child_heredoc(t_cmd *cmd, char *delim)
 			ft_putstr_fd("\
 				minishell: warning: here-document delimited by end-of-file\n",
 				STDERR_FILENO);
+			free(line);
 			break ;
 		}
 		if (ft_strcmp(line, delim) == 0)
@@ -94,7 +95,7 @@ int	heredoc(t_cmd *cmd_list, int status)
 			{
 				status = execute_heredoc(cmd, cmd->delimiter[i]);
 				if (status)
-					return (status);
+					return (close(cmd->hdoc_pipe[0]), status);
 				if (cmd->delimiter[i + 1])
 					close(cmd->hdoc_pipe[0]);
 				i++;

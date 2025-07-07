@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:11:09 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:11:09 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/05 00:28:41 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,26 @@ int	copy_argument(t_cmd *cmd, char *value, int *i)
 
 // Appelle handle_redirection et libère les ressources cmd en cas d'échec
 // fonction utilitaire de fill_cmd_from_tokens
+/* fill_cmd_utils.c */
 int	handle_redir_fail(t_cmd *cmd, t_token *curr)
+{
+	int	i;
+
+	if (handle_redirection(cmd, curr))
+		return (1);
+	if (cmd->delimiter)
+	{
+		i = 0;
+		while (cmd->delimiter[i])
+			free(cmd->delimiter[i++]);
+		free(cmd->delimiter);
+		cmd->delimiter = NULL;
+	}
+	cmd->heredoc = 0;
+	return (0);
+}
+
+/*int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 {
 	if (!handle_redirection(cmd, curr))
 	{
@@ -102,4 +121,4 @@ int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 		return (0);
 	}
 	return (1);
-}
+}*/
