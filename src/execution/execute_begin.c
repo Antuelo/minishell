@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_begin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 20:05:04 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/05 00:20:46 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/07 14:58:02 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/07 14:59:32 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,9 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 	if (prep == 1)
 		return (0);
 	if (prep == -1)
-		return (free_cmd_list(cmd_list), 1);
-	if (run_pipeline(cmd_list, &exec, envp))
-	{
-		free_cmd_list(cmd_list);
 		return (1);
-	}
+	if (run_pipeline(cmd_list, &exec, envp))
+		return (1);
 	return (0);
 }
 

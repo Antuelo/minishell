@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/07 14:18:41 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/07 14:59:52 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/07 14:59:57 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ static void	second_control(t_cmd *cmds, char ***my_envp)
 		g_exit_status = 2;
 }
 
-static char	*first_control(char *input, char **my_envp)
+static char	*first_control(char **my_envp)
 {
 	char	*prompt;
+	char	*input;
 
 	prompt = CLR_GREEN "minishell$ " CLR_RESET;
 	input = readline(prompt);
@@ -64,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		input = first_control(input, my_envp);
+		input = first_control(my_envp);
 		if (!input)
 			break ;
 		if (*input)
