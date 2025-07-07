@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:15:11 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:16:59 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/07 20:05:00 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ char	*get_env_value(char *name, char **envp)
 }
 
 // Boucle principale d’expansion des variables dans une string
-static void	expansion_loop(
-	const char *str, t_expand_ctx *ctx, int g_exit_status
-)
+static void	expansion_loop(const char *str, t_expand_ctx *ctx,
+		int g_exit_status)
 {
 	while (str[*ctx->i] && ctx->buffer)
 	{
@@ -81,6 +80,34 @@ t_token	*expand_tokens(t_token *tokens, char **envp, int g_exit_status)
 	while (curr)
 	{
 		next = curr->next;
+		if (curr->type == T_WORD && curr->value && strchr(curr->value, '$')
+			&& !curr->in_single_quote)
+		{
+			expanded = expand_var(curr->value, envp, g_exit_status);
+			if (!expanded)
+				continue ;
+			free(curr->value);
+			curr->value = expanded;
+			if (expanded[0] == '\0')
+			{
+				tokens = remove_empty_token(curr, tokens);
+			}
+		}
+		curr = next;
+	}
+	return (tokens);
+}
+
+/*t_token	*expand_tokens(t_token *tokens, char **envp, int g_exit_status)
+{
+	t_token	*curr;
+	t_token	*next;
+	char	*expanded;
+
+	curr = tokens;
+	while (curr)
+	{
+		next = curr->next;
 		if (curr->type == T_WORD && curr->value
 			&& strchr(curr->value, '$') && !curr->in_single_quote)
 		{
@@ -93,4 +120,4 @@ t_token	*expand_tokens(t_token *tokens, char **envp, int g_exit_status)
 		curr = next;
 	}
 	return (tokens);
-}
+}*/

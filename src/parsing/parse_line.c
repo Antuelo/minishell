@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:10:01 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:10:01 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/07 20:06:33 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_cmd	*parse_line(char *line, char **envp, int exit_code)
 		return (NULL);
 	tokens = tokenize(line);
 	if (!tokens)
-		return (NULL);
+		return (free(line), NULL);
 	if (!syntax_is_valid(tokens))
 	{
 		free_tokens(tokens);

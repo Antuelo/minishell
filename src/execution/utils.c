@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 20:46:10 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/04 21:34:54 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:34:53 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 void	controlpath(char *path, t_cmd *cmd)
 {
 	g_exit_status = 0;
+	(void)cmd;
 	if (!path)
 	{
 		g_exit_status = 127;
-		free_cmd(cmd);
 		perror("error: command not found");
 		exit(127);
 	}
@@ -57,6 +57,16 @@ int	countcmds(t_cmd *cmd)
 
 void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 {
+	(void)cmd;
+	(void)envp;
+	execve(fullpath, cmd->args, envp);
+	perror("execve");
+	free(fullpath);
+	exit(126);
+}
+
+/*void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
+{
 	execve(fullpath, cmd->args, envp);
 	perror("execve");
 	free(fullpath);
@@ -66,4 +76,4 @@ void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 		exit(127);
 	else
 		exit(1);
-}
+}*/

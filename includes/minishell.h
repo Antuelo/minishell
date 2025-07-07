@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/07 18:23:16 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:50:44 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ void					handle_infile(t_cmd *cmd);
 void					handle_outfile(t_cmd *cmd);
 void					handle_signs(int signo);
 int						comparison_envp(char **args, char **envp, int i, int j);
-
 
 /*free everythings*/
 void					freepath(char **patch);

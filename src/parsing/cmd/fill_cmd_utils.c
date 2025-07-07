@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:11:09 by llabatut          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/07/05 00:28:41 by anoviedo         ###   ########.fr       */
-=======
-/*   Updated: 2025/07/07 18:08:11 by anoviedo         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Created: 2025/07/07 19:18:30 by anoviedo          #+#    #+#             */
+/*   Updated: 2025/07/07 19:18:39 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +108,3 @@ int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 	cmd->heredoc = 0;
 	return (0);
 }
-

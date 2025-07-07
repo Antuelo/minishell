@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/07 18:21:24 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:35:50 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_unset(char **args, char ***envp)
 	count = count_env(*envp);
 	new_envp = rebuild_envp(args, *envp, 0);
 	if (!new_envp)
-		return (free(new_envp), free_envp(*envp, count), 1);
+		return (free_envp(*envp, count), 1);
 	free_envp(*envp, count);
 	*envp = new_envp;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/07 19:14:42 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:47:42 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ int			g_exit_status;
 static void	second_control(t_cmd *cmds, char ***my_envp)
 {
 	if (cmds)
-	{
 		execute_pipeline(cmds, my_envp);
-		free_cmd_list(cmds);
-	}
 	else
 		g_exit_status = 2;
+	free_cmd_list(cmds);
 }
 
 static char	*first_control(char *input, char **my_envp)
