@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 16:59:15 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/02 00:38:07 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/07 17:59:43 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/07 18:00:44 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int						countcmds(t_cmd *cmd);
 void					execute_path(char *path, char **envp, char **args,
 							char *cmd);
 char					**extract_paths(char **envp);
-void					controlpath(char *path, t_cmd *cmd);
+void					controlpath(char *path, t_cmd *cmd, char **envp);
 void					execute_execve(char *fullpath, t_cmd *cmd, char **envp);
 void					handle_infile(t_cmd *cmd);
 void					handle_outfile(t_cmd *cmd);

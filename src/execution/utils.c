@@ -3,28 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 20:46:10 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/04 21:34:54 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/07 18:00:53 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/07 18:00:57 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
+void	clean_exit(t_cmd *cmd, char **envp, int code)
+{
+	free_cmd_list(cmd);
+	if (envp)
+		free_envp(envp, count_env(envp));
+	exit(code);
+}
+
 /* je fais 	g_exit_status = 0;
 ** pour éviter que un erreur d auparavant reste "collé" aux
 ** futurs procesus */
-void	controlpath(char *path, t_cmd *cmd)
+void	controlpath(char *path, t_cmd *cmd, char **envp)
 {
 	g_exit_status = 0;
 	if (!path)
 	{
 		g_exit_status = 127;
-		free_cmd(cmd);
 		perror("error: command not found");
-		exit(127);
+		clean_exit(cmd, envp, 127);
 	}
 }
 

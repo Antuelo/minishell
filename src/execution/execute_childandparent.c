@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_childandparent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 20:29:40 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/07 13:47:42 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/07 18:01:03 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/07 18:01:03 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 		count = count_env(envp);
 		status = exec_builtin(cmd, &envp);
 		free_envp(envp, count);
+		free(fullpath);
 		exit(status);
 	}
 	else
@@ -39,9 +40,7 @@ static char	*control_path(t_cmd *cmd, char **envp, int id_builtin)
 	if (id_builtin == 0)
 	{
 		fullpath = get_cmd_path(cmd->args[0], envp);
-		controlpath(fullpath, cmd);
-		if (g_exit_status == 127)
-			exit(127);
+		controlpath(fullpath, cmd, envp);
 	}
 	return (fullpath);
 }
@@ -75,10 +74,11 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 			exit(1);
 		else if (!cmd->args || !cmd->args[0])
 			exit(0);
-		fullpath = (control_path(cmd, envp, id_builtin));
+		fullpath = control_path(cmd, envp, id_builtin);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		condition(cmd, envp, id_builtin, fullpath);
+		free(fullpath);
 		exit(g_exit_status);
 	}
 	else
