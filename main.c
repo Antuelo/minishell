@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:13:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/02 01:08:49 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:18:41 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ static char	*first_control(char *input, char **my_envp)
 
 	prompt = CLR_GREEN "minishell$ " CLR_RESET;
 	input = readline(prompt);
-	signal(SIGINT, handle_signs);
-	signal(SIGQUIT, SIG_IGN);
 	if (!input)
 	{
 		free_envp(my_envp, count_env(my_envp));
@@ -62,6 +60,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	my_envp = copy_envp(envp);
 	rl_catch_signals = 0;
+	signal(SIGINT, handle_signs);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		input = first_control(input, my_envp);
@@ -75,8 +75,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(input);
 	}
-	clear_history();
-	rl_clear_history();
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:11:09 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/04 23:30:11 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:15:13 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,16 @@ int	copy_argument(t_cmd *cmd, char *value, int *i)
 
 // Appelle handle_redirection et libère les ressources cmd en cas d'échec
 // fonction utilitaire de fill_cmd_from_tokens
+/* fill_cmd_utils.c */
 int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 {
 	int	i;
 
-	i = 0;
 	if (handle_redirection(cmd, curr))
 		return (1);
 	if (cmd->delimiter)
 	{
+		i = 0;
 		while (cmd->delimiter[i])
 			free(cmd->delimiter[i++]);
 		free(cmd->delimiter);

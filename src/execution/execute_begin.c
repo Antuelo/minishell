@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 20:05:04 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/04 21:11:07 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/05 00:20:46 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ static int	run_pipeline(t_cmd *cmd_list, t_exec *exec, char ***envp)
 	return (0);
 }
 
+/*	prep 1 builtin executes dans le pere
+	prep -1 error
+	sinon, des children and pipes*/
 int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 {
 	t_exec	exec;
@@ -60,8 +63,13 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 	if (prep == 1)
 		return (0);
 	if (prep == -1)
+		return (free_cmd_list(cmd_list), 1);
+	if (run_pipeline(cmd_list, &exec, envp))
+	{
+		free_cmd_list(cmd_list);
 		return (1);
-	return (run_pipeline(cmd_list, &exec, envp));
+	}
+	return (0);
 }
 
 /*
