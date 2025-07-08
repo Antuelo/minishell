@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 14:54:24 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 14:54:34 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 14:59:13 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 15:01:38 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static void	append_char(char *buffer, int *j, char c)
 static void	consume_single_quoted(char *line, int *i, char *buffer, int *j, int *sq_flag)
 {
 	(*sq_flag) = 1;
-	(*i)++;
+	append_char(buffer, j, line[(*i)++]);
 	while (line[*i] && line[*i] != '\'')
 		append_char(buffer, j, line[(*i)++]);
 	if (line[*i] == '\'')
-		(*i)++;
+		append_char(buffer, j, line[(*i)++]);
 }
 
 static void	consume_double_quoted(char *line, int *i, char *buffer, int *j, int *dq_flag)
