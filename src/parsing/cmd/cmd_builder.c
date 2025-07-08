@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:10:58 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:10:58 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 14:07:18 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 14:07:18 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,14 @@ t_cmd	*build_cmd_list_from_tokens(t_token *tokens)
 	{
 		ok = 1;
 		if (curr->type == T_PIPE || curr->next == NULL)
+		{
 			ok = process_command(&head, &last, &start, curr);
-		if (!ok)
-			return (free_cmd_list(head), NULL);
+			if (!ok)
+			{
+				free_cmd_list(head);
+				return (NULL);
+			}
+		}
 		curr = curr->next;
 	}
 	return (head);

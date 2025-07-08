@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:11:09 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/07 14:15:13 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/08 14:06:17 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 14:07:08 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 

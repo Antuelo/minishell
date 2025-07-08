@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:14:34 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/07 14:05:57 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/08 14:03:22 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 14:05:39 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
