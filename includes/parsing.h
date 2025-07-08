@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:11:48 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:12:30 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 14:56:15 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 14:56:18 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ char	*get_user_input(void);
 /* ************************************************************************** */
 
 t_token	*tokenize(char *line);
+t_token	*handle_combined_word(char *line, int *i);
 t_token	*handle_operator_token(char *line, int *i);
 t_token	*handle_quoted_token(char *line, int *i);
 t_token	*handle_word_token(char *line, int *i);

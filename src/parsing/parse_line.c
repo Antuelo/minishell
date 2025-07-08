@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:10:01 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/04 23:30:53 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/08 14:56:33 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 14:56:37 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
