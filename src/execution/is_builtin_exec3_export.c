@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_builtin_exec3.c                                 :+:      :+:    :+:   */
+/*   is_builtin_exec3_export.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:20:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/18 23:46:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:24:11 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_export_format(char *line)
 }
 
 /*fonction pour export, control de l'argument*/
-int	is_valid_key(char *args)
+static int	is_valid_key(char *args)
 {
 	int	i;
 
@@ -53,7 +53,7 @@ int	is_valid_key(char *args)
 }
 
 /*fonction pour export, ajute une nouvelle variable à env*/
-int	add_new_var(char ***envp, char *new_var)
+static int	add_new_var(char ***envp, char *new_var)
 {
 	char	**new_envp;
 	int		count;
@@ -104,5 +104,27 @@ int	add_or_replace_var(char ***envp, char *new_var)
 	if (add_new_var(envp, new_var))
 		return (free(key), 1);
 	free(key);
+	return (0);
+}
+
+int	ft_export(char **args, char ***envp)
+{
+	int	i;
+
+	i = 1;
+	if (!args || !args[1])
+		return (tryed_env(*envp), 0);
+	while (args[i])
+	{
+		if (!is_valid_key(args[i]))
+		{
+			ft_putstr_fd("export: '", 2);
+			ft_putstr_fd(args[i], 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+			return (1);
+		}
+		add_or_replace_var(envp, args[i]);
+		i++;
+	}
 	return (0);
 }

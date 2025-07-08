@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/19 13:43:48 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:58:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_exit(char **args)
 	while (args[1][i])
 	{
 		if ((args[1][i] < '0' || args[1][i] > '9') && !(i == 0
-				&& args[1][i] == '-'))
+				&& (args[1][i] == '-' || args[1][i] == '+')))
 		{
 			ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 			exit(2);
@@ -72,32 +72,12 @@ int	ft_exit(char **args)
 	exit((unsigned char)exit_code);
 }
 
-int	ft_export(char **args, char ***envp)
-{
-	int	i;
-
-	i = 1;
-	if (!args || !args[1])
-		return (tryed_env(*envp), 0);
-	while (args[i])
-	{
-		if (!is_valid_key(args[i]))
-		{
-			ft_putstr_fd("export: `", 2);
-			ft_putstr_fd(args[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
-			return (1);
-		}
-		add_or_replace_var(envp, args[i]);
-		i++;
-	}
-	return (0);
-}
-
 int	ft_cd(char **args, char ***envp)
 {
 	char	*path;
 
+	if (args[1] && args[2])
+		return (printf("minishell: cd: too many arguments\n"), 1);
 	if (!args[1])
 		path = get_env_value("HOME", *envp);
 	else if (ft_strncmp(args[1], "-", 2) == 0)
@@ -113,12 +93,9 @@ int	ft_cd(char **args, char ***envp)
 		return (1);
 	}
 	if (chdir(path) != 0)
-	{
-		printf("minishell: cd: %s: \n", path);
-		return (perror(""), 1);
-	}
+		return (fprintf(stderr, "minishell: cd: %s: %s\n", path, \
+			strerror(errno)), 1);
 	else
 		update_pwd_vars(envp);
-	print_in_case(args[1], path);
-	return (0);
+	return (print_in_case(args[1], path), 0);
 }

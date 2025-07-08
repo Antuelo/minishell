@@ -1,4 +1,0 @@
-valgrind --leak-check=full --show-leak-kinds=all \
---track-origins=yes --log-file=valgrind_report.txt ./minishell
-
- valgrind --log-file=valgrind_little_raport ./minishell

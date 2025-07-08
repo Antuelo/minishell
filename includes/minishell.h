@@ -6,7 +6,7 @@
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:21:35 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 20:21:35 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/08 20:58:36 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,12 @@ char					**rebuild_envp(char **args, char **envp, int i, int j);
 int						ft_exit(char **args);
 int						ft_export(char **args, char ***envp);
 void					tryed_env(char **envp);
-void					print_export_format(char *line);
-int						is_valid_key(char *args);
-int						add_or_replace_var(char ***envp, char *new_var);
 int						ft_cd(char **args, char ***envp);
 char					*get_env_value(char *name, char **envp);
 void					update_pwd_vars(char ***envp);
 void					print_in_case(char *arg, char *path);
+int						add_or_replace_var(char ***envp, char *new_var);
+void					print_export_format(char *line);
 int						control_infiles(t_cmd *cmd);
 int						heredoc(t_cmd *cmds, int status);
 int						control_fork_pipe(t_cmd *cmd, t_exec *exec, int i);
