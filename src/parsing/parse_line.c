@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 14:56:33 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 14:56:37 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 16:02:32 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 16:02:32 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ t_cmd	*parse_line(char *line, char **envp, int exit_code)
 	cmds = build_cmd_list_from_tokens(tokens);
 	free_tokens(tokens);
 	if (!cmds)
-		printf("Parsing failed.\n");
+	{
+		g_exit_status = 1;
+		return (NULL);
+	}
 	return (cmds);
 }

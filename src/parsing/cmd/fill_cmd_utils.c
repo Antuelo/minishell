@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 14:06:17 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 14:07:08 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 20:39:14 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 20:39:14 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	init_cmd_fields(t_cmd *cmd)
 	cmd->delimiter = NULL;
 	cmd->append = -1;
 	cmd->heredoc = 0;
+	cmd->invalid = 0;
 }
 
 // Copie un argument dans le tableau cmd->args, avec gestion des erreurs
@@ -106,7 +107,8 @@ int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 		cmd->delimiter = NULL;
 	}
 	cmd->heredoc = 0;
-	return (0);
+	cmd->invalid = 1;
+	return (1);
 }
 
 /*int	handle_redir_fail(t_cmd *cmd, t_token *curr)

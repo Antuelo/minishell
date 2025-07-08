@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 17:59:43 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/07 18:00:44 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 20:21:35 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 20:21:35 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_cmd
 	int					hdoc_pipe[2];
 	struct s_cmd		*next;
 	struct s_cmd		*prev;
+	int					invalid;
 }						t_cmd;
 
 /*
@@ -124,6 +125,6 @@ void					handle_signs(int signo);
 void					freepath(char **patch);
 void					free_cmd(t_cmd *cmd);
 void					free_envp(char **envp, int count);
-void					wait_all_processes(t_exec *exec);
+void					wait_all_processes(t_exec *exec, t_cmd *cmd_list);
 
 #endif

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 14:58:02 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/07 14:59:32 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 20:45:32 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 20:45:32 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,21 @@
 
 static int	prepare_pipeline(t_cmd *cmd_list, char ***envp, t_exec *exec)
 {
-	int	status;
+	t_cmd	*cmd;
+	int		status;
 
 	status = heredoc(cmd_list, 0);
 	if (status)
 		return (g_exit_status = status, -1);
+	cmd = cmd_list;
+	while (cmd)
+	{
+		if (!cmd->invalid)
+			break ;
+		cmd = cmd->next;
+	}
+	if (!cmd)
+		return (g_exit_status = 1, -1);
 	if (control_builtin(cmd_list, envp))
 		return (1);
 	if (init_exec(exec, countcmds(cmd_list)))
@@ -27,24 +37,49 @@ static int	prepare_pipeline(t_cmd *cmd_list, char ***envp, t_exec *exec)
 	return (0);
 }
 
+static int	handle_invalid_cmd(t_cmd *cmd, t_exec *exec, int i)
+{
+	if (cmd->next && pipe(exec->pipe_fd) == -1)
+		return (perror("pipe"), free(exec->pid), 1);
+	if (cmd->next)
+		close(exec->pipe_fd[1]);
+	if (cmd->next)
+	{
+		if (exec->fd_in != STDIN_FILENO)
+			close(exec->fd_in);
+		exec->fd_in = exec->pipe_fd[0];
+	}
+	exec->pid[i] = -1;
+	return (0);
+}
+
+static int	handle_valid_cmd(t_cmd *cmd, t_exec *exec, char **envp, int i)
+{
+	int	ctrl;
+
+	ctrl = control_fork_pipe(cmd, exec, i);
+	if (ctrl == -1)
+		return (free(exec->pid), 1);
+	execute_fork(cmd, exec, envp, i);
+	return (0);
+}
+
 static int	run_pipeline(t_cmd *cmd_list, t_exec *exec, char ***envp)
 {
 	t_cmd	*cmd;
 	int		i;
-	int		ctrl;
 
 	cmd = cmd_list;
 	i = 0;
 	while (cmd)
 	{
-		ctrl = control_fork_pipe(cmd, exec, i);
-		if (ctrl == -1)
-			return (free(exec->pid), 1);
-		execute_fork(cmd, exec, *envp, i);
+		if ((cmd->invalid && handle_invalid_cmd(cmd, exec, i))
+			|| (!cmd->invalid && handle_valid_cmd(cmd, exec, *envp, i)))
+			return (1);
 		i++;
 		cmd = cmd->next;
 	}
-	wait_all_processes(exec);
+	wait_all_processes(exec, cmd_list);
 	if (exec->fd_in != STDIN_FILENO)
 		close(exec->fd_in);
 	free(exec->pid);

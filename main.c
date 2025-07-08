@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 14:59:52 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/07 14:59:57 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 16:01:28 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 16:01:28 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	second_control(t_cmd *cmds, char ***my_envp)
 		free_cmd_list(cmds);
 	}
 	else
-		g_exit_status = 2;
+		g_exit_status = 1;
 }
 
 static char	*first_control(char **my_envp)

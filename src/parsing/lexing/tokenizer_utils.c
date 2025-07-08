@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 14:59:13 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 15:01:38 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 20:50:12 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 20:51:00 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,58 +19,51 @@ static void	append_char(char *buffer, int *j, char c)
 	(*j)++;
 }
 
-static void	consume_single_quoted(char *line, int *i, char *buffer, int *j, int *sq_flag)
+static void	consume_single_quoted(char *line, char *buffer, t_expand_flag *ctx)
 {
-	(*sq_flag) = 1;
-	append_char(buffer, j, line[(*i)++]);
-	while (line[*i] && line[*i] != '\'')
-		append_char(buffer, j, line[(*i)++]);
-	if (line[*i] == '\'')
-		append_char(buffer, j, line[(*i)++]);
+	ctx->sq_flag = 1;
+	append_char(buffer, &ctx->j, line[ctx->i++]);
+	while (line[ctx->i] && line[ctx->i] != '\'')
+		append_char(buffer, &ctx->j, line[ctx->i++]);
+	if (line[ctx->i] == '\'')
+		append_char(buffer, &ctx->j, line[ctx->i++]);
 }
 
-static void	consume_double_quoted(char *line, int *i, char *buffer, int *j, int *dq_flag)
+static void	consume_double_quoted(char *line, char *buffer, t_expand_flag *ctx)
 {
-	(*dq_flag) = 1;
-	(*i)++;
-	while (line[*i] && line[*i] != '"')
-		append_char(buffer, j, line[(*i)++]);
-	if (line[*i] == '"')
-		(*i)++;
-}
-
-static void	consume_unquoted(char *line, int *i, char *buffer, int *j)
-{
-	while (line[*i] && !isspace(line[*i]) && !is_operator(line[*i])
-		&& line[*i] != '\'' && line[*i] != '"')
-		append_char(buffer, j, line[(*i)++]);
+	ctx->dq_flag = 1;
+	ctx->i++;
+	while (line[ctx->i] && line[ctx->i] != '"')
+		append_char(buffer, &ctx->j, line[ctx->i++]);
+	if (line[ctx->i] == '"')
+		ctx->i++;
 }
 
 t_token	*handle_combined_word(char *line, int *i)
 {
-	char		buffer[4096];
-	int			j;
-	int			sq;
-	int			dq;
-	t_token		*token;
+	char			buffer[4096];
+	t_expand_flag	ctx;
+	t_token			*token;
 
-	j = 0;
-	sq = 0;
-	dq = 0;
-	while (line[*i] && !isspace(line[*i]) && !is_operator(line[*i]))
+	ctx.i = *i;
+	ctx.j = 0;
+	ctx.sq_flag = 0;
+	ctx.dq_flag = 0;
+	while (line[ctx.i] && !isspace(line[ctx.i]) && !is_operator(line[ctx.i]))
 	{
-		if (line[*i] == '\'')
-			consume_single_quoted(line, i, buffer, &j, &sq);
-		else if (line[*i] == '"')
-			consume_double_quoted(line, i, buffer, &j, &dq);
+		if (line[ctx.i] == '\'')
+			consume_single_quoted(line, buffer, &ctx);
+		else if (line[ctx.i] == '"')
+			consume_double_quoted(line, buffer, &ctx);
 		else
-			consume_unquoted(line, i, buffer, &j);
+			append_char(buffer, &ctx.j, line[ctx.i++]);
 	}
-	buffer[j] = '\0';
+	buffer[ctx.j] = '\0';
+	*i = ctx.i;
 	token = new_token(buffer, T_WORD);
 	if (!token)
 		return (NULL);
-	token->in_single_quote = sq;
-	token->in_double_quote = dq;
+	token->in_single_quote = ctx.sq_flag;
+	token->in_double_quote = ctx.dq_flag;
 	return (token);
 }

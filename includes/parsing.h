@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 14:56:15 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 14:56:18 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 20:51:14 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 20:51:14 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ typedef struct s_expand_ctx
 	char	**envp;
 }	t_expand_ctx;
 
+typedef struct s_expand_flag
+{
+	int		i;
+	int		j;
+	int		sq_flag;
+	int		dq_flag;
+}	t_expand_flag;
+
 /* ************************************************************************** */
 /*                                  INPUT                                     */
 /* ************************************************************************** */
@@ -98,6 +106,7 @@ int		check_syntax_errors(t_token *tokens);
 int		check_unclosed_quotes(const char *line);
 void	remove_quotes_from_tokens(t_token *tokens);
 int		contains_forbidden_chars(char *line);
+int		check_pipe_redirection(t_token *tokens);
 
 /* ************************************************************************** */
 /*                                 EXPANSION                                  */
