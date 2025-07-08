@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_childandparent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 18:01:03 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/07 18:01:03 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/08 15:10:44 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,25 @@
 #include "parsing.h"
 
 static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
+{
+	int	count;
+	int	status;
+
+	if (id_builtin > 0)
+	{
+		if (id_builtin == 5)
+			ft_exit(cmd->args);
+		count = count_env(envp);
+		status = exec_builtin(cmd, &envp);
+		free_envp(envp, count);
+		free(fullpath);
+		exit(status);
+	}
+	else
+		execute_execve(fullpath, cmd, envp);
+}
+
+/*static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 {
 	int	count;
 	int	status;
@@ -30,7 +49,7 @@ static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 	}
 	else
 		execute_execve(fullpath, cmd, envp);
-}
+}*/
 
 static char	*control_path(t_cmd *cmd, char **envp, int id_builtin)
 {
