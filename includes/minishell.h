@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 20:21:35 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 20:58:36 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 22:09:36 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 22:10:04 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,12 @@ void					parent_process(t_exec *exec, t_cmd *cmd);
 int						countcmds(t_cmd *cmd);
 void					execute_path(char *path, char **envp, char **args,
 							char *cmd);
-char					**extract_paths(char **envp);
 void					controlpath(char *path, t_cmd *cmd, char **envp);
 void					execute_execve(char *fullpath, t_cmd *cmd, char **envp);
 void					handle_infile(t_cmd *cmd);
 void					handle_outfile(t_cmd *cmd);
 void					handle_signs(int signo);
+void					clean_exit(t_cmd *cmd, char **envp, int code);
 
 /*free everythings*/
 void					freepath(char **patch);

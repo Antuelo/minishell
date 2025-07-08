@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:15:11 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:16:59 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 22:11:51 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 22:11:51 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,11 @@ t_token	*expand_tokens(t_token *tokens, char **envp, int g_exit_status)
 			free(curr->value);
 			curr->value = expanded;
 			if (expanded[0] == '\0')
+			{
 				tokens = remove_empty_token(curr, tokens);
+				curr = next;
+				continue ;
+			}
 		}
 		curr = next;
 	}

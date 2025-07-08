@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_childandparent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 18:01:03 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 15:10:44 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/08 22:10:16 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 22:10:16 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 		execute_execve(fullpath, cmd, envp);
 }
 
-/*static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
+/*static void condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 {
 	int	count;
 	int	status;
@@ -58,7 +58,10 @@ static char	*control_path(t_cmd *cmd, char **envp, int id_builtin)
 	fullpath = NULL;
 	if (id_builtin == 0)
 	{
-		fullpath = get_cmd_path(cmd->args[0], envp);
+		if (cmd->args[0][0] == '/' || ft_strncmp(cmd->args[0], "./", 2) == 0)
+			fullpath = ft_strdup(cmd->args[0]);
+		else
+			fullpath = get_cmd_path(cmd->args[0], envp);
 		controlpath(fullpath, cmd, envp);
 	}
 	return (fullpath);
@@ -91,7 +94,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		setup_redirections(cmd, exec);
 		if (control_infiles(cmd))
 			exit(1);
-		else if (!cmd->args || !cmd->args[0])
+		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
 			exit(0);
 		fullpath = control_path(cmd, envp, id_builtin);
 		signal(SIGINT, SIG_DFL);
@@ -100,8 +103,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		free(fullpath);
 		exit(g_exit_status);
 	}
-	else
-		parent_process(exec, cmd);
+	parent_process(exec, cmd);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
