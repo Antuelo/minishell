@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 10:52:26 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/01 23:46:04 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/08 22:10:29 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 22:10:37 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,20 @@ char	*control_slash(char *cmd)
 			return (ft_strdup(cmd));
 	}
 	return (NULL);
+}
+
+static char	**extract_paths(char **envp)
+{
+	int		i;
+	char	**path;
+
+	i = 0;
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+		i++;
+	if (!envp[i])
+		return (NULL);
+	path = ft_split(envp[i] + 5, ':');
+	return (path);
 }
 
 char	*get_cmd_path(char *cmd, char **envp)

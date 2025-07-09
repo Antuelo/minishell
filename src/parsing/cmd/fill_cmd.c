@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:20:04 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:23:19 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 20:38:44 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 20:38:55 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,6 @@ static int	is_redir(t_token *t)
 	return (t->type >= T_REDIR_IN && t->type <= T_HEREDOC);
 }
 
-// Traite une redirection : vérifie la présence d'un mot après et l'applique
-static int	process_redirection(t_token **curr, t_cmd *cmd)
-{
-	if (!(*curr)->next || (*curr)->next->type != T_WORD)
-		return (0);
-	if (!handle_redir_fail(cmd, *curr))
-		return (0);
-	*curr = (*curr)->next;
-	return (1);
-}
-
 // Copie un mot dans la liste d'arguments if not une cible de redirection
 static int	process_word(t_token *curr, t_cmd *cmd, int *i)
 {
@@ -40,6 +29,16 @@ static int	process_word(t_token *curr, t_cmd *cmd, int *i)
 }
 
 // Remplit une structure t_cmd à partir d’une portion de tokens
+static int	handle_redir_and_advance(t_cmd *cmd, t_token **curr)
+{
+	if (!(*curr)->next || (*curr)->next->type != T_WORD)
+		return (0);
+	if (!handle_redir_fail(cmd, *curr))
+		return (0);
+	*curr = (*curr)->next;
+	return (1);
+}
+
 int	fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd)
 {
 	t_token	*curr;
@@ -52,14 +51,14 @@ int	fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd)
 	i = 0;
 	while (curr && curr != limit)
 	{
+		if (cmd->invalid)
+			break ;
 		if (curr->type == T_WORD && !process_word(curr, cmd, &i))
 			return (0);
-		else if (is_redir(curr) && !process_redirection(&curr, cmd))
-			return (0);
+		else if (is_redir(curr) && !handle_redir_and_advance(cmd, &curr))
+			break ;
 		curr = curr->next;
 	}
 	cmd->args[i] = NULL;
-	if (!cmd->args[0] && !cmd->infile && !cmd->outfile && !cmd->heredoc)
-		return (printf("Syntax error: empty command\n"), 0);
 	return (1);
 }

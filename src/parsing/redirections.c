@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:14:34 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/07 14:05:57 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/08 20:35:04 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 20:35:22 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 // Remplace infile si elle existe déjà
 static int	set_infile(t_cmd *cmd, t_token *token)
 {
+	int	fd;
+
+	fd = open(token->value, O_RDONLY);
+	if (fd == -1)
+	{
+		perror(token->value);
+		return (0);
+	}
+	close(fd);
 	if (cmd->infile)
 		free(cmd->infile);
 	cmd->infile = strdup(token->value);
@@ -30,6 +39,21 @@ static int	set_infile(t_cmd *cmd, t_token *token)
 // Remplace outfile si elle existe déjà et stocke si append ou non
 static int	set_outfile(t_cmd *cmd, t_token *token, int append)
 {
+	int	fd;
+	int	flags;
+
+	flags = O_WRONLY | O_CREAT;
+	if (append)
+		flags |= O_APPEND;
+	else
+		flags |= O_TRUNC;
+	fd = open(token->value, flags, 0644);
+	if (fd == -1)
+	{
+		perror(token->value);
+		return (0);
+	}
+	close(fd);
 	if (cmd->outfile)
 		free(cmd->outfile);
 	cmd->outfile = strdup(token->value);

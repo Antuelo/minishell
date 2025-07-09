@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 19:09:22 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/01 19:09:22 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 14:55:20 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 14:55:25 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,9 @@ static t_token	*process_token_segment(char *line, int *i)
 
 	if (is_operator(line[*i]))
 		token = handle_operator_token(line, i);
-	else if (line[*i] == '\'' || line[*i] == '\"')
-		token = handle_quoted_token(line, i);
 	else
-		token = handle_word_token(line, i);
-	if (!token)
-	{
-		return (NULL);
-	}
-	if (!token->value)
+		token = handle_combined_word(line, i);
+	if (!token || !token->value)
 	{
 		free_single_token(token);
 		return (NULL);

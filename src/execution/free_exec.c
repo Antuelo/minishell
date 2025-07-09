@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 21:49:51 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/04 21:42:47 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/08 20:43:54 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 20:45:14 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,40 @@ int	control_signs(int status, t_exec *exec, int j)
 	c'est pour faire un saute de ligne si ctrl + c, s est fait dasn le fils
 	et il doit pas se répeter dans le père
 */
-void	wait_all_processes(t_exec *exec)
+static void	update_last_exit(int *status, int *exit_code, int *last_indx, int i)
 {
-	int	status;
-	int	saw_sigint;
-	int	j;
-
-	status = 0;
-	j = 0;
-	while (j < exec->cmd_count)
+	if (WIFEXITED(*status))
 	{
-		waitpid(exec->pid[j], &status, 0);
-		saw_sigint = control_signs(status, exec, j);
-		j++;
+		*exit_code = WEXITSTATUS(*status);
+		*last_indx = i;
 	}
-	if (saw_sigint)
-		write(1, "\n", 1);
-	signal(SIGINT, handle_signs);
-	signal(SIGQUIT, SIG_IGN);
+}
+
+void	wait_all_processes(t_exec *exec, t_cmd *cmd_list)
+{
+	int		i;
+	int		status;
+	t_cmd	*cmd;
+	int		last_valid_exit;
+	int		last_valid_index;
+
+	i = 0;
+	cmd = cmd_list;
+	last_valid_exit = 0;
+	last_valid_index = -1;
+	while (i < exec->cmd_count)
+	{
+		if (exec->pid[i] != -1)
+		{
+			waitpid(exec->pid[i], &status, 0);
+			update_last_exit(&status, &last_valid_exit, &last_valid_index, i);
+		}
+		if (cmd)
+			cmd = cmd->next;
+		i++;
+	}
+	if (last_valid_index != exec->cmd_count - 1)
+		g_exit_status = 1;
+	else
+		g_exit_status = last_valid_exit;
 }

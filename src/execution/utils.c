@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 18:00:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/07 18:00:57 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/08 22:10:49 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/08 22:11:33 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,42 @@ void	clean_exit(t_cmd *cmd, char **envp, int code)
 /* je fais 	g_exit_status = 0;
 ** pour éviter que un erreur d auparavant reste "collé" aux
 ** futurs procesus */
+
+static void	stat_result(char *path, struct stat *sb, t_cmd *cmd, char **envp)
+{
+	if (S_ISDIR(sb->st_mode))
+	{
+		g_exit_status = 126;
+		fprintf(stderr, "%s: Is a directory\n", path);
+		clean_exit(cmd, envp, 126);
+	}
+	else if (access(path, X_OK) != 0)
+	{
+		g_exit_status = 126;
+		fprintf(stderr, "%s: Permission denied\n", path);
+		clean_exit(cmd, envp, 126);
+	}
+}
+
 void	controlpath(char *path, t_cmd *cmd, char **envp)
 {
+	struct stat	sb;
+
 	g_exit_status = 0;
 	if (!path)
 	{
 		g_exit_status = 127;
-		perror("error: command not found");
+		fprintf(stderr, "%s: command not found\n", cmd->args[0]);
 		clean_exit(cmd, envp, 127);
 	}
-}
-
-char	**extract_paths(char **envp)
-{
-	int		i;
-	char	**path;
-
-	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
-		i++;
-	if (!envp[i])
-		return (NULL);
-	path = ft_split(envp[i] + 5, ':');
-	return (path);
+	if (stat(path, &sb) == 0)
+		stat_result(path, &sb, cmd, envp);
+	else
+	{
+		g_exit_status = 127;
+		fprintf(stderr, "%s: No such file or directory\n", path);
+		clean_exit(cmd, envp, 127);
+	}
 }
 
 int	countcmds(t_cmd *cmd)

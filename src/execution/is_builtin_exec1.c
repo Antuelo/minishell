@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 21:58:41 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/08 14:58:47 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/09 13:10:49 by anoviedo          #+#    #+#             */
+/*   Updated: 2025/07/09 13:18:29 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int	ft_unset(char **args, char ***envp)
 
 int	ft_exit(char **args)
 {
-	long	exit_code;
-	int		i;
+	int	i;
 
-	write(2, "exit\n", 5);
+	if (isatty(STDIN_FILENO))
+		write(2, "exit\n", 5);
 	if (!args[1])
 		exit(0);
 	i = 0;
@@ -68,8 +68,7 @@ int	ft_exit(char **args)
 		g_exit_status = 1;
 		return (1);
 	}
-	exit_code = ft_atoi(args[1]);
-	exit((unsigned char)exit_code);
+	exit((unsigned char)ft_atoi(args[1]));
 }
 
 int	ft_cd(char **args, char ***envp)
@@ -77,7 +76,7 @@ int	ft_cd(char **args, char ***envp)
 	char	*path;
 
 	if (args[1] && args[2])
-		return (printf("minishell: cd: too many arguments\n"), 1);
+		return (ft_putendl_fd("cd: too many arguments", 2), 1);
 	if (!args[1])
 		path = get_env_value("HOME", *envp);
 	else if (ft_strncmp(args[1], "-", 2) == 0)
@@ -87,15 +86,13 @@ int	ft_cd(char **args, char ***envp)
 	if (!path || path[0] == '\0')
 	{
 		if (!args[1] || ft_strncmp(args[1], "-", 2) != 0)
-			printf("minishell: cd: HOME not set\n");
+			ft_putendl_fd("cd: HOME not set", 2);
 		else
-			printf("minishell: cd: OLDPWD not set\n");
+			ft_putendl_fd("cd: OLDPWD not set", 2);
 		return (1);
 	}
 	if (chdir(path) != 0)
-		return (fprintf(stderr, "minishell: cd: %s: %s\n", path, \
-			strerror(errno)), 1);
-	else
-		update_pwd_vars(envp);
+		return (fprintf(stderr, "cd: %s: %s\n", path, strerror(errno)), 1);
+	update_pwd_vars(envp);
 	return (print_in_case(args[1], path), 0);
 }

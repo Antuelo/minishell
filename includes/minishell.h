@@ -5,27 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/07 17:59:43 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 14:18:07 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/09 13:08:29 by anoviedo          #+#    #+#             */
+/*   Updated: 2025/07/09 13:08:57 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
 
-# include "libft.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <termio.h>
-# include <unistd.h>
+#ifndef MINISHELL_H
+#define MINISHELL_H
+
+#include "libft.h"
+#include <errno.h>
+#include <fcntl.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <termio.h>
+#include <unistd.h>
 
 extern int				g_exit_status;
 
@@ -49,6 +50,7 @@ typedef struct s_cmd
 	int					hdoc_pipe[2];
 	struct s_cmd		*next;
 	struct s_cmd		*prev;
+	int					invalid;
 }						t_cmd;
 
 /*
@@ -112,17 +114,17 @@ void					parent_process(t_exec *exec, t_cmd *cmd);
 int						countcmds(t_cmd *cmd);
 void					execute_path(char *path, char **envp, char **args,
 							char *cmd);
-char					**extract_paths(char **envp);
 void					controlpath(char *path, t_cmd *cmd, char **envp);
 void					execute_execve(char *fullpath, t_cmd *cmd, char **envp);
 void					handle_infile(t_cmd *cmd);
 void					handle_outfile(t_cmd *cmd);
 void					handle_signs(int signo);
+void					clean_exit(t_cmd *cmd, char **envp, int code);
 
 /*free everythings*/
 void					freepath(char **patch);
 void					free_cmd(t_cmd *cmd);
 void					free_envp(char **envp, int count);
-void					wait_all_processes(t_exec *exec);
+void					wait_all_processes(t_exec *exec, t_cmd *cmd_list);
 
 #endif
