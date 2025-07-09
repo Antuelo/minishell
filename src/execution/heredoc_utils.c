@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:55:07 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/28 16:03:23 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/09 13:43:04 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	reset_readline(void)
 	rl_redisplay();
 }
 
+/* tcgetattr me permet de garder l'état orifinal dans "original"
+** comme ça, je peux le reprendre plus tard */
 int	save_original_terminal_mode(t_termios *original)
 {
 	if (tcgetattr(STDIN_FILENO, original) == -1)

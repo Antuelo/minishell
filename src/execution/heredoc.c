@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/07 13:30:14 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/09 13:57:00 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	close_pipes(int pipes[2])
 		close(pipes[1]);
 }
 
+/*le coeur du heredoc ... là on fait readline dedié*/
 static void	child_heredoc(t_cmd *cmd, char *delim)
 {
 	char	*line;
@@ -42,7 +43,6 @@ static void	child_heredoc(t_cmd *cmd, char *delim)
 			ft_putstr_fd("\
 				minishell: warning: here-document delimited by end-of-file\n",
 				STDERR_FILENO);
-			free(line);
 			break ;
 		}
 		if (ft_strcmp(line, delim) == 0)
@@ -56,6 +56,9 @@ static void	child_heredoc(t_cmd *cmd, char *delim)
 	exit(0);
 }
 
+/*	Je met en place les termios (donc la terminal) et j excute dans un
+	fork, les heredoc. En fin, j'attends pour tous les heredoc (comme
+	wait_all_proccess) dans wait_for_heredoc*/
 static int	execute_heredoc(t_cmd *cmd, char *delim)
 {
 	int			pid;
