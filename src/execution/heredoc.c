@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/09 13:57:00 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:59:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 static void	heredoc_signal_handler(int signo)
 {
 	(void)signo;
-	write(STDERR_FILENO, "^C", 2);
+	write(STDERR_FILENO, "^C", 3);
+	signal(SIGINT, handle_signs);
 	exit(130);
 }
 
