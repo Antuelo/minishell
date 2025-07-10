@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:29:45 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/10 20:21:07 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:32:53 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	check_pipe_redirection(t_token *tokens)
 			next = curr->next;
 			if (!skip_redirs_and_check_filename(&next))
 				return (0);
-			if (!next /*|| next->type != T_WORD*/)
+			if (!next)
 			{
 				printf("Syntax error: missing command after pipe\n");
 				return (0);
