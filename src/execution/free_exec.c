@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:43:54 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 20:45:14 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/12 14:01:59 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_envp(char **envp, int count)
 | ------------- | ------ | ------------------------------------------- |
 | `SIGHUP`      | 1      | Hangup (déconnexion du terminal)            |
 | `SIGINT`      | 2      | Interruption (Ctrl + C)                     |
-| `SIGQUIT`     | 3      | Quitter (Ctrl + \\)                         |
+| `SIGQUIT`     | 3      | Quitter (Ctrl + \)                          |
 | `SIGILL`      | 4      | Instruction illégale                        |
 | `SIGABRT`     | 6      | Abandon (abort)                             |
 | `SIGFPE`      | 8      | Erreur arithmétique (ex: division par zéro) |
@@ -75,6 +75,9 @@ int	control_signs(int status, t_exec *exec, int j)
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	c'est pour faire un saute de ligne si ctrl + c, s est fait dasn le fils
 	et il doit pas se répeter dans le père
+
+	modification de lisa: update_last_exit c'est pour savoir s'il a bien fini le
+	dernière processus
 */
 static void	update_last_exit(int *status, int *exit_code, int *last_indx, int i)
 {

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 16:01:28 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/09 12:56:24 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/12 09:43:52 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*first_control(char **my_envp)
 /* rl_catch_signals = 0; c'est pour pouvoir controler moi même
 ** le hendler, c'est à dire, les signals... EN REALITé DESACTIVE
 ** LES HANDLERS INTERNES
-** 	signal(SIGINT, handle_signs) = installe mon prope handler pour SIGINT
+** 	signal(SIGINT, handle_signs) = installe mon prope handler pour (ctrl + c)
 */
 int	main(int argc, char **argv, char **envp)
 {

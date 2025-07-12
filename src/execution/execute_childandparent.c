@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:10:28 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/10 20:49:02 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/12 13:30:09 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 		exit(status);
 	}
 	else
-	{
 		execute_execve(fullpath, cmd, envp);
-		if (fullpath)
-			free(fullpath);
-	}
 }
 
 static char	*control_path(t_cmd *cmd, char **envp, int id_builtin)

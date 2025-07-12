@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:10:49 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 22:11:33 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/12 13:43:57 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,14 @@ int	countcmds(t_cmd *cmd)
 	return (count);
 }
 
+/*	ENOENT : fichier inexistant
+
+	ENOTDIR : Une partie du chemin n'est pas un dossier alors qu'elle
+	devrait l'être
+*/
 void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 {
+	signal(SIGINT, SIG_DFL);
 	execve(fullpath, cmd->args, envp);
 	perror("execve");
 	free(fullpath);
