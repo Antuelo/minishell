@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:43:54 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/12 14:01:59 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:21:10 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_envp(char **envp, int count)
 | ------------- | ------ | ------------------------------------------- |
 | `SIGHUP`      | 1      | Hangup (déconnexion du terminal)            |
 | `SIGINT`      | 2      | Interruption (Ctrl + C)                     |
-| `SIGQUIT`     | 3      | Quitter (Ctrl + \)                          |
+| `SIGQUIT`     | 3      | Quitter (Ctrl + \\)                         |
 | `SIGILL`      | 4      | Instruction illégale                        |
 | `SIGABRT`     | 6      | Abandon (abort)                             |
 | `SIGFPE`      | 8      | Erreur arithmétique (ex: division par zéro) |
@@ -75,44 +75,23 @@ int	control_signs(int status, t_exec *exec, int j)
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	c'est pour faire un saute de ligne si ctrl + c, s est fait dasn le fils
 	et il doit pas se répeter dans le père
-
-	modification de lisa: update_last_exit c'est pour savoir s'il a bien fini le
-	dernière processus
 */
-static void	update_last_exit(int *status, int *exit_code, int *last_indx, int i)
+void	wait_all_processes(t_exec *exec)
 {
-	if (WIFEXITED(*status))
-	{
-		*exit_code = WEXITSTATUS(*status);
-		*last_indx = i;
-	}
-}
-
-void	wait_all_processes(t_exec *exec, t_cmd *cmd_list)
-{
-	int		i;
 	int		status;
-	t_cmd	*cmd;
-	int		last_valid_exit;
-	int		last_valid_index;
+	int		saw_sigint;
+	int		j;
 
-	i = 0;
-	cmd = cmd_list;
-	last_valid_exit = 0;
-	last_valid_index = -1;
-	while (i < exec->cmd_count)
+	status = 0;
+	j = 0;
+	while (j < exec->cmd_count)
 	{
-		if (exec->pid[i] != -1)
-		{
-			waitpid(exec->pid[i], &status, 0);
-			update_last_exit(&status, &last_valid_exit, &last_valid_index, i);
-		}
-		if (cmd)
-			cmd = cmd->next;
-		i++;
+		waitpid(exec->pid[j], &status, 0);
+		saw_sigint = control_signs(status, exec, j);
+		j++;
 	}
-	if (last_valid_index != exec->cmd_count - 1)
-		g_exit_status = 1;
-	else
-		g_exit_status = last_valid_exit;
+	if (saw_sigint)
+		write(1, "\n", 1);
+	signal(SIGINT, handle_signs);
+	signal(SIGQUIT, SIG_IGN);
 }

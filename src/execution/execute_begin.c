@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:45:32 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/12 11:12:32 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:23:23 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	run_pipeline(t_cmd *cmd_list, t_exec *exec, char ***envp)
 		i++;
 		cmd = cmd->next;
 	}
-	wait_all_processes(exec, cmd_list);
+	wait_all_processes(exec);
 	if (exec->fd_in != STDIN_FILENO)
 		close(exec->fd_in);
 	free(exec->pid);

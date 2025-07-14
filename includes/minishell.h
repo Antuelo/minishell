@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:08:29 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/10 20:08:09 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:22:43 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,6 @@ void					clean_exit(t_cmd *cmd, char **envp, int code);
 void					freepath(char **patch);
 void					free_cmd(t_cmd *cmd);
 void					free_envp(char **envp, int count);
-void					wait_all_processes(t_exec *exec, t_cmd *cmd_list);
+void					wait_all_processes(t_exec *exec);
 
 #endif
