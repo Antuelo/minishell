@@ -6,12 +6,12 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:43:54 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/14 15:08:09 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:31:54 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
+#include "parsing.h"
 
 void	freepath(char **patch)
 {
@@ -35,35 +35,41 @@ void	free_envp(char **envp, int count)
  Analyse le `status` renvoyé par waitpid() pour un enfant donné.
 
   Paramètres :
-    - `status`      : valeur brute renvoyée par waitpid().
-    - `idx`         : indice de cet enfant dans exec->pid[].
-    - `last_exit`   : pointeur vers le dernier exit() reçu (sortie normale).
-    - `last_idx`    : pointeur vers l’indice du dernier exit() reçu.
-    - `saw_sigint`  : pointeur booléen qui devient 1 si un enfant a reçu SIGINT.
+	- `status`      : valeur brute renvoyée par waitpid().
+	- `idx`         : indice de cet enfant dans exec->pid[].
+	- `last_exit`   : pointeur vers le dernier exit() reçu (sortie normale).
+	- `last_idx`    : pointeur vers l’indice du dernier exit() reçu.
+	- `saw_sigint`  : pointeur booléen qui devient 1 si un enfant a reçu SIGINT.
 
   Actions :
-    1. Si l’enfant s’est terminé par un signal :
-         • SIGINT  → on note l’interruption pour afficher un ‘\n’ plus tard.
-         • SIGQUIT → on écrit “Quit (core dumped)”.
-    2. Si l’enfant s’est terminé normalement (exit) :
-         • On mémorise son code de sortie et son indice
-           (c’est le « dernier exit valide »).*/
-static void	update_status(int status, int idx, int *last_exit, int *last_idx)
+	1. Si l’enfant s’est terminé par un signal :
+			• SIGINT  → on note l’interruption pour afficher un ‘\n’ plus tard.
+			• SIGQUIT → on écrit “Quit (core dumped)”.
+	2. Si l’enfant s’est terminé normalement (exit) :
+			• On mémorise son code de sortie et son indice
+			(c’est le « dernier exit valide »).*/
+static int	update_status(int status, int idx, int *last_exit, int *last_idx)
 {
-	int	*saw_sigint;
+	int	saw_sigint;
+	int	sig;
 
+	saw_sigint = 0;
+	sig = WTERMSIG(status);
 	if (WIFSIGNALED(status))
 	{
-		if (WTERMSIG(status) == SIGINT)
-			*saw_sigint = 1;
-		else if (WTERMSIG(status) == SIGQUIT && WCOREDUMP(status))
+		if (sig == SIGINT)
+			saw_sigint = 1;
+		else if (sig == SIGQUIT && WCOREDUMP(status))
 			write(1, "Quit (core dumped)\n", 19);
+		*last_exit = 128 + sig;
+		*last_idx = idx;
 	}
 	else if (WIFEXITED(status))
 	{
 		*last_exit = WEXITSTATUS(status);
 		*last_idx = idx;
 	}
+	return (saw_sigint);
 }
 
 /** Établit la valeur finale de `g_exit_status` une fois que tous les enfants
@@ -89,6 +95,8 @@ static void	set_global_exit(int saw_sigint, int last_exit, int last_idx,
 		g_exit_status = last_exit;
 	else
 		g_exit_status = 1;
+	signal(SIGINT, handle_signs);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 /** Boucle principale qui attend chaque processus fils d’un pipeline, met à jour
@@ -120,7 +128,7 @@ void	wait_all_processes(t_exec *exec)
 		if (exec->pid[i] != -1)
 		{
 			waitpid(exec->pid[i], &status, 0);
-			update_status(status, i, &last_exit, &last_idx, &saw_sigint);
+			saw_sigint = update_status(status, i, &last_exit, &last_idx);
 		}
 	}
 	set_global_exit(saw_sigint, last_exit, last_idx, exec->cmd_count);
