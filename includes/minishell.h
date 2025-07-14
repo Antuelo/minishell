@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:08:29 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/14 11:22:43 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:17:13 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ void					execute_path(char *path, char **envp, char **args,
 							char *cmd);
 void					controlpath(char *path, t_cmd *cmd, char **envp);
 void					execute_execve(char *fullpath, t_cmd *cmd, char **envp);
-void					handle_infile(t_cmd *cmd);
-void					handle_outfile(t_cmd *cmd);
+int						handle_infile(t_cmd *cmd);
+int						handle_outfile(t_cmd *cmd);
 void					handle_signs(int signo);
 void					clean_exit(t_cmd *cmd, char **envp, int code);
 

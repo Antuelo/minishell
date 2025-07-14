@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:43:54 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/14 11:21:10 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:08:09 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,68 +30,98 @@ void	free_envp(char **envp, int count)
 	free(envp);
 }
 
-/*
-| Nom du signal | Numéro | Signification                               |
-| ------------- | ------ | ------------------------------------------- |
-| `SIGHUP`      | 1      | Hangup (déconnexion du terminal)            |
-| `SIGINT`      | 2      | Interruption (Ctrl + C)                     |
-| `SIGQUIT`     | 3      | Quitter (Ctrl + \\)                         |
-| `SIGILL`      | 4      | Instruction illégale                        |
-| `SIGABRT`     | 6      | Abandon (abort)                             |
-| `SIGFPE`      | 8      | Erreur arithmétique (ex: division par zéro) |
-| `SIGKILL`     | 9      | Forcer la fin immédiate                     |
-| `SIGSEGV`     | 11     | Segmentation fault                          |
-| `SIGPIPE`     | 13     | Écriture sur un pipe sans lecteur           |
-| `SIGALRM`     | 14     | Timeout (alarme)                            |
-| `SIGTERM`     | 15     | Demande de terminaison classique            |
-*/
-int	control_signs(int status, t_exec *exec, int j)
-{
-	int	ss;
+/* * update_status
 
-	ss = 0;
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+ Analyse le `status` renvoyé par waitpid() pour un enfant donné.
+
+  Paramètres :
+    - `status`      : valeur brute renvoyée par waitpid().
+    - `idx`         : indice de cet enfant dans exec->pid[].
+    - `last_exit`   : pointeur vers le dernier exit() reçu (sortie normale).
+    - `last_idx`    : pointeur vers l’indice du dernier exit() reçu.
+    - `saw_sigint`  : pointeur booléen qui devient 1 si un enfant a reçu SIGINT.
+
+  Actions :
+    1. Si l’enfant s’est terminé par un signal :
+         • SIGINT  → on note l’interruption pour afficher un ‘\n’ plus tard.
+         • SIGQUIT → on écrit “Quit (core dumped)”.
+    2. Si l’enfant s’est terminé normalement (exit) :
+         • On mémorise son code de sortie et son indice
+           (c’est le « dernier exit valide »).*/
+static void	update_status(int status, int idx, int *last_exit, int *last_idx)
+{
+	int	*saw_sigint;
+
+	if (WIFSIGNALED(status))
 	{
-		if (WCOREDUMP(status))
-		{
+		if (WTERMSIG(status) == SIGINT)
+			*saw_sigint = 1;
+		else if (WTERMSIG(status) == SIGQUIT && WCOREDUMP(status))
 			write(1, "Quit (core dumped)\n", 19);
-			g_exit_status = 131;
-		}
-		return (0);
 	}
-	if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGINT))
-		ss = 1;
-	if (j == exec->cmd_count - 1)
+	else if (WIFEXITED(status))
 	{
-		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			g_exit_status = 128 + WTERMSIG(status);
+		*last_exit = WEXITSTATUS(status);
+		*last_idx = idx;
 	}
-	return (ss);
 }
 
-/**
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-	c'est pour faire un saute de ligne si ctrl + c, s est fait dasn le fils
-	et il doit pas se répeter dans le père
-*/
-void	wait_all_processes(t_exec *exec)
+/** Établit la valeur finale de `g_exit_status` une fois que tous les enfants
+ * sont récoltés, et restaure l’affichage.
+ *
+ * Paramètres :
+ *   - `saw_sigint` : 1 si au moins un enfant a fini sur SIGINT.
+ *   - `last_exit`  : code du dernier exit() normal reçu.
+ *   - `last_idx`   : indice de cet enfant.
+ *   - `cmd_count`  : nombre total de commandes dans le pipeline.
+ *
+ * Règles (mimique Bash) :
+ *   • Si SIGINT : on imprime une ligne vide pour replacer le prompt.
+ *   • Si le dernier exit() n’appartient PAS à la dernière commande du pipe,
+ *     cela signifie qu’une commande précédente a échoué → g_exit_status = 1.
+ *   • Sinon, g_exit_status reçoit `last_exit`.*/
+static void	set_global_exit(int saw_sigint, int last_exit, int last_idx,
+		int cmd_count)
 {
-	int		status;
-	int		saw_sigint;
-	int		j;
-
-	status = 0;
-	j = 0;
-	while (j < exec->cmd_count)
-	{
-		waitpid(exec->pid[j], &status, 0);
-		saw_sigint = control_signs(status, exec, j);
-		j++;
-	}
 	if (saw_sigint)
 		write(1, "\n", 1);
-	signal(SIGINT, handle_signs);
-	signal(SIGQUIT, SIG_IGN);
+	if (last_idx == cmd_count - 1)
+		g_exit_status = last_exit;
+	else
+		g_exit_status = 1;
+}
+
+/** Boucle principale qui attend chaque processus fils d’un pipeline, met à jour
+ * les informations d’état via update_status(), puis appelle set_global_exit().
+ *
+ * Étapes :
+ *   1. Initialisation des accumulateurs (SIGINT, last_exit, last_idx…).
+ *   2. Pour chaque PID non nul :
+ *        • waitpid(pid) bloque jusqu’à la fin de ce fils.
+ *        • update_status() traite le status et met à jour les accumulateurs.
+ *   3. Une fois tous les fils terminés :
+ *        • set_global_exit() décide du g_exit_status final
+ *          et imprime/masque ce qu’il faut.
+ *   4. Ne traite qu’un maximum de 25 lignes → conforme Norme 42.*/
+void	wait_all_processes(t_exec *exec)
+{
+	int	status;
+	int	saw_sigint;
+	int	last_exit;
+	int	last_idx;
+	int	i;
+
+	i = -1;
+	saw_sigint = 0;
+	last_exit = 0;
+	last_idx = -1;
+	while (++i < exec->cmd_count)
+	{
+		if (exec->pid[i] != -1)
+		{
+			waitpid(exec->pid[i], &status, 0);
+			update_status(status, i, &last_exit, &last_idx, &saw_sigint);
+		}
+	}
+	set_global_exit(saw_sigint, last_exit, last_idx, exec->cmd_count);
 }

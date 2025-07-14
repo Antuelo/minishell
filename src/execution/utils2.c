@@ -3,53 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:10:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 22:10:37 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/14 14:36:11 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-void	handle_infile(t_cmd *cmd)
+int	handle_infile(t_cmd *cmd)
 {
 	int	fd_in;
 
 	fd_in = open(cmd->infile, O_RDONLY);
-	if (fd_in < 0)
-	{
-		perror("open infile");
-		g_exit_status = 1;
-		exit(1);
-	}
-	dup2(fd_in, STDIN_FILENO);
+	if (fd_in == -1)
+		return (perror("open infile"), g_exit_status = 1, 1);
+	if (dup2(fd_in, STDIN_FILENO) == -1)
+		return (perror("dup2 infile"), close(fd_in), g_exit_status = 1, 1);
 	close(fd_in);
+	return (0);
 }
 
-void	handle_outfile(t_cmd *cmd)
+int	handle_outfile(t_cmd *cmd)
 {
-	int	fd_out;
+	int	fd;
 	int	flags;
 
-	flags = O_CREAT | O_WRONLY;
-	if (cmd->append == 1)
-		flags |= O_APPEND;
+	if (cmd->append)
+		flags = O_WRONLY | O_CREAT | O_APPEND;
 	else
-		flags |= O_TRUNC;
-	if (cmd->outfile)
-	{
-		fd_out = open(cmd->outfile, flags, 0644);
-		if (fd_out < 0)
-		{
-			perror("open outfile");
-			g_exit_status = 1;
-			exit(1);
-		}
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
-	}
+		flags = O_WRONLY | O_CREAT | O_TRUNC;
+	fd = open(cmd->outfile, flags, 0644);
+	if (fd == -1)
+		return (perror(cmd->outfile), g_exit_status = 1, 1);
+	if (dup2(fd, STDOUT_FILENO) == -1)
+		return (perror("dup2 outfile"), close(fd), g_exit_status = 1, 1);
+	close(fd);
+	return (0);
 }
 
 /*dans ce cas 		if (access(cmd, X_OK) == 0)
