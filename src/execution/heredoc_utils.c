@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:55:07 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/09 13:43:04 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:09:31 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int	handle_heredoc_interrupt(t_cmd *cmd, t_termios *term)
 	return (130);
 }
 
+/*	if (WIFEXITED(status) si l enfant a fini ...
+	 et && WEXITSTATUS(status) == 130 si fini avec ctrol + c
+*/
 int	wait_for_heredoc(pid_t pid, t_cmd *cmd, t_termios *term)
 {
 	int	status;

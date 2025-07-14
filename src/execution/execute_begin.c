@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   execute_begin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:45:32 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 21:28:43 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/14 13:17:16 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
+/*	control_builtin dans le cas de "non pipes",
+	seulement un builtin (echo par ex).
+	init_exec initialitation de t_exec*/
 static int	prepare_pipeline(t_cmd *cmd_list, char ***envp, t_exec *exec)
 {
 	t_cmd	*cmd;
@@ -37,14 +40,17 @@ static int	prepare_pipeline(t_cmd *cmd_list, char ***envp, t_exec *exec)
 	return (0);
 }
 
+/*	return 1 si erreur en pipe, 0 si tout va bien
+	j'ai éliminé un pipe de plus: -----> (déjà executé en control_fork_pipes)
+		if (cmd->next && pipe(exec->pipe_fd) == -1)
+		return (perror("pipe"), free(exec->pid), 1);	*/
 static int	handle_invalid_cmd(t_cmd *cmd, t_exec *exec, int i)
 {
 	if (cmd->next && pipe(exec->pipe_fd) == -1)
 		return (perror("pipe"), free(exec->pid), 1);
 	if (cmd->next)
-		close(exec->pipe_fd[1]);
-	if (cmd->next)
 	{
+		close(exec->pipe_fd[1]);
 		if (exec->fd_in != STDIN_FILENO)
 			close(exec->fd_in);
 		exec->fd_in = exec->pipe_fd[0];
@@ -58,7 +64,7 @@ static int	handle_valid_cmd(t_cmd *cmd, t_exec *exec, char **envp, int i)
 	int	ctrl;
 
 	ctrl = control_fork_pipe(cmd, exec, i);
-	if (ctrl == -1)
+	if (ctrl != 0)
 		return (free(exec->pid), 1);
 	execute_fork(cmd, exec, envp, i);
 	return (0);
@@ -73,20 +79,20 @@ static int	run_pipeline(t_cmd *cmd_list, t_exec *exec, char ***envp)
 	i = 0;
 	while (cmd)
 	{
-		if ((cmd->invalid && handle_invalid_cmd(cmd, exec, i))
-			|| (!cmd->invalid && handle_valid_cmd(cmd, exec, *envp, i)))
+		if ((cmd->invalid && handle_invalid_cmd(cmd, exec, i)) || (!cmd->invalid
+				&& handle_valid_cmd(cmd, exec, *envp, i)))
 			return (1);
 		i++;
 		cmd = cmd->next;
 	}
-	wait_all_processes(exec, cmd_list);
+	wait_all_processes(exec);
 	if (exec->fd_in != STDIN_FILENO)
 		close(exec->fd_in);
 	free(exec->pid);
 	return (0);
 }
 
-/*	prep 1 builtin executes dans le pere
+/*	prep 1 builtin executés dans le pere
 	prep -1 error
 	sinon, des children and pipes*/
 int	execute_pipeline(t_cmd *cmd_list, char ***envp)
@@ -103,43 +109,3 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 		return (1);
 	return (0);
 }
-
-/*
-** initialiser exec (le struct)
-** controler si c'est un builtin hors le procesus fils exemple:
-** comme exit, unset, export et cd (parce que ils mofifient envp)
-** génerer fork et pipe (control_for_pipe)
-** executer les forks (tous les fils avec execute_fork)
-** wait_processes attends tout les procces pour eviter les bugs
-int	execute_pipeline(t_cmd *cmd_list, char ***envp)
-{
-	t_exec	exec;
-	t_cmd	*cmd;
-	int		i;
-	int		control;
-	int		status;
-
-	i = 0;
-	cmd = cmd_list;
-	status = heredoc(cmd_list);
-	if (status)
-		return (g_exit_status = status);
-	if (control_builtin(cmd, envp))
-		return (0);
-	if (init_exec(&exec, countcmds(cmd_list)))
-		return (1);
-	while (cmd)
-	{
-		control = control_fork_pipe(cmd, &exec, i);
-		if (control == -1)
-			return (free(exec.pid), 1);
-		execute_fork(cmd, &exec, (*envp), i);
-		i++;
-		cmd = cmd->next;
-	}
-	wait_all_processes(&exec);
-	if (exec.fd_in != STDIN_FILENO)
-		close(exec.fd_in);
-	free(exec.pid);
-	return (0);
-}*/

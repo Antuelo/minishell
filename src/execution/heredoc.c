@@ -6,17 +6,21 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/09 13:57:00 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/10 21:21:42 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
+#define MENS "minishell: warning: here-document delimited by end-of-file\n"
+
+/*STDERR_FILENO = Standard error output. Expands to: 2*/
 static void	heredoc_signal_handler(int signo)
 {
 	(void)signo;
-	write(STDERR_FILENO, "^C", 2);
+	write(STDERR_FILENO, "^C", 3);
+	signal(SIGINT, handle_signs);
 	exit(130);
 }
 
@@ -40,9 +44,7 @@ static void	child_heredoc(t_cmd *cmd, char *delim)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putstr_fd("\
-				minishell: warning: here-document delimited by end-of-file\n",
-				STDERR_FILENO);
+			ft_putstr_fd(MENS, STDERR_FILENO);
 			break ;
 		}
 		if (ft_strcmp(line, delim) == 0)
@@ -75,7 +77,6 @@ static int	execute_heredoc(t_cmd *cmd, char *delim)
 		return (close_pipes(cmd->hdoc_pipe), perror("fork - heredoc"), 1);
 	if (pid == 0)
 		child_heredoc(cmd, delim);
-	close(cmd->hdoc_pipe[1]);
 	status = wait_for_heredoc(pid, cmd, &origin_termios);
 	signal(SIGINT, handle_signs);
 	return (status);

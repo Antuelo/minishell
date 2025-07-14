@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/01 23:45:33 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:18:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,23 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 	return (0);
 }
 
+/*control = control d erreurs pour le exit_status*/
 int	control_infiles(t_cmd *cmd)
 {
+	int	control;
+
+	control = 0;
 	if (cmd->outfile != NULL && cmd->append != -1)
-		handle_outfile(cmd);
+	{
+		if (handle_outfile(cmd))
+			control = 1;
+	}
 	if (cmd->infile)
-		handle_infile(cmd);
+	{
+		if (handle_infile(cmd))
+			control = 1;
+	}
+	if (control)
+		return (g_exit_status = 1, 1);
 	return (0);
 }

@@ -6,14 +6,14 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/05 00:06:32 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:17:29 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-/*	ça assure que on ferme le dernier dans un processus fils fd
+/*	ça assure que on ferme le dernier fd dans un processus fils
 	if (!cmd->next)
 		close(exec->pipe_fd[0]);
 	1) Si heredamos un fd distinto de STDIN, redirígelo a STDIN_FILENO
