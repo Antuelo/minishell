@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:43:54 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/14 15:31:54 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/20 11:08:52 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ static int	update_status(int status, int idx, int *last_exit, int *last_idx)
 		if (sig == SIGINT)
 			saw_sigint = 1;
 		else if (sig == SIGQUIT && WCOREDUMP(status))
-			write(1, "Quit (core dumped)\n", 19);
+		{
+			write(1, "Quit (core dumped)", 19);
+			saw_sigint = 1;
+			return (*last_idx = 4242, *last_exit = 131, saw_sigint);
+		}
 		*last_exit = 128 + sig;
 		*last_idx = idx;
 	}
@@ -91,7 +95,7 @@ static void	set_global_exit(int saw_sigint, int last_exit, int last_idx,
 {
 	if (saw_sigint)
 		write(1, "\n", 1);
-	if (last_idx == cmd_count - 1)
+	if (last_idx == cmd_count - 1 || last_idx == 4242)
 		g_exit_status = last_exit;
 	else
 		g_exit_status = 1;
@@ -129,6 +133,8 @@ void	wait_all_processes(t_exec *exec)
 		{
 			waitpid(exec->pid[i], &status, 0);
 			saw_sigint = update_status(status, i, &last_exit, &last_idx);
+			if (saw_sigint)
+				break ;
 		}
 	}
 	set_global_exit(saw_sigint, last_exit, last_idx, exec->cmd_count);
