@@ -23,8 +23,9 @@ $(LIBFT):
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 	@echo "✅ MINISHELL compiled successfully!"
-	@echo "🧪 Ejecutando MINISHELL con Valgrind..."
-	@valgrind --leak-check=full --show-leak-kinds=definite --log-file=valgrind_log.txt ./minishell
+#	@echo "\nexecutings MINISHELL with Valgrind !!!"
+#	@echo "result in valgrind_log.txt...\n"
+#	@valgrind --leak-check=full --show-leak-kinds=definite --log-file=valgrind_log.txt ./minishell
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
