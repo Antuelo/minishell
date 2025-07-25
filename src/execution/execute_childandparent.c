@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_childandparent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:10:28 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/14 13:16:56 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:06:16 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 	if (id_builtin > 0)
 	{
 		if (id_builtin == 5)
-			ft_exit(cmd->args);
+			ft_exit(cmd->args, &envp);
 		count = count_env(envp);
 		status = exec_builtin(cmd, &envp);
 		free_envp(envp, count);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:10:49 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/14 14:23:13 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:05:39 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 	free_cmd(cmd);
 	free_envp(envp, count_env(envp));
 	if (errno == ENOENT || errno == ENOTDIR)
-		exit(127);
+		quit_minishell(envp, 127);
 	else
-		exit(1);
+		quit_minishell(envp, 1);
 }

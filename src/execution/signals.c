@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:16:06 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/01 23:39:45 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:12:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,13 @@ void	handle_signs(int signo)
 	rl_on_new_line();
 	rl_redisplay();
 	g_exit_status = 130;
+}
+
+void	quit_minishell(char **envp, int code)
+{
+	if (envp)
+		free_envp(envp, count_env(envp));
+	clear_history();
+	rl_clear_history();
+	exit(code);
 }

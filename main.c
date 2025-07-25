@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 16:01:28 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/12 09:43:52 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:24:48 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,19 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 			cmds = parse_line(input, my_envp, g_exit_status);
 			second_control(cmds, &my_envp);
+			if (cmds)
+				free_cmd_list(cmds);
 		}
+		else
+			cmds = NULL;
 		free(input);
 	}
+	quit_minishell(my_envp, g_exit_status);
 	return (0);
 }
 
-// Affiche le contenu de la structure t_cmd pour debug
-/*void	print_cmd(t_cmd *cmd)
-{
-	int	i;
+/*
 
-	if (!cmd)
-		return ;
-	printf("Infile    : %s\n", cmd->infile);
-	printf("Outfile   : %s\n", cmd->outfile);
-	printf("Append    : %d\n", cmd->append);
-	printf("Heredoc   : %d\n", cmd->heredoc);
-	printf("Delimiter : %s\n", cmd->delimiter);
-	printf("Args      : ");
-	if (cmd->args)
-	{
-		i = 0;
-		while (cmd->args[i])
-			printf("[%s] ", cmd->args[i++]);
-		printf("\n");
-	}
-}*/
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=a.supp --log-file=val_log.txt ./minishell
+
+*/

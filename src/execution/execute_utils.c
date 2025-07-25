@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/14 14:18:37 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:59:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 	if (!cmd_list->next && !cmd_list->infile && !cmd_list->outfile && id > 0)
 	{
 		if (id == 5)
-			ft_exit(cmd_list->args);
+			ft_exit(cmd_list->args, envp);
 		else
 			g_exit_status = exec_builtin(cmd_list, envp);
 		return (1);

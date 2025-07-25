@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 16:02:32 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 16:02:32 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/25 17:58:32 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,33 @@ static int	sanitize_input(char *line)
 	return (1);
 }
 
+static int	prep_tokens(char *line, char **envp, int exit_code, t_token **out)
+{
+	if (!sanitize_input(line))
+		return (0);
+	*out = tokenize(line);
+	if (!*out)
+		return (0);
+	if (!syntax_is_valid(*out))
+		return (free_tokens(*out), 0);
+	*out = expand_tokens(*out, envp, exit_code);
+	if (!*out)
+		return (0);
+	remove_quotes_from_tokens(*out);
+	return (1);
+}
+
 // Fonction principale de parsing : transforme une ligne en liste de commandes
 t_cmd	*parse_line(char *line, char **envp, int exit_code)
 {
 	t_token	*tokens;
 	t_cmd	*cmds;
 
-	if (!sanitize_input(line))
+	if (!prep_tokens(line, envp, exit_code, &tokens))
 		return (NULL);
-	tokens = tokenize(line);
-	if (!tokens)
-		return (NULL);
-	if (!syntax_is_valid(tokens))
-	{
-		free_tokens(tokens);
-		return (NULL);
-	}
-	tokens = expand_tokens(tokens, envp, exit_code);
-	if (!tokens)
-		return (NULL);
-	remove_quotes_from_tokens(tokens);
 	cmds = build_cmd_list_from_tokens(tokens);
 	free_tokens(tokens);
 	if (!cmds)
-	{
-		g_exit_status = 1;
-		return (NULL);
-	}
+		return (g_exit_status = 1, NULL);
 	return (cmds);
 }

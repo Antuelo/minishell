@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:10:49 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/09 13:18:29 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 17:17:15 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ int	ft_unset(char **args, char ***envp)
 	return (0);
 }
 
-int	ft_exit(char **args)
+int	ft_exit(char **args, char ***envp)
 {
 	int	i;
 
 	if (isatty(STDIN_FILENO))
 		write(2, "exit\n", 5);
 	if (!args[1])
-		exit(0);
+		quit_minishell(*envp, 0);
 	i = 0;
 	while (args[1][i])
 	{
@@ -58,7 +58,7 @@ int	ft_exit(char **args)
 				&& (args[1][i] == '-' || args[1][i] == '+')))
 		{
 			ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
-			exit(2);
+			quit_minishell(*envp, 2);
 		}
 		i++;
 	}
@@ -68,7 +68,8 @@ int	ft_exit(char **args)
 		g_exit_status = 1;
 		return (1);
 	}
-	exit((unsigned char)ft_atoi(args[1]));
+	quit_minishell(*envp, (unsigned char)ft_atoi(args[1]));
+	return (0);
 }
 
 int	ft_cd(char **args, char ***envp)

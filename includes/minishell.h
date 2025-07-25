@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 13:29:38 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 13:29:38 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/07/25 17:30:28 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int						execute_pipeline(t_cmd *cmd_list, char ***envp);
 char					*get_cmd_path(char *cmd, char **envp);
 int						control_builtin(t_cmd *cmd_list, char ***envp);
 int						init_exec(t_exec *exec, int count);
+void					quit_minishell(char **envp, int code);
+
 
 /*builtins fork et pipes*/
 int						is_builtin(char *cmd);
@@ -92,7 +94,7 @@ int						ft_env(char **envp);
 int						ft_pwd(void);
 int						ft_unset(char **args, char ***envp);
 char					**rebuild_envp(char **args, char **envp, int i, int j);
-int						ft_exit(char **args);
+int						ft_exit(char **args, char ***envp);
 int						ft_export(char **args, char ***envp, t_cmd *cmd);
 void					tryed_env(char **envp);
 int						ft_cd(char **args, char ***envp);
