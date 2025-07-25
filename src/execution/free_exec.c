@@ -58,12 +58,12 @@ static int	update_status(int status, int idx, int *last_exit, int *last_idx)
 	if (WIFSIGNALED(status))
 	{
 		if (sig == SIGINT)
-			saw_sigint = 1;
+			saw_sigint = 2;
 		else if (sig == SIGQUIT && WCOREDUMP(status))
 		{
 			write(1, "Quit (core dumped)", 19);
 			saw_sigint = 1;
-			return (*last_idx = 4242, *last_exit = 131, saw_sigint);
+			return (*last_idx = 424242, *last_exit = 131, saw_sigint);
 		}
 		*last_exit = 128 + sig;
 		*last_idx = idx;
@@ -95,8 +95,10 @@ static void	set_global_exit(int saw_sigint, int last_exit, int last_idx,
 {
 	if (saw_sigint)
 		write(1, "\n", 1);
-	if (last_idx == cmd_count - 1 || last_idx == 4242)
+	if (last_idx == cmd_count - 1 || last_idx == 424242)
 		g_exit_status = last_exit;
+	else if (saw_sigint == 2)
+		g_exit_status = 130;
 	else
 		g_exit_status = 1;
 	signal(SIGINT, handle_signs);
