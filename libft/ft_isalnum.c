@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 22:58:05 by anoviedo          #+#    #+#             */
-/*   Updated: 2024/10/17 14:53:07 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/25 13:32:25 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/25 13:33:21 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int	ft_isalnum(int h)
 {
-	return ((h >= 'a' && h <= 'z') || (h >= 'A' && h <= 'Z') || \
-		(h >= '0' && h <= '9'));
+	return ((h >= 'a' && h <= 'z') || (h >= 'A' && h <= 'Z')
+		|| (h >= '0' && h <= '9'));
 }

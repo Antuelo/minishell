@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 13:41:59 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/26 15:10:41 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/25 13:29:56 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/25 13:29:56 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	exec_builtin(t_cmd *cmd, char ***envp)
 	else if (builtin_id == 5)
 		return (ft_exit(cmd->args));
 	else if (builtin_id == 6)
-		return (ft_export(cmd->args, envp));
+		return (ft_export(cmd->args, envp, cmd));
 	else if (builtin_id == 7)
 		return (ft_cd(cmd->args, envp));
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/29 17:20:19 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/25 10:08:04 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/25 13:30:21 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/25 13:31:46 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,12 @@ int	add_or_replace_var(char ***envp, char *new_var)
 	return (0);
 }
 
-int	ft_export(char **args, char ***envp)
+int	ft_export(char **args, char ***envp, t_cmd *cmd)
 {
 	int	i;
 
+	if (cmd && cmd->next)
+		return (0);
 	i = 1;
 	if (!args || !args[1])
 		return (tryed_env(*envp), 0);
