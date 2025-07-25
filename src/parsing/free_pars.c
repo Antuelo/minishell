@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_pars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 17:48:43 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 20:01:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	free_cmd_list(t_cmd *cmd)
 		cmd = next;
 	}
 }
-
 
 // Libère line, tokens et la liste de commandes cmds
 void	free_all(char *line, t_token *tokens, t_cmd *cmds)

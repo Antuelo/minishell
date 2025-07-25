@@ -6,24 +6,12 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:10:49 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/25 19:48:13 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 19:57:34 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
-
-int	ft_pwd(void)
-{
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		return (perror("pwd"), 1);
-	ft_putendl_fd(pwd, 1);
-	free(pwd);
-	return (0);
-}
 
 /*je utilise ***envp pour modifier la racine...
 "count" necessaire pour eliminer et liberer le vieux envp*/
@@ -43,7 +31,52 @@ int	ft_unset(char **args, char ***envp)
 	return (0);
 }
 
+int	validate_exit_args(char **args)
+{
+	int	i;
+
+	if (!args[1])
+		return (0);
+	i = 0;
+	while (args[1][i])
+	{
+		if ((args[1][i] < '0' || args[1][i] > '9')
+			&& !(i == 0 && (args[1][i] == '-' || args[1][i] == '+')))
+			return (2);
+		i++;
+	}
+	if (args[2])
+		return (1);
+	return (0);
+}
+
 int	ft_exit(char **args, char ***envp, t_cmd *cmd)
+{
+	int	err;
+
+	if (cmd)
+		free_cmd(cmd);
+	if (isatty(STDIN_FILENO))
+		write(2, "exit\n", 5);
+	err = validate_exit_args(args);
+	if (err == 2)
+	{
+		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
+		quit_minishell(*envp, 2);
+	}
+	if (err == 1)
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		g_exit_status = 1;
+		return (1);
+	}
+	if (!args[1])
+		quit_minishell(*envp, 0);
+	quit_minishell(*envp, (unsigned char)ft_atoi(args[1]));
+	return (0);
+}
+
+/*int	ft_exit(char **args, char ***envp, t_cmd *cmd)
 {
 	int	i;
 
@@ -72,7 +105,7 @@ int	ft_exit(char **args, char ***envp, t_cmd *cmd)
 	}
 	quit_minishell(*envp, (unsigned char)ft_atoi(args[1]));
 	return (0);
-}
+}*/
 
 int	ft_cd(char **args, char ***envp)
 {

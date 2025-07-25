@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 13:29:38 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 19:47:10 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 20:00:26 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ char					*get_cmd_path(char *cmd, char **envp);
 int						control_builtin(t_cmd *cmd_list, char ***envp);
 int						init_exec(t_exec *exec, int count);
 void					quit_minishell(char **envp, int code);
-
 
 /*builtins fork et pipes*/
 int						is_builtin(char *cmd);

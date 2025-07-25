@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:16:06 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/25 18:12:49 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 19:55:23 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,16 @@ void	quit_minishell(char **envp, int code)
 	clear_history();
 	rl_clear_history();
 	exit(code);
+}
+
+int	ft_pwd(void)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (perror("pwd"), 1);
+	ft_putendl_fd(pwd, 1);
+	free(pwd);
+	return (0);
 }
