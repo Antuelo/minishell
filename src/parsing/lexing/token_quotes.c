@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_utils.c                                  :+:      :+:    :+:   */
+/*   token_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 20:50:12 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 20:51:00 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/25 14:38:10 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/25 14:41:01 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,34 @@ static void	append_char(char *buffer, int *j, char c)
 	(*j)++;
 }
 
-static void	consume_single_quoted(char *line, char *buffer, t_expand_flag *ctx)
+static void    consume_single_quoted(char *line, char *buffer, t_expand_flag *ctx)
 {
-	ctx->sq_flag = 1;
-	append_char(buffer, &ctx->j, line[ctx->i++]);
-	while (line[ctx->i] && line[ctx->i] != '\'')
-		append_char(buffer, &ctx->j, line[ctx->i++]);
-	if (line[ctx->i] == '\'')
-		append_char(buffer, &ctx->j, line[ctx->i++]);
+    int    start;
+
+    ctx->sq_flag = 1;
+    ctx->i++;
+    start = ctx->i;
+    while (line[ctx->i] && line[ctx->i] != '\'')
+        ctx->i++;
+    while (start < ctx->i)
+        append_char(buffer, &ctx->j, line[start++]);
+    if (line[ctx->i] == '\'')
+        ctx->i++;
 }
 
-static void	consume_double_quoted(char *line, char *buffer, t_expand_flag *ctx)
+static void    consume_double_quoted(char *line, char *buffer, t_expand_flag *ctx)
 {
-	ctx->dq_flag = 1;
-	ctx->i++;
-	while (line[ctx->i] && line[ctx->i] != '"')
-		append_char(buffer, &ctx->j, line[ctx->i++]);
-	if (line[ctx->i] == '"')
-		ctx->i++;
+    int    start;
+
+    ctx->dq_flag = 1;
+    ctx->i++;
+    start = ctx->i;
+    while (line[ctx->i] && line[ctx->i] != '"')
+        ctx->i++;
+    while (start < ctx->i)
+        append_char(buffer, &ctx->j, line[start++]);
+    if (line[ctx->i] == '"')
+        ctx->i++;
 }
 
 t_token	*handle_combined_word(char *line, int *i)

@@ -26,6 +26,7 @@ $(NAME): $(OBJS)
 #	@echo "\nexecutings MINISHELL with Valgrind !!!"
 #	@echo "result in valgrind_log.txt...\n"
 #	@valgrind --leak-check=full --show-leak-kinds=definite --log-file=valgrind_log.txt ./minishell
+#	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=a.supp --log-file="valg.log" ./minishell
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
