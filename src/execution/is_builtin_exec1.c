@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:10:49 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/25 17:17:15 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 19:48:13 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ int	ft_unset(char **args, char ***envp)
 	return (0);
 }
 
-int	ft_exit(char **args, char ***envp)
+int	ft_exit(char **args, char ***envp, t_cmd *cmd)
 {
 	int	i;
 
+	if (cmd)
+		free_cmd(cmd);
 	if (isatty(STDIN_FILENO))
 		write(2, "exit\n", 5);
 	if (!args[1])

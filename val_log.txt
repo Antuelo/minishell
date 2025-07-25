@@ -1,62 +1,714 @@
-==370601== Memcheck, a memory error detector
-==370601== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==370601== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==370601== Command: ./minishell
-==370601== Parent PID: 298678
-==370601==
-==370601==
-==370601== FILE DESCRIPTORS: 6 open (3 std) at exit.
-==370601== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==370601==    <inherited from parent>
-==370601==
-==370601== Open file descriptor 41: /home/anoviedo/.config/Code/logs/20250725T154927/ptyhost.log
-==370601==    <inherited from parent>
-==370601==
-==370601== Open file descriptor 3: /goinfre/anoviedo/minishel-github/val_log.txt
-==370601==    <inherited from parent>
-==370601==
-==370601==
-==370601== HEAP SUMMARY:
-==370601==     in use at exit: 208,309 bytes in 226 blocks
-==370601==   total heap usage: 508 allocs, 282 frees, 232,130 bytes allocated
-==370601==
-==370601==  b5ytes in 1 blocks are still reachable in loss record 2 of 67
-==370601==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==370601==    by 0x497058E: strdup (strdup.c:42)
-==370601==    by 0x109ECB: copy_argument (fill_cmd_utils.c:76)
-==370601==    by 0x109A05: process_word (fill_cmd.c:26)
-==370601==    by 0x109B20: fill_cmd_from_tokens (fill_cmd.c:56)
-==370601==    by 0x10987D: handle_new_cmd (cmd_builder_utils.c:35)
-==370601==    by 0x10990E: process_command (cmd_builder_utils.c:56)
-==370601==    by 0x109CC7: build_cmd_list_from_tokens (cmd_builder.c:56)
-==370601==    by 0x10B06A: parse_line (parse_line.c:55)
-==370601==    by 0x10976D: main (main.c:72)
-==370601==
-==370601== 16 bytes in 1 blocks are still reachable in loss record 10 of 67
-==370601==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==370601==    by 0x109DE6: allocate_args_array (fill_cmd_utils.c:51)
-==370601==    by 0x109AC8: fill_cmd_from_tokens (fill_cmd.c:47)
-==370601==    by 0x10987D: handle_new_cmd (cmd_builder_utils.c:35)
-==370601==    by 0x10990E: process_command (cmd_builder_utils.c:56)
-==370601==    by 0x109CC7: build_cmd_list_from_tokens (cmd_builder.c:56)
-==370601==    by 0x10B06A: parse_line (parse_line.c:55)
-==370601==    by 0x10976D: main (main.c:72)
-==370601==
-==370601== 72 bytes in 1 blocks are still reachable in loss record 19 of 67
-==370601==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==370601==    by 0x109BC3: init_cmd (cmd_builder.c:21)
-==370601==    by 0x109849: handle_new_cmd (cmd_builder_utils.c:32)
-==370601==    by 0x10990E: process_command (cmd_builder_utils.c:56)
-==370601==    by 0x109CC7: build_cmd_list_from_tokens (cmd_builder.c:56)
-==370601==    by 0x10B06A: parse_line (parse_line.c:55)
-==370601==    by 0x10976D: main (main.c:72)
-==370601==
-==370601== LEAK SUMMARY:
-==370601==    definitely lost: 0 bytes in 0 blocks
-==370601==    indirectly lost: 0 bytes in 0 blocks
-==370601==      possibly lost: 0 bytes in 0 blocks
-==370601==    still reachable: 93 bytes in 3 blocks
-==370601==         suppressed: 208,216 bytes in 223 blocks
-==370601==
-==370601== For lists of detected and suppressed errors, rerun with: -s
-==370601== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12631== Memcheck, a memory error detector
+==12631== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12631== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==12631== Command: ./minishell
+==12631== Parent PID: 5496
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B877: free_cmd_list (free_pars.c:58)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55680 is 48 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B7A3: free_cmd (free_pars.c:33)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55658 is 8 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B7C0: free_cmd (free_pars.c:35)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55660 is 16 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B7DD: free_cmd (free_pars.c:37)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55670 is 32 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B7FA: free_cmd (free_pars.c:39)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55650 is 0 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B806: free_cmd (free_pars.c:40)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55650 is 0 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B76B: ft_free_strarray (free_pars.c:23)
+==12631==    by 0x10B810: free_cmd (free_pars.c:40)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b556e0 is 0 bytes inside a block of size 24 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B77E: ft_free_strarray (free_pars.c:25)
+==12631==    by 0x10B810: free_cmd (free_pars.c:40)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B4CF: allocate_args_array (fill_cmd_utils.c:51)
+==12631==    by 0x10B315: fill_cmd_from_tokens (fill_cmd.c:47)
+==12631==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B74C: ft_free_strarray (free_pars.c:24)
+==12631==    by 0x10B810: free_cmd (free_pars.c:40)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b556e0 is 0 bytes inside a block of size 24 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B77E: ft_free_strarray (free_pars.c:25)
+==12631==    by 0x10B810: free_cmd (free_pars.c:40)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B4CF: allocate_args_array (fill_cmd_utils.c:51)
+==12631==    by 0x10B315: fill_cmd_from_tokens (fill_cmd.c:47)
+==12631==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid free() / delete / delete[] / realloc()
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B756: ft_free_strarray (free_pars.c:24)
+==12631==    by 0x10B810: free_cmd (free_pars.c:40)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55740 is 0 bytes inside a block of size 5 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B756: ft_free_strarray (free_pars.c:24)
+==12631==    by 0x10B810: free_cmd (free_pars.c:40)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x495E58E: strdup (strdup.c:42)
+==12631==    by 0x10B5B4: copy_argument (fill_cmd_utils.c:76)
+==12631==    by 0x10B252: process_word (fill_cmd.c:26)
+==12631==    by 0x10B36D: fill_cmd_from_tokens (fill_cmd.c:56)
+==12631==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid free() / delete / delete[] / realloc()
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B77E: ft_free_strarray (free_pars.c:25)
+==12631==    by 0x10B810: free_cmd (free_pars.c:40)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b556e0 is 0 bytes inside a block of size 24 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B77E: ft_free_strarray (free_pars.c:25)
+==12631==    by 0x10B810: free_cmd (free_pars.c:40)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B4CF: allocate_args_array (fill_cmd_utils.c:51)
+==12631==    by 0x10B315: fill_cmd_from_tokens (fill_cmd.c:47)
+==12631==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 4
+==12631==    at 0x10B815: free_cmd (free_pars.c:41)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b5566c is 28 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid free() / delete / delete[] / realloc()
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55650 is 0 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12758== 
+==12758== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==12758== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250725T192739/remoteTelemetry.log
+==12758==    <inherited from parent>
+==12758== 
+==12758== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250725T192739/remoteagent.log
+==12758==    <inherited from parent>
+==12758== 
+==12758== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250725T192739/ptyhost.log
+==12758==    <inherited from parent>
+==12758== 
+==12758== Open file descriptor 3: /home/antuel/minishell/val_log.txt
+==12758==    <inherited from parent>
+==12758== 
+==12758== 
+==12758== HEAP SUMMARY:
+==12758==     in use at exit: 212,573 bytes in 276 blocks
+==12758==   total heap usage: 519 allocs, 247 frees, 239,904 bytes allocated
+==12758== 
+==12758== 3 bytes in 1 blocks are still reachable in loss record 1 of 74
+==12758==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12758==    by 0x495E58E: strdup (strdup.c:42)
+==12758==    by 0x10B5B4: copy_argument (fill_cmd_utils.c:76)
+==12758==    by 0x10B252: process_word (fill_cmd.c:26)
+==12758==    by 0x10B36D: fill_cmd_from_tokens (fill_cmd.c:56)
+==12758==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12758==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12758==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12758==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12758==    by 0x10976D: main (main.c:72)
+==12758== 
+==12758== 5 bytes in 1 blocks are still reachable in loss record 4 of 74
+==12758==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12758==    by 0x10F9F8: ft_strdup (in /home/antuel/minishell/minishell)
+==12758==    by 0x109A69: set_heredoc (redirections.c:85)
+==12758==    by 0x109B69: handle_redirection (redirections.c:106)
+==12758==    by 0x10B673: handle_redir_fail (fill_cmd_utils.c:99)
+==12758==    by 0x10B2B7: handle_redir_and_advance (fill_cmd.c:36)
+==12758==    by 0x10B39B: fill_cmd_from_tokens (fill_cmd.c:58)
+==12758==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12758==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12758==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12758==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12758==    by 0x10976D: main (main.c:72)
+==12758== 
+==12758== 16 bytes in 1 blocks are still reachable in loss record 13 of 74
+==12758==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12758==    by 0x1099F4: set_heredoc (redirections.c:80)
+==12758==    by 0x109B69: handle_redirection (redirections.c:106)
+==12758==    by 0x10B673: handle_redir_fail (fill_cmd_utils.c:99)
+==12758==    by 0x10B2B7: handle_redir_and_advance (fill_cmd.c:36)
+==12758==    by 0x10B39B: fill_cmd_from_tokens (fill_cmd.c:58)
+==12758==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12758==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12758==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12758==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12758==    by 0x10976D: main (main.c:72)
+==12758== 
+==12758== 32 bytes in 2 blocks are still reachable in loss record 19 of 74
+==12758==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12758==    by 0x10B4CF: allocate_args_array (fill_cmd_utils.c:51)
+==12758==    by 0x10B315: fill_cmd_from_tokens (fill_cmd.c:47)
+==12758==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12758==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12758==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12758==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12758==    by 0x10976D: main (main.c:72)
+==12758== 
+==12758== 144 bytes in 2 blocks are still reachable in loss record 28 of 74
+==12758==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12758==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12758==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12758==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12758==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12758==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12758==    by 0x10976D: main (main.c:72)
+==12758== 
+==12758== 320 bytes in 1 blocks are still reachable in loss record 32 of 74
+==12758==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12758==    by 0x10E991: copy_envp (mini_envp.c:50)
+==12758==    by 0x1096F5: main (main.c:60)
+==12758== 
+==12758== 3,788 bytes in 39 blocks are still reachable in loss record 49 of 74
+==12758==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12758==    by 0x10F9F8: ft_strdup (in /home/antuel/minishell/minishell)
+==12758==    by 0x10E9DB: copy_envp (mini_envp.c:55)
+==12758==    by 0x1096F5: main (main.c:60)
+==12758== 
+==12758== LEAK SUMMARY:
+==12758==    definitely lost: 0 bytes in 0 blocks
+==12758==    indirectly lost: 0 bytes in 0 blocks
+==12758==      possibly lost: 0 bytes in 0 blocks
+==12758==    still reachable: 4,308 bytes in 47 blocks
+==12758==         suppressed: 208,265 bytes in 229 blocks
+==12758== 
+==12758== For lists of detected and suppressed errors, rerun with: -s
+==12758== ERROR SUMMARY: 16 errors from 12 contexts (suppressed: 0 from 0)
+==12776== 
+==12776== FILE DESCRIPTORS: 8 open (3 std) at exit.
+==12776== Open file descriptor 5:
+==12776==    at 0x49CB07D: pipe (pipe.c:29)
+==12776==    by 0x10D4B7: execute_heredoc (heredoc.c:72)
+==12776==    by 0x10D5FB: heredoc (heredoc.c:100)
+==12776==    by 0x10E57A: prepare_pipeline (execute_begin.c:24)
+==12776==    by 0x10E85C: execute_pipeline (execute_begin.c:103)
+==12776==    by 0x109636: second_control (main.c:25)
+==12776==    by 0x109784: main (main.c:73)
+==12776== 
+==12776== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250725T192739/remoteTelemetry.log
+==12776==    <inherited from parent>
+==12776== 
+==12776== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250725T192739/remoteagent.log
+==12776==    <inherited from parent>
+==12776== 
+==12776== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250725T192739/ptyhost.log
+==12776==    <inherited from parent>
+==12776== 
+==12776== Open file descriptor 3: /home/antuel/minishell/val_log.txt
+==12776==    <inherited from parent>
+==12776== 
+==12776== 
+==12776== HEAP SUMMARY:
+==12776==     in use at exit: 212,629 bytes in 277 blocks
+==12776==   total heap usage: 515 allocs, 242 frees, 239,861 bytes allocated
+==12776== 
+==12776== 3 bytes in 1 blocks are still reachable in loss record 1 of 75
+==12776==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12776==    by 0x495E58E: strdup (strdup.c:42)
+==12776==    by 0x10B5B4: copy_argument (fill_cmd_utils.c:76)
+==12776==    by 0x10B252: process_word (fill_cmd.c:26)
+==12776==    by 0x10B36D: fill_cmd_from_tokens (fill_cmd.c:56)
+==12776==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12776==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12776==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12776==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12776==    by 0x10976D: main (main.c:72)
+==12776== 
+==12776== 5 bytes in 1 blocks are still reachable in loss record 2 of 75
+==12776==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12776==    by 0x10F9F8: ft_strdup (in /home/antuel/minishell/minishell)
+==12776==    by 0x109A69: set_heredoc (redirections.c:85)
+==12776==    by 0x109B69: handle_redirection (redirections.c:106)
+==12776==    by 0x10B673: handle_redir_fail (fill_cmd_utils.c:99)
+==12776==    by 0x10B2B7: handle_redir_and_advance (fill_cmd.c:36)
+==12776==    by 0x10B39B: fill_cmd_from_tokens (fill_cmd.c:58)
+==12776==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12776==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12776==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12776==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12776==    by 0x10976D: main (main.c:72)
+==12776== 
+==12776== 8 bytes in 1 blocks are still reachable in loss record 5 of 75
+==12776==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12776==    by 0x10D6BA: init_exec (execute_utils.c:22)
+==12776==    by 0x10E613: prepare_pipeline (execute_begin.c:38)
+==12776==    by 0x10E85C: execute_pipeline (execute_begin.c:103)
+==12776==    by 0x109636: second_control (main.c:25)
+==12776==    by 0x109784: main (main.c:73)
+==12776== 
+==12776== 16 bytes in 1 blocks are still reachable in loss record 12 of 75
+==12776==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12776==    by 0x1099F4: set_heredoc (redirections.c:80)
+==12776==    by 0x109B69: handle_redirection (redirections.c:106)
+==12776==    by 0x10B673: handle_redir_fail (fill_cmd_utils.c:99)
+==12776==    by 0x10B2B7: handle_redir_and_advance (fill_cmd.c:36)
+==12776==    by 0x10B39B: fill_cmd_from_tokens (fill_cmd.c:58)
+==12776==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12776==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12776==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12776==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12776==    by 0x10976D: main (main.c:72)
+==12776== 
+==12776== 32 bytes in 2 blocks are still reachable in loss record 20 of 75
+==12776==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12776==    by 0x10B4CF: allocate_args_array (fill_cmd_utils.c:51)
+==12776==    by 0x10B315: fill_cmd_from_tokens (fill_cmd.c:47)
+==12776==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12776==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12776==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12776==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12776==    by 0x10976D: main (main.c:72)
+==12776== 
+==12776== 144 bytes in 2 blocks are still reachable in loss record 29 of 75
+==12776==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12776==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12776==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12776==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12776==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12776==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12776==    by 0x10976D: main (main.c:72)
+==12776== 
+==12776== 320 bytes in 1 blocks are still reachable in loss record 33 of 75
+==12776==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12776==    by 0x10E991: copy_envp (mini_envp.c:50)
+==12776==    by 0x1096F5: main (main.c:60)
+==12776== 
+==12776== 3,788 bytes in 39 blocks are still reachable in loss record 50 of 75
+==12776==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12776==    by 0x10F9F8: ft_strdup (in /home/antuel/minishell/minishell)
+==12776==    by 0x10E9DB: copy_envp (mini_envp.c:55)
+==12776==    by 0x1096F5: main (main.c:60)
+==12776== 
+==12776== LEAK SUMMARY:
+==12776==    definitely lost: 0 bytes in 0 blocks
+==12776==    indirectly lost: 0 bytes in 0 blocks
+==12776==      possibly lost: 0 bytes in 0 blocks
+==12776==    still reachable: 4,316 bytes in 48 blocks
+==12776==         suppressed: 208,313 bytes in 229 blocks
+==12776== 
+==12776== For lists of detected and suppressed errors, rerun with: -s
+==12776== ERROR SUMMARY: 16 errors from 12 contexts (suppressed: 0 from 0)
+==12631== Invalid read of size 8
+==12631==    at 0x10B7EA: free_cmd (free_pars.c:38)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55f70 is 32 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B76B: ft_free_strarray (free_pars.c:23)
+==12631==    by 0x10B7F5: free_cmd (free_pars.c:38)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b56030 is 0 bytes inside a block of size 16 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B77E: ft_free_strarray (free_pars.c:25)
+==12631==    by 0x10B7F5: free_cmd (free_pars.c:38)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x1099F4: set_heredoc (redirections.c:80)
+==12631==    by 0x109B69: handle_redirection (redirections.c:106)
+==12631==    by 0x10B673: handle_redir_fail (fill_cmd_utils.c:99)
+==12631==    by 0x10B2B7: handle_redir_and_advance (fill_cmd.c:36)
+==12631==    by 0x10B39B: fill_cmd_from_tokens (fill_cmd.c:58)
+==12631==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10B74C: ft_free_strarray (free_pars.c:24)
+==12631==    by 0x10B7F5: free_cmd (free_pars.c:38)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b56030 is 0 bytes inside a block of size 16 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B77E: ft_free_strarray (free_pars.c:25)
+==12631==    by 0x10B7F5: free_cmd (free_pars.c:38)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x1099F4: set_heredoc (redirections.c:80)
+==12631==    by 0x109B69: handle_redirection (redirections.c:106)
+==12631==    by 0x10B673: handle_redir_fail (fill_cmd_utils.c:99)
+==12631==    by 0x10B2B7: handle_redir_and_advance (fill_cmd.c:36)
+==12631==    by 0x10B39B: fill_cmd_from_tokens (fill_cmd.c:58)
+==12631==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid free() / delete / delete[] / realloc()
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B756: ft_free_strarray (free_pars.c:24)
+==12631==    by 0x10B7F5: free_cmd (free_pars.c:38)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b56080 is 0 bytes inside a block of size 5 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B756: ft_free_strarray (free_pars.c:24)
+==12631==    by 0x10B7F5: free_cmd (free_pars.c:38)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10F9F8: ft_strdup (in /home/antuel/minishell/minishell)
+==12631==    by 0x109A69: set_heredoc (redirections.c:85)
+==12631==    by 0x109B69: handle_redirection (redirections.c:106)
+==12631==    by 0x10B673: handle_redir_fail (fill_cmd_utils.c:99)
+==12631==    by 0x10B2B7: handle_redir_and_advance (fill_cmd.c:36)
+==12631==    by 0x10B39B: fill_cmd_from_tokens (fill_cmd.c:58)
+==12631==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid free() / delete / delete[] / realloc()
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B77E: ft_free_strarray (free_pars.c:25)
+==12631==    by 0x10B7F5: free_cmd (free_pars.c:38)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b56030 is 0 bytes inside a block of size 16 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B77E: ft_free_strarray (free_pars.c:25)
+==12631==    by 0x10B7F5: free_cmd (free_pars.c:38)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x1099F4: set_heredoc (redirections.c:80)
+==12631==    by 0x109B69: handle_redirection (redirections.c:106)
+==12631==    by 0x10B673: handle_redir_fail (fill_cmd_utils.c:99)
+==12631==    by 0x10B2B7: handle_redir_and_advance (fill_cmd.c:36)
+==12631==    by 0x10B39B: fill_cmd_from_tokens (fill_cmd.c:58)
+==12631==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 4
+==12631==    at 0x10B820: free_cmd (free_pars.c:43)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55f78 is 40 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 4
+==12631==    at 0x10B82C: free_cmd (free_pars.c:44)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55f78 is 40 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 4
+==12631==    at 0x10B83A: free_cmd (free_pars.c:45)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55f7c is 44 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 4
+==12631==    at 0x10B846: free_cmd (free_pars.c:46)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109797: main (main.c:75)
+==12631==  Address 0x4b55f7c is 44 bytes inside a block of size 72 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B85B: free_cmd (free_pars.c:48)
+==12631==    by 0x10B88A: free_cmd_list (free_pars.c:59)
+==12631==    by 0x109642: second_control (main.c:26)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B080: init_cmd (cmd_builder.c:21)
+==12631==    by 0x10AF33: handle_new_cmd (cmd_builder_utils.c:32)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== Invalid read of size 8
+==12631==    at 0x10D9B3: ft_exit (is_builtin_exec1.c:54)
+==12631==    by 0x10D7AD: control_builtin (execute_utils.c:41)
+==12631==    by 0x10E5EC: prepare_pipeline (execute_begin.c:36)
+==12631==    by 0x10E85C: execute_pipeline (execute_begin.c:103)
+==12631==    by 0x109636: second_control (main.c:25)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Address 0x4b56778 is 8 bytes inside a block of size 16 free'd
+==12631==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B77E: ft_free_strarray (free_pars.c:25)
+==12631==    by 0x10B810: free_cmd (free_pars.c:40)
+==12631==    by 0x10D983: ft_exit (is_builtin_exec1.c:51)
+==12631==    by 0x10D7AD: control_builtin (execute_utils.c:41)
+==12631==    by 0x10E5EC: prepare_pipeline (execute_begin.c:36)
+==12631==    by 0x10E85C: execute_pipeline (execute_begin.c:103)
+==12631==    by 0x109636: second_control (main.c:25)
+==12631==    by 0x109784: main (main.c:73)
+==12631==  Block was alloc'd at
+==12631==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12631==    by 0x10B4CF: allocate_args_array (fill_cmd_utils.c:51)
+==12631==    by 0x10B315: fill_cmd_from_tokens (fill_cmd.c:47)
+==12631==    by 0x10AF67: handle_new_cmd (cmd_builder_utils.c:35)
+==12631==    by 0x10AFF8: process_command (cmd_builder_utils.c:56)
+==12631==    by 0x10B184: build_cmd_list_from_tokens (cmd_builder.c:56)
+==12631==    by 0x10BA7F: parse_line (parse_line.c:55)
+==12631==    by 0x10976D: main (main.c:72)
+==12631== 
+==12631== 
+==12631== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==12631== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250725T192739/remoteTelemetry.log
+==12631==    <inherited from parent>
+==12631== 
+==12631== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250725T192739/remoteagent.log
+==12631==    <inherited from parent>
+==12631== 
+==12631== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250725T192739/ptyhost.log
+==12631==    <inherited from parent>
+==12631== 
+==12631== Open file descriptor 3: /home/antuel/minishell/val_log.txt
+==12631==    <inherited from parent>
+==12631== 
+==12631== 
+==12631== HEAP SUMMARY:
+==12631==     in use at exit: 208,210 bytes in 223 blocks
+==12631==   total heap usage: 531 allocs, 319 frees, 240,205 bytes allocated
+==12631== 
+==12631== LEAK SUMMARY:
+==12631==    definitely lost: 0 bytes in 0 blocks
+==12631==    indirectly lost: 0 bytes in 0 blocks
+==12631==      possibly lost: 0 bytes in 0 blocks
+==12631==    still reachable: 0 bytes in 0 blocks
+==12631==         suppressed: 208,210 bytes in 223 blocks
+==12631== 
+==12631== For lists of detected and suppressed errors, rerun with: -s
+==12631== ERROR SUMMARY: 50 errors from 22 contexts (suppressed: 0 from 0)

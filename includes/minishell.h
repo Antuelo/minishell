@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 13:29:38 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 17:30:28 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 19:47:10 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int						ft_env(char **envp);
 int						ft_pwd(void);
 int						ft_unset(char **args, char ***envp);
 char					**rebuild_envp(char **args, char **envp, int i, int j);
-int						ft_exit(char **args, char ***envp);
+int						ft_exit(char **args, char ***envp, t_cmd *cmd);
 int						ft_export(char **args, char ***envp, t_cmd *cmd);
 void					tryed_env(char **envp);
 int						ft_cd(char **args, char ***envp);
