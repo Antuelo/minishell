@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:28:11 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:28:11 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/28 18:01:20 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 18:03:00 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,28 +66,26 @@ int	exec_builtin(t_cmd *cmd, char ***envp)
 	builtin_id = is_builtin(cmd->args[0]);
 	if (builtin_id == 0)
 		return (0);
-	else if (builtin_id == 1)
+	if (builtin_id == 1)
 		return (ft_echo(cmd->args, 1, 1, 1));
-	else if (builtin_id == 2)
+	if (builtin_id == 2)
 		return (ft_env(*envp));
-	else if (builtin_id == 3)
+	if (builtin_id == 3)
 		return (ft_pwd());
-	else if (builtin_id == 4)
+	if (builtin_id == 4)
 		return (ft_unset(cmd->args, envp));
-	else if (builtin_id == 5)
+	if (builtin_id == 5)
 	{
 		if (ft_exit(cmd->args, envp, &exit_code) == 0)
 			quit_minishell(*envp, exit_code);
 		return (exit_code);
 	}
-	else if (builtin_id == 6)
+	if (builtin_id == 6)
 		return (ft_export(cmd->args, envp, cmd));
-	else if (builtin_id == 7)
+	if (builtin_id == 7)
 		return (ft_cd(cmd->args, envp));
-	else
-		return (-1);
+	return (-1);
 }
-
 
 int	is_builtin(char *cmd)
 {

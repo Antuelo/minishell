@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:18:02 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:18:02 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/28 17:59:50 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 17:59:50 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:28:24 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:28:24 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/28 18:00:04 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 18:00:12 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 	}
 	return (0);
 }
-
 
 /*control = control d erreurs pour le exit_status*/
 int	control_infiles(t_cmd *cmd)

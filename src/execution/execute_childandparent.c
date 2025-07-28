@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_childandparent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:28:37 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:28:37 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/28 17:59:29 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 17:59:39 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 	else
 		execute_execve(fullpath, cmd, envp);
 }
-
 
 static char	*control_path(t_cmd *cmd, char **envp, int id_builtin)
 {

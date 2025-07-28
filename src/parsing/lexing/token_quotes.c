@@ -3,89 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   token_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:43:55 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:53:24 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/28 18:25:08 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 18:25:34 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-/*static void	append_char(char *buffer, int *j, char c)
+static void	init_buffer_flags(char *buffer, int *j, int *sq_flag, int *dq_flag)
 {
-	buffer[*j] = c;
-	(*j)++;
+	int	i;
+
+	i = 0;
+	while (i < 4096)
+		buffer[i++] = '\0';
+	*j = 0;
+	*sq_flag = 0;
+	*dq_flag = 0;
 }
 
-static void	consume_single_quoted(char *line, char *buffer, t_expand_flag *ctx)
+static void	handle_single_quote(char *line, int *i, char *buffer, int *j)
 {
-	int	start;
-
-	ctx->sq_flag = 1;
-	ctx->i++;
-	start = ctx->i;
-	while (line[ctx->i] && line[ctx->i] != '\'')
-		ctx->i++;
-	while (start < ctx->i)
-		append_char(buffer, &ctx->j, line[start++]);
-	if (line[ctx->i] == '\'')
-		ctx->i++;
+	(*i)++;
+	while (line[*i] && line[*i] != '\'')
+		buffer[(*j)++] = line[(*i)++];
+	if (line[*i] == '\'')
+		(*i)++;
 }
 
-static void	consume_double_quoted(char *line, char *buffer, t_expand_flag *ctx)
+static void	handle_double_quote(char *line, int *i, char *buffer, int *j)
 {
-	int	start;
+	(*i)++;
+	while (line[*i] && line[*i] != '"')
+		buffer[(*j)++] = line[(*i)++];
+	if (line[*i] == '"')
+		(*i)++;
+}
 
-	ctx->dq_flag = 1;
-	ctx->i++;
-	start = ctx->i;
-	while (line[ctx->i] && line[ctx->i] != '"')
-		ctx->i++;
-	while (start < ctx->i)
-		append_char(buffer, &ctx->j, line[start++]);
-	if (line[ctx->i] == '"')
-		ctx->i++;
-}*/
+static void	fill_buffer_loop(t_bufdata *data)
+{
+	while (data->line[*data->i] && !isspace(data->line[*data->i])
+		&& !is_operator(data->line[*data->i]))
+	{
+		if (data->line[*data->i] == '\'')
+		{
+			*data->sq_flag = 1;
+			handle_single_quote(data->line, data->i, data->buffer, data->j);
+		}
+		else if (data->line[*data->i] == '"')
+		{
+			*data->dq_flag = 1;
+			handle_double_quote(data->line, data->i, data->buffer, data->j);
+		}
+		else
+			data->buffer[(*data->j)++] = data->line[(*data->i)++];
+	}
+	data->buffer[*data->j] = '\0';
+}
 
 t_token	*handle_combined_word(char *line, int *i)
 {
-	char		buffer[4096];
-	int			j = 0;
-	int			sq_flag = 0;
-	int			dq_flag = 0;
+	t_wordinfo	info;
+	t_token		*token;
+	t_bufdata	data;
 
-	while (line[*i] && !isspace(line[*i]) && !is_operator(line[*i]))
-	{
-		if (line[*i] == '\'')
-		{
-			sq_flag = 1;
-			(*i)++;
-			while (line[*i] && line[*i] != '\'')
-				buffer[j++] = line[(*i)++];
-			if (line[*i] == '\'')
-				(*i)++;
-		}
-		else if (line[*i] == '"')
-		{
-			dq_flag = 1;
-			(*i)++;
-			while (line[*i] && line[*i] != '"')
-				buffer[j++] = line[(*i)++];
-			if (line[*i] == '"')
-				(*i)++;
-		}
-		else
-			buffer[j++] = line[(*i)++];
-	}
-	buffer[j] = '\0';
-
-	t_token *token = new_token(buffer, T_WORD);
+	init_buffer_flags(info.buffer, &info.j, &info.sq_flag, &info.dq_flag);
+	data.line = line;
+	data.i = i;
+	data.buffer = info.buffer;
+	data.j = &info.j;
+	data.sq_flag = &info.sq_flag;
+	data.dq_flag = &info.dq_flag;
+	fill_buffer_loop(&data);
+	token = new_token(info.buffer, T_WORD);
 	if (!token)
 		return (NULL);
-	token->in_single_quote = sq_flag;
-	token->in_double_quote = dq_flag;
+	token->in_single_quote = info.sq_flag;
+	token->in_double_quote = info.dq_flag;
 	return (token);
 }
-

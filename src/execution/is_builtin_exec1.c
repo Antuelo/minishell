@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:31:11 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:31:11 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/28 17:59:07 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 17:59:20 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_exit(char **args, char ***envp, int *exit_code)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		g_exit_status = 1;
-		return (1); // Ne quitte pas
+		return (1);
 	}
 	if (!args[1])
 		*exit_code = 0;

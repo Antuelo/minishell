@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/25 13:29:30 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 13:29:30 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/28 18:27:23 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 18:27:28 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,24 @@ typedef struct s_expand_flag
 	int		sq_flag;
 	int		dq_flag;
 }	t_expand_flag;
+
+typedef struct s_bufdata
+{
+	char	*line;
+	int		*i;
+	char	*buffer;
+	int		*j;
+	int		*sq_flag;
+	int		*dq_flag;
+}	t_bufdata;
+
+typedef struct s_wordinfo
+{
+	char		buffer[4096];
+	int			j;
+	int			sq_flag;
+	int			dq_flag;
+}	t_wordinfo;
 
 /* ************************************************************************** */
 /*                                  INPUT                                     */

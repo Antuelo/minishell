@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 17:24:41 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:24:44 by llabatut         ###   ########.ch       */
+/*   Created: 2025/07/28 17:58:47 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 17:58:47 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
