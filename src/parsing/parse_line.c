@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 16:02:32 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 17:58:32 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/28 17:43:16 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 17:43:16 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static int	prep_tokens(char *line, char **envp, int exit_code, t_token **out)
 	*out = expand_tokens(*out, envp, exit_code);
 	if (!*out)
 		return (0);
-	remove_quotes_from_tokens(*out);
 	return (1);
 }
 
