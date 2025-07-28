@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 20:16:06 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/25 19:55:23 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/28 17:18:02 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 17:18:02 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	handle_signs(int signo)
 void	quit_minishell(char **envp, int code)
 {
 	if (envp)
+	{
 		free_envp(envp, count_env(envp));
+		envp = NULL;
+	}
 	clear_history();
 	rl_clear_history();
 	exit(code);

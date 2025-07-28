@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 13:10:49 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/25 19:57:34 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/28 17:31:11 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 17:31:11 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,30 @@ int	validate_exit_args(char **args)
 	return (0);
 }
 
-int	ft_exit(char **args, char ***envp, t_cmd *cmd)
+int	ft_exit(char **args, char ***envp, int *exit_code)
 {
 	int	err;
 
-	if (cmd)
-		free_cmd(cmd);
+	(void)envp;
 	if (isatty(STDIN_FILENO))
 		write(2, "exit\n", 5);
 	err = validate_exit_args(args);
 	if (err == 2)
 	{
 		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
-		quit_minishell(*envp, 2);
+		*exit_code = 2;
+		return (0);
 	}
 	if (err == 1)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		g_exit_status = 1;
-		return (1);
+		return (1); // Ne quitte pas
 	}
 	if (!args[1])
-		quit_minishell(*envp, 0);
-	quit_minishell(*envp, (unsigned char)ft_atoi(args[1]));
+		*exit_code = 0;
+	else
+		*exit_code = (unsigned char)ft_atoi(args[1]);
 	return (0);
 }
 

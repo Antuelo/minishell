@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/25 19:47:39 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/28 17:28:24 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 17:28:24 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,24 @@ int	init_exec(t_exec *exec, int count)
 int	control_builtin(t_cmd *cmd_list, char ***envp)
 {
 	int	id;
+	int	exit_code;
 
 	id = is_builtin(cmd_list->args[0]);
 	if (!cmd_list->next && !cmd_list->infile && !cmd_list->outfile && id > 0)
 	{
 		if (id == 5)
-			ft_exit(cmd_list->args, envp, cmd_list);
+		{
+			if (ft_exit(cmd_list->args, envp, &exit_code) == 0)
+				quit_minishell(*envp, exit_code);
+			return (1);
+		}
 		else
 			g_exit_status = exec_builtin(cmd_list, envp);
 		return (1);
 	}
 	return (0);
 }
+
 
 /*control = control d erreurs pour le exit_status*/
 int	control_infiles(t_cmd *cmd)

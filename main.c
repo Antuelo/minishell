@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 16:01:28 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 20:02:20 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/28 17:25:29 by llabatut          #+#    #+#             */
+/*   Updated: 2025/07/28 17:25:29 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,22 @@
 
 int			g_exit_status;
 
-static void	second_control(t_cmd *cmds, char ***my_envp)
+int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
 {
+	if (cmds && cmds->args && ft_strncmp(cmds->args[0], "exit", 4) == 0)
+	{
+		if (ft_exit(cmds->args, my_envp, exit_code) == 0)
+		{
+			free_cmd_list(cmds);
+			return (1); // signaler à main qu’on doit quitter
+		}
+	}
 	if (cmds)
 	{
 		execute_pipeline(cmds, my_envp);
 		free_cmd_list(cmds);
 	}
+	return (0);
 }
 
 static char	*first_control(char **my_envp)
@@ -32,11 +41,11 @@ static char	*first_control(char **my_envp)
 	char	*prompt;
 	char	*input;
 
+	(void)my_envp; // si plus utilisé ici
 	prompt = CLR_GREEN "minishell$ " CLR_RESET;
 	input = readline(prompt);
 	if (!input)
 	{
-		free_envp(my_envp, count_env(my_envp));
 		write(1, "exit\n", 5);
 		return (NULL);
 	}
@@ -51,8 +60,9 @@ static char	*first_control(char **my_envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd	*cmds;
-	char	*input;
+	char	*input = NULL;
 	char	**my_envp;
+	int		exit_code = 0;
 
 	g_exit_status = 0;
 	(void)argc;
@@ -70,13 +80,17 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			cmds = parse_line(input, my_envp, g_exit_status);
-			second_control(cmds, &my_envp);
+			if (second_control(cmds, &my_envp, &exit_code))
+			{
+				free(input);
+				break ;
+			}
 		}
 		else
 			cmds = NULL;
 		free(input);
 	}
-	quit_minishell(my_envp, g_exit_status);
+	quit_minishell(my_envp, exit_code);
 	return (0);
 }
 
