@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:10:46 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/05 00:19:13 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:08:46 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ int	process_command(t_cmd **head, t_cmd **last,
 		limit = curr;
 	ok = handle_new_cmd(*start, limit, &new);
 	if (!ok)
+	{
+		if (new)
+			free_cmd(new);
 		return (0);
+	}
 	update_cmd_links(head, last, new);
 	if (curr->type == T_PIPE)
 		*start = curr->next;

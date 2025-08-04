@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 16:01:28 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/04 15:36:59 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/07/28 18:27:48 by llabatut          #+#    #+#             */
+/*   Updated: 2025/08/04 16:30:36 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,22 @@
 
 int			g_exit_status;
 
-static void	second_control(t_cmd *cmds, char ***my_envp)
+int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
 {
+	if (cmds && cmds->args && ft_strncmp(cmds->args[0], "exit", 4) == 0)
+	{
+		if (ft_exit(cmds->args, my_envp, exit_code) == 0)
+		{
+			free_cmd_list(cmds);
+			return (1);
+		}
+	}
 	if (cmds)
 	{
 		execute_pipeline(cmds, my_envp);
 		free_cmd_list(cmds);
 	}
+	return (0);
 }
 
 static char	*first_control(char **my_envp)
@@ -32,11 +41,11 @@ static char	*first_control(char **my_envp)
 	char	*prompt;
 	char	*input;
 
+	(void)my_envp;
 	prompt = CLR_GREEN "minishell$ " CLR_RESET;
 	input = readline(prompt);
 	if (!input)
 	{
-		free_envp(my_envp, count_env(my_envp));
 		write(1, "exit\n", 5);
 		return (NULL);
 	}
@@ -48,37 +57,57 @@ static char	*first_control(char **my_envp)
 ** LES HANDLERS INTERNES
 ** 	signal(SIGINT, handle_signs) = installe mon prope handler pour (ctrl + c)
 */
-int	main(int argc, char **argv, char **envp)
+static void	init_minishell(char **argv, int argc, char **envp, char ***my_envp)
 {
-	t_cmd	*cmds;
-	char	*input;
-	char	**my_envp;
-
-	g_exit_status = 0;
 	(void)argc;
 	(void)argv;
-	my_envp = copy_envp(envp);
+	*my_envp = copy_envp(envp);
 	rl_catch_signals = 0;
 	signal(SIGINT, handle_signs);
 	signal(SIGQUIT, SIG_IGN);
+	g_exit_status = 0;
+}
+
+static void	main_loop(char ***my_envp, int *exit_code)
+{
+	t_cmd	*cmds;
+	char	*input;
+
+	input = NULL;
 	while (1)
 	{
-		input = first_control(my_envp);
+		input = first_control(*my_envp);
 		if (!input)
 			break ;
 		if (*input)
 		{
 			add_history(input);
-			cmds = parse_line(input, my_envp, g_exit_status);
-			second_control(cmds, &my_envp);
+			cmds = parse_line(input, *my_envp, g_exit_status);
+			if (second_control(cmds, my_envp, exit_code))
+			{
+				free(input);
+				break ;
+			}
 		}
 		free(input);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char	**my_envp;
+	int		exit_code;
+
+	init_minishell(argv, argc, envp, &my_envp);
+	exit_code = 0;
+	main_loop(&my_envp, &exit_code);
+	quit_minishell(my_envp, exit_code);
 	return (0);
 }
 
 /*
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=a.supp --log-file=val_log.txt ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
+--suppressions=a.supp --log-file=val_log.txt ./minishell
 */
 
 // Affiche le contenu de la structure t_cmd pour debug
@@ -86,19 +115,7 @@ valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=
 {
 	int	i;
 
-	if (!cmd)
-		return ;
-	printf("Infile    : %s\n", cmd->infile);
-	printf("Outfile   : %s\n", cmd->outfile);
-	printf("Append    : %d\n", cmd->append);
-	printf("Heredoc   : %d\n", cmd->heredoc);
-	printf("Delimiter : %s\n", cmd->delimiter);
-	printf("Args      : ");
-	if (cmd->args)
-	{
-		i = 0;
-		while (cmd->args[i])
-			printf("[%s] ", cmd->args[i++]);
-		printf("\n");
-	}
-}*/
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
+--suppressions=a.supp --log-file=val_log.txt ./minishell
+
+*/

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/04 13:56:40 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/04 16:30:50 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	free_cmd(t_cmd *cmd)
 // Libère une liste chaînée de t_cmd
 void	free_cmd_list(t_cmd *cmd)
 {
-	t_cmd	*tmp;
+	t_cmd	*next;
 
 	while (cmd)
 	{
-		tmp = cmd->next;
+		next = cmd->next;
 		free_cmd(cmd);
-		cmd = tmp;
+		cmd = next;
 	}
 }
 
