@@ -6,14 +6,14 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/04 23:52:32 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:56:40 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-static void	ft_free_strarray(char **arr)
+void	ft_free_strarray(char **arr)
 {
 	int	i;
 

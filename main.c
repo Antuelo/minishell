@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 16:01:28 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/12 09:43:52 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/04 15:36:59 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+
+/*
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=a.supp --log-file=val_log.txt ./minishell
+*/
 
 // Affiche le contenu de la structure t_cmd pour debug
 /*void	print_cmd(t_cmd *cmd)
