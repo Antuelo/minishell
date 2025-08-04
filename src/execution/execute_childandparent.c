@@ -3,20 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   execute_childandparent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:59:39 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/04 18:31:41 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
+static void	child_builtin(t_cmd *cmd, char ***envp)
+{
+	int	status;
+
+	status = exec_builtin(cmd, envp);
+	free_envp(*envp, count_env(*envp));
+	free_cmd(cmd);
+	exit(status);
+}
+
 static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 {
-	int	count;
-	int	status;
 	int	exit_code;
 
 	if (id_builtin > 0)
@@ -26,11 +34,7 @@ static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 			if (ft_exit(cmd->args, &envp, &exit_code) == 0)
 				quit_minishell(envp, exit_code);
 		}
-		count = count_env(envp);
-		status = exec_builtin(cmd, &envp);
-		free_envp(envp, count);
-		free(fullpath);
-		exit(status);
+		child_builtin(cmd, &envp);
 	}
 	else
 		execute_execve(fullpath, cmd, envp);
