@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:04:27 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/07 19:27:07 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/08 01:47:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,5 @@ t_cmd	*parse_line(char *line, char **envp, int exit_code)
 	free_tokens(tokens);
 	if (!cmds)
 		return (g_exit_status = 1, NULL);
-	if (!cmds->invalid)
-		free_cmd_list(cmds);
 	return (cmds);
 }

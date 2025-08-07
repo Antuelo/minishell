@@ -6,13 +6,14 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:00:04 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/07 15:33:26 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/08 00:28:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
+/* pour initialiser exec, le structure de execution, LOL*/
 int	init_exec(t_exec *exec, int count)
 {
 	int	i;
@@ -30,6 +31,7 @@ int	init_exec(t_exec *exec, int count)
 	return (0);
 }
 
+/*si il y a que un builtin, on execute... */
 int	control_builtin(t_cmd *cmd_list, char ***envp)
 {
 	int	id;
