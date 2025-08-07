@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/04 18:31:41 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/07 01:21:01 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static void	child_builtin(t_cmd *cmd, char ***envp)
 
 	status = exec_builtin(cmd, envp);
 	free_envp(*envp, count_env(*envp));
-	free_cmd(cmd);
+	free_cmd_list(cmd);
 	exit(status);
 }
 
-static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
+void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 {
 	int	exit_code;
 
