@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:04:27 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 18:04:27 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/07 19:13:27 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ t_cmd	*parse_line(char *line, char **envp, int exit_code)
 	free_tokens(tokens);
 	if (!cmds)
 		return (g_exit_status = 1, NULL);
+	if (!cmds->invalid)
+		free_cmd_list(cmds);
 	return (cmds);
 }

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:45:32 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/07 01:11:08 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/07 18:36:30 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ static int	prepare_pipeline(t_cmd *cmd_list, t_exec *exec, char ***envp)
 	return (0);
 }
 
-/*	return 1 si erreur en pipe, 0 si tout va bien
-	j'ai éliminé un pipe de plus: -----> (déjà executé en control_fork_pipes)
-		if (cmd->next && pipe(exec->pipe_fd) == -1)
-		return (perror("pipe"), free(exec->pid), 1);	*/
+/*	return 1 si erreur en pipe, 0 si tout va bien	*/
 static int	handle_invalid_cmd(t_cmd *cmd, t_exec *exec, int i)
 {
 	if (cmd->next && pipe(exec->pipe_fd) == -1)
@@ -81,7 +78,7 @@ static int	run_pipeline(t_cmd *cmd_list, t_exec *exec, char ***envp)
 	{
 		if ((cmd->invalid && handle_invalid_cmd(cmd, exec, i)) || (!cmd->invalid
 				&& handle_valid_cmd(cmd, exec, *envp, i)))
-			return (1);
+			return (free_cmd_full(cmd), 1);
 		i++;
 		cmd = cmd->next;
 	}
@@ -100,7 +97,6 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 	int		prep;
 	int		ret;
 
-	exec.pid = NULL;
 	prep = prepare_pipeline(cmd_list, &exec, envp);
 	if (prep == 1)
 		ret = 0;

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/07 01:21:01 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/07 17:48:25 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	child_builtin(t_cmd *cmd, char ***envp)
 
 	status = exec_builtin(cmd, envp);
 	free_envp(*envp, count_env(*envp));
-	free_cmd_list(cmd);
+	free_cmd_full(cmd);
 	exit(status);
 }
 
@@ -78,19 +78,20 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 	id_builtin = is_builtin(cmd->args[0]);
 	if (exec->pid[i] == 0)
 	{
+		free(exec->pid);
 		g_exit_status = 0;
 		control_heredoc(cmd);
 		setup_redirections(cmd, exec);
 		if (control_infiles(cmd))
-			exit(1);
+			return (free_cmd_full(cmd), exit(1), (void)0);
 		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
-			exit(0);
+			return (free_cmd_full(cmd), exit(0), (void)0);
 		fullpath = control_path(cmd, envp, id_builtin);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		condition(cmd, envp, id_builtin, fullpath);
 		free(fullpath);
-		exit(g_exit_status);
+		return (free_cmd_full(cmd), exit(g_exit_status), (void)0);
 	}
 	parent_process(exec, cmd);
 	signal(SIGINT, SIG_IGN);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:10:49 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 17:05:39 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/07 17:36:27 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	clean_exit(t_cmd *cmd, char **envp, int code)
 {
-	free_cmd_list(cmd);
+	free_cmd_full(cmd);
 	if (envp)
 		free_envp(envp, count_env(envp));
 	exit(code);
@@ -24,7 +24,6 @@ void	clean_exit(t_cmd *cmd, char **envp, int code)
 /* je fais 	g_exit_status = 0;
 ** pour éviter que un erreur d auparavant reste "collé" aux
 ** futurs procesus */
-
 static void	stat_result(char *path, struct stat *sb, t_cmd *cmd, char **envp)
 {
 	if (S_ISDIR(sb->st_mode))
@@ -85,7 +84,7 @@ void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 	execve(fullpath, cmd->args, envp);
 	perror("execve");
 	free(fullpath);
-	free_cmd(cmd);
+	free_cmd_full(cmd);
 	free_envp(envp, count_env(envp));
 	if (errno == ENOENT || errno == ENOTDIR)
 		quit_minishell(envp, 127);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:00:04 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 18:00:12 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/07 15:33:26 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_exec(t_exec *exec, int count)
 
 	i = 0;
 	exec->cmd_count = count;
-	exec->pid = malloc(sizeof(pid_t) * count);
+	exec->pid = ft_calloc(count, sizeof(pid_t));
 	if (!exec->pid)
 		return (perror("malloc"), 1);
 	while (i < count)

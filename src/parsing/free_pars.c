@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/04 16:30:50 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/07 18:52:56 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,11 @@ void	free_all(char *line, t_token *tokens, t_cmd *cmds)
 		free_cmd_list(cmds);
 }
 
-// Libère chaque argument d’un tableau de strings (args)
-/*static void	free_cmd_args(char **args)
+void	free_cmd_full(t_cmd *any)
 {
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		free(args[i]);
-		i++;
-	}
-	free(args);
-}*/
+	if (!any)
+		return ;
+	while (any->prev)
+		any = any->prev;
+	free_cmd_list(any);
+}

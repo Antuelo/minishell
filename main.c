@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:27:48 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/04 16:30:36 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/07 18:23:01 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
 	if (cmds)
 	{
 		execute_pipeline(cmds, my_envp);
-		free_cmd_list(cmds);
+		free_cmd_full(cmds);
 	}
 	return (0);
 }
@@ -107,6 +107,7 @@ int	main(int argc, char **argv, char **envp)
 
 /*
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
+--tool=massif --pages-as-heap=yes --track-origins=yes --trace-children=yes
 --suppressions=a.supp --log-file=val_log.txt ./minishell
 */
 

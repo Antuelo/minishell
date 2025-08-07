@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:38:44 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 20:38:55 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/07 18:00:22 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	fill_cmd_from_tokens(t_token *tokens, t_token *limit, t_cmd *cmd)
 	while (curr && curr != limit)
 	{
 		if (cmd->invalid)
-			break ;
+			return (free_cmd_full(cmd), 0);
 		if (curr->type == T_WORD && !process_word(curr, cmd, &i))
-			return (0);
+			return (free_cmd_full(cmd), 0);
 		else if (is_redir(curr) && !handle_redir_and_advance(cmd, &curr))
-			break ;
+			return (free_cmd_full(cmd), 0);
 		curr = curr->next;
 	}
 	cmd->args[i] = NULL;
