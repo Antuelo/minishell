@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:10:49 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/08 01:09:57 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/08 12:57:25 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	stat_result(char *path, struct stat *sb, t_cmd *cmd, char **envp)
 	{
 		g_exit_status = 126;
 		fprintf(stderr, "%s: Is a directory\n", path);
-		clean_exit(cmd, envp, 126);
+		clean_exit_child(cmd, envp, 126);
 	}
 	else if (access(path, X_OK) != 0)
 	{
 		g_exit_status = 126;
 		fprintf(stderr, "%s: Permission denied\n", path);
-		clean_exit(cmd, envp, 126);
+		clean_exit_child(cmd, envp, 126);
 	}
 }
 
@@ -49,7 +49,7 @@ void	controlpath(char *path, t_cmd *cmd, char **envp)
 	{
 		g_exit_status = 127;
 		fprintf(stderr, "%s: command not found\n", cmd->args[0]);
-		clean_exit(cmd, envp, 127);
+		clean_exit_child(cmd, envp, 127);
 	}
 	if (stat(path, &sb) == 0)
 		stat_result(path, &sb, cmd, envp);
@@ -57,7 +57,7 @@ void	controlpath(char *path, t_cmd *cmd, char **envp)
 	{
 		g_exit_status = 127;
 		fprintf(stderr, "%s: No such file or directory\n", path);
-		clean_exit(cmd, envp, 127);
+		clean_exit_child(cmd, envp, 127);
 	}
 }
 
@@ -78,6 +78,7 @@ int	countcmds(t_cmd *cmd)
 
 	ENOTDIR : Une partie du chemin n'est pas un dossier alors qu'elle
 	devrait l'être
+	_exit ----> pour eviter des handlers de readline
 */
 void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 {
@@ -87,7 +88,7 @@ void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 	free_cmd_full(cmd);
 	free_envp(envp, count_env(envp));
 	if (errno == ENOENT || errno == ENOTDIR)
-		quit_minishell(envp, 127);
+		_exit(127);
 	else
-		quit_minishell(envp, 1);
+		_exit(1);
 }
