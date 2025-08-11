@@ -10,7 +10,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 # Source files 'src/executions'
 
-SRCS := ./main.c $(shell find src/parsing src/execution -name '*.c')
+SRCS := ./main.c ./main_utils.c $(shell find src/parsing src/execution -name '*.c')
 OBJS := $(SRCS:.c=.o)
 
 RM = rm -f

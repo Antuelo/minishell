@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:58:47 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/10 18:56:16 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/11 15:00:10 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void					handle_signs(int signo);
 void					clean_exit(t_cmd *cmd, char **envp, int code);
 void					free_cmd_full(t_cmd *any);
 void					clean_exit_child(t_cmd *cmd, char **envp, int code);
+char					*first_control(char **my_envp);
+char					*read_full_input(char **envp);
 
 /*free everythings*/
 void					freepath(char **patch);

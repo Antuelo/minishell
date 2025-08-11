@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 20:33:18 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 20:33:18 by llabatut         ###   ########.ch       */
+/*   Created: 2025/08/08 14:50:04 by llabatut          #+#    #+#             */
+/*   Updated: 2025/08/08 14:50:04 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,24 @@ static int	is_pipe(t_token *token)
 	return (token && token->type == T_PIPE);
 }
 
+int	is_incomplete_line(t_token *tokens)
+{
+	t_token	*last;
+
+	if (!tokens)
+		return (0);
+	last = tokens;
+	while (last->next)
+		last = last->next;
+	if (last->type == T_PIPE
+		|| last->type == T_REDIR_IN
+		|| last->type == T_REDIR_OUT
+		|| last->type == T_REDIR_APPEND
+		|| last->type == T_HEREDOC)
+		return (1);
+	return (0);
+}
+
 // Vérifie les erreurs de syntaxe liées aux pipes
 int	check_pipe_errors(t_token *tokens)
 {
@@ -27,7 +45,7 @@ int	check_pipe_errors(t_token *tokens)
 	if (!tokens)
 		return (0);
 	curr = tokens;
-	if (is_pipe(curr) || (!curr->next && is_pipe(curr)))
+	if (curr && curr->next && is_pipe(curr) && is_pipe(curr->next))
 	{
 		printf("Syntax error: unexpected token `|'\n");
 		return (0);
@@ -40,11 +58,6 @@ int	check_pipe_errors(t_token *tokens)
 			return (0);
 		}
 		curr = curr->next;
-	}
-	if (curr && is_pipe(curr))
-	{
-		printf("Syntax error: unexpected token `|'\n");
-		return (0);
 	}
 	return (1);
 }

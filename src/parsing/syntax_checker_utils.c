@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 20:29:45 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/10 20:37:11 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/08/08 14:49:49 by llabatut          #+#    #+#             */
+/*   Updated: 2025/08/08 14:49:59 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,30 @@ int	check_pipe_redirection(t_token *tokens)
 			next = curr->next;
 			if (!skip_redirs_and_check_filename(&next))
 				return (0);
-			if (!next)
-			{
-				printf("Syntax error: missing command after pipe\n");
-				return (0);
-			}
 		}
 		curr = curr->next;
 	}
 	return (1);
+}
+
+char	*strjoin_and_free(char *s1, char *s2)
+{
+	char	*joined;
+	size_t	len1;
+	size_t	len2;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	joined = malloc(len1 + len2 + 2);
+	if (!joined)
+		return (NULL);
+	ft_memcpy(joined, s1, len1);
+	joined[len1] = '\n';
+	ft_memcpy(joined + len1 + 1, s2, len2);
+	joined[len1 + len2 + 1] = '\0';
+	free(s1);
+	free(s2);
+	return (joined);
 }
 
 /*int	check_pipe_redirection(t_token *tokens)

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:27:48 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/11 12:04:17 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/11 14:58:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int			g_exit_status;
 
-int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
+static int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
 {
 	if (cmds && cmds->args && cmds->args[0]
 		&& ft_strncmp(cmds->args[0], "exit", 4) == 0)
@@ -37,7 +37,7 @@ int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
 	return (0);
 }
 
-static char	*first_control(char **my_envp)
+char	*first_control(char **my_envp)
 {
 	char	*prompt;
 	char	*input;
@@ -58,7 +58,7 @@ static char	*first_control(char **my_envp)
 ** LES HANDLERS INTERNES
 ** 	signal(SIGINT, handle_signs) = installe mon prope handler pour (ctrl + c)
 */
-static void	init_minishell(char **argv, int argc, char **envp, char ***my_envp)
+void	init_minishell(char **argv, int argc, char **envp, char ***my_envp)
 {
 	(void)argc;
 	(void)argv;
@@ -69,15 +69,14 @@ static void	init_minishell(char **argv, int argc, char **envp, char ***my_envp)
 	g_exit_status = 0;
 }
 
-static void	main_loop(char ***my_envp, int *exit_code)
+void	main_loop(char ***my_envp, int *exit_code)
 {
 	t_cmd	*cmds;
 	char	*input;
 
-	input = NULL;
 	while (1)
 	{
-		input = first_control(*my_envp);
+		input = read_full_input(*my_envp);
 		if (!input)
 			break ;
 		if (*input)
