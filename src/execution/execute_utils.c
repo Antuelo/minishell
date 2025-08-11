@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:00:04 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/11 09:37:13 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/11 12:12:28 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 
 	id = is_builtin(cmd_list->args[0]);
 	if (!cmd_list->next && !cmd_list->infile && !cmd_list->outfile
-		&& cmd_list->append == -1 && !cmd_list->heredoc && id > 0)
+		&& cmd_list->append == -1 && !cmd_list->heredoc
+		&& (id == 4 || id == 5 || id == 6 || id == 7))
 	{
 		if (id == 5)
 		{
@@ -72,5 +73,5 @@ int	control_infiles(t_cmd *cmd)
 	}
 	if (control)
 		return (g_exit_status = 1, 1);
-	return (0);
+	return (control);
 }

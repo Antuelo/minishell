@@ -23,8 +23,6 @@ $(LIBFT):
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 	@echo "✅ MINISHELL compiled successfully!"
-#	@echo "\nexecutings MINISHELL with Valgrind !!!"
-#	@echo "result in valgrind_log.txt...\n"
 #	@valgrind --leak-check=full --show-leak-kinds=definite --log-file=valgrind_log.txt ./minishell
 #	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=a.supp --log-file="valg.log" ./minishell
 
@@ -41,5 +39,11 @@ fclean: clean
 	@$(RM) $(NAME)
 
 re: fclean all
+
+valgrind: re
+	@echo "\n----->executings MINISHELL with Valgrind !!!"
+	@echo "----->result in valgrind_log\n"
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=a.supp --log-file="valg.log" ./minishell
+
 
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/11 00:13:30 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/11 12:45:09 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		free(exec->pid);
 		g_exit_status = 0;
 		control_heredoc(cmd);
+		setup_redirections(cmd, exec);
 		if (control_infiles(cmd))
 			return (free_cmd_full(cmd), _exit(1), (void)0);
-		setup_redirections(cmd, exec);
 		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
 			return (free_cmd_full(cmd), _exit(0), (void)0);
 		fullpath = control_path(cmd, envp, id_builtin);

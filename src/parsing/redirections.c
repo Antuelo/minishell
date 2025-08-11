@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:35:04 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/10 22:53:37 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/11 12:37:24 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,23 @@
 
 // Gère la redirection d'entrée (ex: < fichier)
 // Remplace infile si elle existe déjà
-static int	set_infile(t_cmd *cmd, t_token *token)
+static int set_infile(t_cmd *cmd, t_token *token)
+{
+    char *new;
+
+    if (!token || !token->value)
+        return (0);
+    new = strdup(token->value);
+    if (!new)
+        return (0);
+    if (cmd->infile)
+        free(cmd->infile);
+    cmd->infile = new;
+    cmd->append = -1;
+    return (1);
+}
+
+/*static int	set_infile(t_cmd *cmd, t_token *token)
 {
 	int	fd;
 
@@ -33,7 +49,7 @@ static int	set_infile(t_cmd *cmd, t_token *token)
 		return (0);
 	cmd->append = -1;
 	return (1);
-}
+}*/
 
 // Gère la redirection de sortie (ex: > ou >>)
 // Remplace outfile si elle existe déjà et stocke si append ou non

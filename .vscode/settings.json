@@ -62,5 +62,7 @@
     "minishell.h": "c",
     "signal.h": "c",
     "test1": "c"
-  }
+  },
+  "42header.email": "antuel@outlook.com",
+  "42header.username": "anoviedo"
 }
