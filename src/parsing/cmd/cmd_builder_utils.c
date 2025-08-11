@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:10:46 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/08 13:31:27 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/11 14:19:52 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,7 @@ static int	handle_new_cmd(t_token *start, t_token *end, t_cmd **new)
 	if (!*new)
 		return (0);
 	if (!fill_cmd_from_tokens(start, end, *new))
-	{
-		free_cmd(*new);
-		*new = NULL;
 		return (0);
-	}
 	(*new)->next = NULL;
 	return (1);
 }

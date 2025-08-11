@@ -43,7 +43,7 @@ re: fclean all
 valgrind: re
 	@echo "\n----->executings MINISHELL with Valgrind !!!"
 	@echo "----->result in valgrind_log\n"
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=a.supp --log-file="valg.log" ./minishell
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=a.supp --log-file="valg.log" ./minishell
 
 
 .PHONY: all clean fclean re

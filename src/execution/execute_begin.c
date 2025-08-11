@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:45:32 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/11 00:18:13 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/11 14:15:31 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ static int	run_pipeline(t_cmd *cmd_list, t_exec *exec, char ***envp)
 	wait_all_processes(exec);
 	if (exec->fd_in != STDIN_FILENO)
 		close(exec->fd_in);
+	close_all_heredoc_fds(cmd_list);
 	return (0);
 }
 
