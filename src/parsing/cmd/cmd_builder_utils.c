@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:10:46 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 18:08:46 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/08 13:31:27 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static void	update_cmd_links(t_cmd **head, t_cmd **last, t_cmd *new)
 	if (!*head)
 		*head = new;
 	else
+	{
 		(*last)->next = new;
+		new->prev = *last;
+	}
 	*last = new;
 }
 
@@ -35,6 +38,7 @@ static int	handle_new_cmd(t_token *start, t_token *end, t_cmd **new)
 	if (!fill_cmd_from_tokens(start, end, *new))
 	{
 		free_cmd(*new);
+		*new = NULL;
 		return (0);
 	}
 	(*new)->next = NULL;
@@ -50,16 +54,13 @@ int	process_command(t_cmd **head, t_cmd **last,
 	t_token	*limit;
 	int		ok;
 
+	new = NULL;
 	limit = NULL;
 	if (curr->type == T_PIPE)
 		limit = curr;
 	ok = handle_new_cmd(*start, limit, &new);
 	if (!ok)
-	{
-		if (new)
-			free_cmd(new);
 		return (0);
-	}
 	update_cmd_links(head, last, new);
 	if (curr->type == T_PIPE)
 		*start = curr->next;

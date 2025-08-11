@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/10 21:21:42 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/10 21:37:59 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static void	heredoc_signal_handler(int signo)
 {
 	(void)signo;
-	write(STDERR_FILENO, "^C", 3);
+	write(STDERR_FILENO, "^C", 2);
 	signal(SIGINT, handle_signs);
 	exit(130);
 }
@@ -55,7 +55,7 @@ static void	child_heredoc(t_cmd *cmd, char *delim)
 	}
 	close(cmd->hdoc_pipe[1]);
 	free(line);
-	exit(0);
+	_exit(0);
 }
 
 /*	Je met en place les termios (donc la terminal) et j excute dans un
@@ -77,6 +77,11 @@ static int	execute_heredoc(t_cmd *cmd, char *delim)
 		return (close_pipes(cmd->hdoc_pipe), perror("fork - heredoc"), 1);
 	if (pid == 0)
 		child_heredoc(cmd, delim);
+	if (cmd->hdoc_pipe[1] != -1)
+	{
+		close(cmd->hdoc_pipe[1]);
+		cmd->hdoc_pipe[1] = -1;
+	}
 	status = wait_for_heredoc(pid, cmd, &origin_termios);
 	signal(SIGINT, handle_signs);
 	return (status);

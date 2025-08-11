@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:39:14 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/08 20:39:14 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/10 23:00:00 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,9 @@ int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 		cmd->delimiter = NULL;
 	}
 	cmd->heredoc = 0;
+	cmd->infile = NULL;
+	cmd->outfile = NULL;
+	cmd->append = -1;
 	cmd->invalid = 1;
 	return (1);
 }

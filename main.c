@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:27:48 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 18:30:23 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/08 12:38:45 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@ int			g_exit_status;
 
 int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
 {
-	if (cmds && cmds->args && ft_strncmp(cmds->args[0], "exit", 4) == 0)
+	if (cmds && cmds->args && cmds->args[0]
+		&& ft_strncmp(cmds->args[0], "exit", 4) == 0)
 	{
 		if (ft_exit(cmds->args, my_envp, exit_code) == 0)
 		{
-			free_cmd_list(cmds);
+			free_cmd_full(cmds);
 			return (1);
 		}
 	}
 	if (cmds)
 	{
 		execute_pipeline(cmds, my_envp);
-		free_cmd_list(cmds);
+		free_cmd_full(cmds);
 	}
 	return (0);
 }
@@ -106,8 +107,17 @@ int	main(int argc, char **argv, char **envp)
 }
 
 /*
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
+--tool=massif --pages-as-heap=yes --track-origins=yes --trace-children=yes
+--suppressions=a.supp --log-file=val_log.txt ./minishell
+*/
 
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes 
+// Affiche le contenu de la structure t_cmd pour debug
+/*void	print_cmd(t_cmd *cmd)
+{
+	int	i;
+
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes
 --suppressions=a.supp --log-file=val_log.txt ./minishell
 
 */

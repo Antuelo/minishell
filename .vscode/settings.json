@@ -60,6 +60,7 @@
     "libft.h": "c",
     "parsing.h": "c",
     "minishell.h": "c",
-    "signal.h": "c"
+    "signal.h": "c",
+    "test1": "c"
   }
 }

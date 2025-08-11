@@ -3,20 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   execute_childandparent.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:59:39 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/11 00:13:30 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
+static void	child_builtin(t_cmd *cmd, char ***envp)
 {
-	int	count;
 	int	status;
+
+	status = exec_builtin(cmd, envp);
+	free_envp(*envp, count_env(*envp));
+	free_cmd_full(cmd);
+	_exit(status);
+}
+
+void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
+{
 	int	exit_code;
 
 	if (id_builtin > 0)
@@ -26,11 +34,7 @@ static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 			if (ft_exit(cmd->args, &envp, &exit_code) == 0)
 				quit_minishell(envp, exit_code);
 		}
-		count = count_env(envp);
-		status = exec_builtin(cmd, &envp);
-		free_envp(envp, count);
-		free(fullpath);
-		exit(status);
+		child_builtin(cmd, &envp);
 	}
 	else
 		execute_execve(fullpath, cmd, envp);
@@ -74,19 +78,20 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 	id_builtin = is_builtin(cmd->args[0]);
 	if (exec->pid[i] == 0)
 	{
+		free(exec->pid);
 		g_exit_status = 0;
 		control_heredoc(cmd);
-		setup_redirections(cmd, exec);
 		if (control_infiles(cmd))
-			exit(1);
+			return (free_cmd_full(cmd), _exit(1), (void)0);
+		setup_redirections(cmd, exec);
 		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
-			exit(0);
+			return (free_cmd_full(cmd), _exit(0), (void)0);
 		fullpath = control_path(cmd, envp, id_builtin);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		condition(cmd, envp, id_builtin, fullpath);
 		free(fullpath);
-		exit(g_exit_status);
+		return (free_cmd_full(cmd), _exit(g_exit_status), (void)0);
 	}
 	parent_process(exec, cmd);
 	signal(SIGINT, SIG_IGN);

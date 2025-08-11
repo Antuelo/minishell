@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:00:04 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 18:00:12 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/11 09:37:13 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
+/* pour initialiser exec, le structure de execution, LOL*/
 int	init_exec(t_exec *exec, int count)
 {
 	int	i;
 
 	i = 0;
 	exec->cmd_count = count;
-	exec->pid = malloc(sizeof(pid_t) * count);
+	exec->pid = ft_calloc(count, sizeof(pid_t));
 	if (!exec->pid)
 		return (perror("malloc"), 1);
 	while (i < count)
@@ -30,13 +31,15 @@ int	init_exec(t_exec *exec, int count)
 	return (0);
 }
 
+/*si il y a que un builtin, on execute... */
 int	control_builtin(t_cmd *cmd_list, char ***envp)
 {
 	int	id;
 	int	exit_code;
 
 	id = is_builtin(cmd_list->args[0]);
-	if (!cmd_list->next && !cmd_list->infile && !cmd_list->outfile && id > 0)
+	if (!cmd_list->next && !cmd_list->infile && !cmd_list->outfile
+		&& cmd_list->append == -1 && !cmd_list->heredoc && id > 0)
 	{
 		if (id == 5)
 		{

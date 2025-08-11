@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:43:54 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/20 11:08:52 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/10 22:53:16 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,4 +140,5 @@ void	wait_all_processes(t_exec *exec)
 		}
 	}
 	set_global_exit(saw_sigint, last_exit, last_idx, exec->cmd_count);
+	free(exec->pid);
 }

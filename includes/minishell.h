@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:58:47 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:58:47 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/10 18:56:16 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,14 @@ int						handle_infile(t_cmd *cmd);
 int						handle_outfile(t_cmd *cmd);
 void					handle_signs(int signo);
 void					clean_exit(t_cmd *cmd, char **envp, int code);
+void					free_cmd_full(t_cmd *any);
+void					clean_exit_child(t_cmd *cmd, char **envp, int code);
 
 /*free everythings*/
 void					freepath(char **patch);
 void					free_cmd(t_cmd *cmd);
 void					free_envp(char **envp, int count);
 void					wait_all_processes(t_exec *exec);
+void					close_all_heredoc_fds(t_cmd *list);
 
 #endif

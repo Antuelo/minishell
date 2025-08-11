@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:50 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:59:50 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/10 21:52:32 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,38 @@ int	ft_pwd(void)
 	ft_putendl_fd(pwd, 1);
 	free(pwd);
 	return (0);
+}
+
+void	clean_exit_child(t_cmd *cmd, char **envp, int code)
+{
+	free_cmd_full(cmd);
+	if (envp)
+		free_envp(envp, count_env(envp));
+	_exit(code);
+}
+
+void	close_all_heredoc_fds(t_cmd *list)
+{
+	t_cmd	*c;
+
+	c = list;
+	while (c)
+	{
+		if (c->hdoc_pipe[0] != -1)
+		{
+			close(c->hdoc_pipe[0]);
+			c->hdoc_pipe[0] = -1;
+		}
+		if (c->hdoc_pipe[1] != -1)
+		{
+			close(c->hdoc_pipe[1]);
+			c->hdoc_pipe[1] = -1;
+		}
+		if (c->delimiter)
+		{
+			freepath(c->delimiter);
+			c->delimiter = NULL;
+		}
+		c = c->next;
+	}
 }

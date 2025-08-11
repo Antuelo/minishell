@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <anoviedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:10:49 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 17:05:39 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/11 09:38:39 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	clean_exit(t_cmd *cmd, char **envp, int code)
 {
-	free_cmd_list(cmd);
+	free_cmd_full(cmd);
 	if (envp)
 		free_envp(envp, count_env(envp));
 	exit(code);
@@ -24,20 +24,20 @@ void	clean_exit(t_cmd *cmd, char **envp, int code)
 /* je fais 	g_exit_status = 0;
 ** pour éviter que un erreur d auparavant reste "collé" aux
 ** futurs procesus */
-
 static void	stat_result(char *path, struct stat *sb, t_cmd *cmd, char **envp)
 {
 	if (S_ISDIR(sb->st_mode))
 	{
 		g_exit_status = 126;
 		fprintf(stderr, "%s: Is a directory\n", path);
-		clean_exit(cmd, envp, 126);
+		clean_exit_child(cmd, envp, 126);
 	}
 	else if (access(path, X_OK) != 0)
 	{
 		g_exit_status = 126;
 		fprintf(stderr, "%s: Permission denied\n", path);
-		clean_exit(cmd, envp, 126);
+		g_exit_status = 1;
+		clean_exit_child(cmd, envp, 126);
 	}
 }
 
@@ -50,7 +50,7 @@ void	controlpath(char *path, t_cmd *cmd, char **envp)
 	{
 		g_exit_status = 127;
 		fprintf(stderr, "%s: command not found\n", cmd->args[0]);
-		clean_exit(cmd, envp, 127);
+		clean_exit_child(cmd, envp, 127);
 	}
 	if (stat(path, &sb) == 0)
 		stat_result(path, &sb, cmd, envp);
@@ -58,7 +58,7 @@ void	controlpath(char *path, t_cmd *cmd, char **envp)
 	{
 		g_exit_status = 127;
 		fprintf(stderr, "%s: No such file or directory\n", path);
-		clean_exit(cmd, envp, 127);
+		clean_exit_child(cmd, envp, 127);
 	}
 }
 
@@ -79,16 +79,17 @@ int	countcmds(t_cmd *cmd)
 
 	ENOTDIR : Une partie du chemin n'est pas un dossier alors qu'elle
 	devrait l'être
+	_exit ----> pour eviter des handlers de readline
 */
 void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 {
 	execve(fullpath, cmd->args, envp);
 	perror("execve");
 	free(fullpath);
-	free_cmd(cmd);
+	free_cmd_full(cmd);
 	free_envp(envp, count_env(envp));
 	if (errno == ENOENT || errno == ENOTDIR)
-		quit_minishell(envp, 127);
+		_exit(127);
 	else
-		quit_minishell(envp, 1);
+		_exit(1);
 }
