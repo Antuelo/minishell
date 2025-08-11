@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:10:49 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/08 12:57:25 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/11 09:38:39 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	stat_result(char *path, struct stat *sb, t_cmd *cmd, char **envp)
 	{
 		g_exit_status = 126;
 		fprintf(stderr, "%s: Permission denied\n", path);
+		g_exit_status = 1;
 		clean_exit_child(cmd, envp, 126);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:58:47 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/08 12:52:28 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/10 18:56:16 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,6 @@ void					freepath(char **patch);
 void					free_cmd(t_cmd *cmd);
 void					free_envp(char **envp, int count);
 void					wait_all_processes(t_exec *exec);
+void					close_all_heredoc_fds(t_cmd *list);
 
 #endif

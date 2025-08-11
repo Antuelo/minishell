@@ -1,0 +1,8 @@
+int			g_exit_status;
+int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
+static void	init_minishell(char **argv, int argc, char **envp, char ***my_envp)
+static void	main_loop(char ***my_envp, int *exit_code)
+int	main(int argc, char **argv, char **envp)
+	int		exit_code;
+/*void	print_cmd(t_cmd *cmd)
+	int	i;
