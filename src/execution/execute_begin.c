@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:45:32 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/11 14:15:31 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:41:42 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	prepare_pipeline(t_cmd *cmd_list, t_exec *exec, char ***envp)
 
 	if (control_builtin(cmd_list, envp))
 		return (1);
-	status = heredoc(cmd_list, 0);
+	status = heredoc(cmd_list, 0, envp);
 	if (status)
 		return (close_all_heredoc_fds(cmd_list), g_exit_status = status, -1);
 	cmd = cmd_list;
@@ -78,7 +78,7 @@ static int	run_pipeline(t_cmd *cmd_list, t_exec *exec, char ***envp)
 	{
 		if ((cmd->invalid && handle_invalid_cmd(cmd, exec, i)) || (!cmd->invalid
 				&& handle_valid_cmd(cmd, exec, *envp, i)))
-			return (free_cmd_full(cmd), 1);
+			return (fcf(cmd), 1);
 		i++;
 		cmd = cmd->next;
 	}

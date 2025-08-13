@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 13:30:21 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/04 15:56:14 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:46:55 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ static int	add_new_var(char ***envp, char *new_var)
 	{
 		new_envp[i] = ft_strdup((*envp)[i]);
 		if (!new_envp[i++])
-			return (ft_free_strarray(new_envp), 1);
+			return (f_array(new_envp), 1);
 	}
 	new_envp[i] = ft_strdup(new_var);
 	if (!new_envp[i])
-		return (ft_free_strarray(new_envp), 1);
+		return (f_array(new_envp), 1);
 	i++;
 	new_envp[i] = NULL;
-	ft_free_strarray(*envp);
+	f_array(*envp);
 	*envp = new_envp;
 	return (0);
 }

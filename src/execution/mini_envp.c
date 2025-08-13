@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:22:38 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/06/17 11:30:31 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:46:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	**copy_envp(char **envp)
 		copy[i] = ft_strdup(envp[i]);
 		if (!copy[i])
 		{
-			free_envp(copy, i);
+			f_envp(copy, i);
 			return (NULL);
 		}
 		i++;

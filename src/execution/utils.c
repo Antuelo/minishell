@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:10:49 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/11 12:08:07 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:46:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 void	clean_exit(t_cmd *cmd, char **envp, int code)
 {
-	free_cmd_full(cmd);
+	fcf(cmd);
 	if (envp)
-		free_envp(envp, count_env(envp));
+		f_envp(envp, count_env(envp));
 	exit(code);
 }
 
@@ -86,8 +86,8 @@ void	execute_execve(char *fullpath, t_cmd *cmd, char **envp)
 	execve(fullpath, cmd->args, envp);
 	perror("execve");
 	free(fullpath);
-	free_cmd_full(cmd);
-	free_envp(envp, count_env(envp));
+	fcf(cmd);
+	f_envp(envp, count_env(envp));
 	if (errno == ENOENT || errno == ENOTDIR)
 		_exit(127);
 	else

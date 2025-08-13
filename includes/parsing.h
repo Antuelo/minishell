@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:48:22 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/08 14:48:22 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/13 17:47:33 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void	link_cmd(t_cmd **head, t_cmd **last, t_cmd *new);
 /* ************************************************************************** */
 
 void	free_cmd(t_cmd *cmd);
-void	free_cmd_list(t_cmd *cmd);
-void	ft_free_strarray(char **arr);
+void	fcl(t_cmd *cmd);
+void	f_array(char **arr);
 
 #endif

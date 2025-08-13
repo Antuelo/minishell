@@ -6,14 +6,14 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/07 18:52:56 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:47:33 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-void	ft_free_strarray(char **arr)
+void	f_array(char **arr)
 {
 	int	i;
 
@@ -35,9 +35,9 @@ void	free_cmd(t_cmd *cmd)
 	if (cmd->outfile)
 		free(cmd->outfile);
 	if (cmd->delimiter)
-		ft_free_strarray(cmd->delimiter);
+		f_array(cmd->delimiter);
 	if (cmd->args)
-		ft_free_strarray(cmd->args);
+		f_array(cmd->args);
 	if (cmd->heredoc)
 	{
 		if (cmd->hdoc_pipe[0] != -1)
@@ -49,7 +49,7 @@ void	free_cmd(t_cmd *cmd)
 }
 
 // Libère une liste chaînée de t_cmd
-void	free_cmd_list(t_cmd *cmd)
+void	fcl(t_cmd *cmd)
 {
 	t_cmd	*next;
 
@@ -69,14 +69,15 @@ void	free_all(char *line, t_token *tokens, t_cmd *cmds)
 	if (tokens)
 		free_tokens(tokens);
 	if (cmds)
-		free_cmd_list(cmds);
+		fcl(cmds);
 }
 
-void	free_cmd_full(t_cmd *any)
+/*fcf = free_cmd_full --- > coupé pour passer la norminette*/
+void	fcf(t_cmd *any)
 {
 	if (!any)
 		return ;
 	while (any->prev)
 		any = any->prev;
-	free_cmd_list(any);
+	fcl(any);
 }

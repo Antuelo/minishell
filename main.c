@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:27:48 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/11 14:58:37 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:41:42 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ static int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
 	{
 		if (ft_exit(cmds->args, my_envp, exit_code) == 0)
 		{
-			free_cmd_full(cmds);
+			fcf(cmds);
 			return (1);
 		}
 	}
 	if (cmds)
 	{
 		execute_pipeline(cmds, my_envp);
-		free_cmd_full(cmds);
+		fcf(cmds);
 	}
 	return (0);
 }

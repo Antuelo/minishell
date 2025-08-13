@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/08/11 14:41:18 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:46:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	close_pipes(int pipes[2])
 }
 
 /*le coeur du heredoc ... là on fait readline dedié*/
-static void	child_heredoc(t_cmd *cmd, char *delim)
+static void	child_heredoc(t_cmd *cmd, char *delim, char ***envp)
 {
 	char	*line;
 
@@ -55,13 +55,15 @@ static void	child_heredoc(t_cmd *cmd, char *delim)
 	}
 	close(cmd->hdoc_pipe[1]);
 	free(line);
+	fcf(cmd);
+	f_envp(*envp, count_env(*envp));
 	_exit(0);
 }
 
 /*	Je met en place les termios (donc la terminal) et j excute dans un
 	fork, les heredoc. En fin, j'attends pour tous les heredoc (comme
 	wait_all_proccess) dans wait_for_heredoc*/
-static int	execute_heredoc(t_cmd *cmd, char *delim)
+static int	execute_heredoc(t_cmd *cmd, char *delim, char ***envp)
 {
 	int			pid;
 	int			status;
@@ -76,7 +78,7 @@ static int	execute_heredoc(t_cmd *cmd, char *delim)
 	if (pid == -1)
 		return (close_pipes(cmd->hdoc_pipe), perror("fork - heredoc"), 1);
 	if (pid == 0)
-		child_heredoc(cmd, delim);
+		child_heredoc(cmd, delim, envp);
 	if (cmd->hdoc_pipe[1] != -1)
 	{
 		close(cmd->hdoc_pipe[1]);
@@ -87,7 +89,7 @@ static int	execute_heredoc(t_cmd *cmd, char *delim)
 	return (status);
 }
 
-int	heredoc(t_cmd *cmd_list, int status)
+int	heredoc(t_cmd *cmd_list, int status, char ***envp)
 {
 	t_cmd	*cmd;
 	int		i;
@@ -102,7 +104,7 @@ int	heredoc(t_cmd *cmd_list, int status)
 			i = 0;
 			while (cmd->delimiter[i])
 			{
-				status = execute_heredoc(cmd, cmd->delimiter[i]);
+				status = execute_heredoc(cmd, cmd->delimiter[i], envp);
 				if (status)
 					return (close(cmd->hdoc_pipe[0]), status);
 				if (cmd->delimiter[i + 1])

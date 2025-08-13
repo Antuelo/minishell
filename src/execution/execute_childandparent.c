@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/11 12:45:09 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 18:04:53 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	child_builtin(t_cmd *cmd, char ***envp)
 	int	status;
 
 	status = exec_builtin(cmd, envp);
-	free_envp(*envp, count_env(*envp));
-	free_cmd_full(cmd);
+	f_envp(*envp, count_env(*envp));
+	fcf(cmd);
 	_exit(status);
 }
 
@@ -83,15 +83,15 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		control_heredoc(cmd);
 		setup_redirections(cmd, exec);
 		if (control_infiles(cmd))
-			return (free_cmd_full(cmd), _exit(1), (void)0);
+			return (fcf(cmd), _exit(1), (void)0);
 		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
-			return (free_cmd_full(cmd), _exit(0), (void)0);
+			return (fcf(cmd), f_envp(envp, count_env(envp)), _exit(0), (void)0);
 		fullpath = control_path(cmd, envp, id_builtin);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		condition(cmd, envp, id_builtin, fullpath);
 		free(fullpath);
-		return (free_cmd_full(cmd), _exit(g_exit_status), (void)0);
+		return (fcf(cmd), _exit(g_exit_status), (void)0);
 	}
 	parent_process(exec, cmd);
 	signal(SIGINT, SIG_IGN);

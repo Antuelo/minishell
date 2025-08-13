@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:50 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/10 21:52:32 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:46:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	quit_minishell(char **envp, int code)
 {
 	if (envp)
 	{
-		free_envp(envp, count_env(envp));
+		f_envp(envp, count_env(envp));
 		envp = NULL;
 	}
 	clear_history();
@@ -53,9 +53,9 @@ int	ft_pwd(void)
 
 void	clean_exit_child(t_cmd *cmd, char **envp, int code)
 {
-	free_cmd_full(cmd);
+	fcf(cmd);
 	if (envp)
-		free_envp(envp, count_env(envp));
+		f_envp(envp, count_env(envp));
 	_exit(code);
 }
 

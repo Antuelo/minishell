@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:07:18 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/08 01:45:29 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/13 17:47:33 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_cmd	*build_cmd_list_from_tokens(t_token *tokens)
 			ok = process_command(&head, &last, &start, curr);
 			if (!ok)
 			{
-				free_cmd_list(head);
+				fcl(head);
 				return (NULL);
 			}
 		}

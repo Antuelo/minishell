@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:07 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 17:59:20 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/13 17:46:03 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_unset(char **args, char ***envp)
 	new_envp = rebuild_envp(args, *envp, 0, 0);
 	if (!new_envp)
 		return (1);
-	free_envp(*envp, count);
+	f_envp(*envp, count);
 	*envp = new_envp;
 	return (0);
 }
