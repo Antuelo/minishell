@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:55:07 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/08/13 17:33:00 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/14 02:54:08 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	wait_for_heredoc(pid_t pid, t_cmd *cmd, t_termios *term)
 	int	status;
 
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+	if (WIFEXITED(status))
 	{
 		close(cmd->hdoc_pipe[0]);
 		restore_original_terminal_mode(term);
