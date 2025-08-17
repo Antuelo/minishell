@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:39:14 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/10 23:00:00 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/17 23:42:35 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,16 @@ int	handle_redir_fail(t_cmd *cmd, t_token *curr)
 
 	if (handle_redirection(cmd, curr))
 		return (1);
+	if (cmd->infile)
+	{
+		free(cmd->infile);
+		cmd->infile = NULL;
+	}
+	if (cmd->outfile)
+	{
+		free(cmd->outfile);
+		cmd->outfile = NULL;
+	}
 	if (cmd->delimiter)
 	{
 		i = 0;

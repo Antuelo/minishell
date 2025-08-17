@@ -1,402 +1,146 @@
-==377432== Memcheck, a memory error detector
-==377432== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==377432== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==377432== Command: ./minishell
-==377432== Parent PID: 377109
-==377432== 
-==377538== 
-==377538== FILE DESCRIPTORS: 8 open (3 std) at exit.
-==377538== Open file descriptor 5:
-==377538==    at 0x49CB07D: pipe (pipe.c:29)
-==377538==    by 0x10DB15: execute_heredoc (heredoc.c:74)
-==377538==    by 0x10DC8A: heredoc (heredoc.c:107)
-==377538==    by 0x10ECC7: prepare_pipeline (execute_begin.c:26)
-==377538==    by 0x10EF97: execute_pipeline (execute_begin.c:101)
-==377538==    by 0x1096D2: second_control (main.c:34)
-==377538==    by 0x109821: main_loop (main.c:86)
-==377538==    by 0x10989F: main (main.c:103)
-==377538== 
-==377538== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteTelemetry.log
-==377538==    <inherited from parent>
-==377538== 
-==377538== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteagent.log
-==377538==    <inherited from parent>
-==377538== 
-==377538== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250813T175423/ptyhost.log
-==377538==    <inherited from parent>
-==377538== 
-==377538== Open file descriptor 3: /home/antuel/minishell/valg.log
-==377538==    <inherited from parent>
-==377538== 
-==377538== 
-==377538== HEAP SUMMARY:
-==377538==     in use at exit: 212,418 bytes in 271 blocks
-==377538==   total heap usage: 504 allocs, 233 frees, 239,527 bytes allocated
-==377538== 
-==377538== 2 bytes in 1 blocks are still reachable in loss record 1 of 73
-==377538==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377538==    by 0x1101D9: ft_strdup (in /home/antuel/minishell/minishell)
-==377538==    by 0x109BEE: set_heredoc (redirections.c:101)
-==377538==    by 0x109CEE: handle_redirection (redirections.c:122)
-==377538==    by 0x10B9E1: handle_redir_fail (fill_cmd_utils.c:99)
-==377538==    by 0x10B5EF: handle_redir_and_advance (fill_cmd.c:36)
-==377538==    by 0x10B6F8: fill_cmd_from_tokens (fill_cmd.c:58)
-==377538==    by 0x10B2BB: handle_new_cmd (cmd_builder_utils.c:38)
-==377538==    by 0x10B345: process_command (cmd_builder_utils.c:57)
-==377538==    by 0x10B4BC: build_cmd_list_from_tokens (cmd_builder.c:56)
-==377538==    by 0x10BE44: parse_line (parse_line.c:54)
-==377538==    by 0x109806: main_loop (main.c:85)
-==377538== 
-==377538== 8 bytes in 1 blocks are still reachable in loss record 7 of 73
-==377538==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377538==    by 0x10B83D: allocate_args_array (fill_cmd_utils.c:51)
-==377538==    by 0x10B64D: fill_cmd_from_tokens (fill_cmd.c:47)
-==377538==    by 0x10B2BB: handle_new_cmd (cmd_builder_utils.c:38)
-==377538==    by 0x10B345: process_command (cmd_builder_utils.c:57)
-==377538==    by 0x10B4BC: build_cmd_list_from_tokens (cmd_builder.c:56)
-==377538==    by 0x10BE44: parse_line (parse_line.c:54)
-==377538==    by 0x109806: main_loop (main.c:85)
-==377538==    by 0x10989F: main (main.c:103)
-==377538== 
-==377538== 16 bytes in 1 blocks are still reachable in loss record 15 of 73
-==377538==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377538==    by 0x109B79: set_heredoc (redirections.c:96)
-==377538==    by 0x109CEE: handle_redirection (redirections.c:122)
-==377538==    by 0x10B9E1: handle_redir_fail (fill_cmd_utils.c:99)
-==377538==    by 0x10B5EF: handle_redir_and_advance (fill_cmd.c:36)
-==377538==    by 0x10B6F8: fill_cmd_from_tokens (fill_cmd.c:58)
-==377538==    by 0x10B2BB: handle_new_cmd (cmd_builder_utils.c:38)
-==377538==    by 0x10B345: process_command (cmd_builder_utils.c:57)
-==377538==    by 0x10B4BC: build_cmd_list_from_tokens (cmd_builder.c:56)
-==377538==    by 0x10BE44: parse_line (parse_line.c:54)
-==377538==    by 0x109806: main_loop (main.c:85)
-==377538==    by 0x10989F: main (main.c:103)
-==377538== 
-==377538== 72 bytes in 1 blocks are still reachable in loss record 23 of 73
-==377538==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377538==    by 0x10B3B8: init_cmd (cmd_builder.c:21)
-==377538==    by 0x10B287: handle_new_cmd (cmd_builder_utils.c:35)
-==377538==    by 0x10B345: process_command (cmd_builder_utils.c:57)
-==377538==    by 0x10B4BC: build_cmd_list_from_tokens (cmd_builder.c:56)
-==377538==    by 0x10BE44: parse_line (parse_line.c:54)
-==377538==    by 0x109806: main_loop (main.c:85)
-==377538==    by 0x10989F: main (main.c:103)
-==377538== 
-==377538== 328 bytes in 1 blocks are still reachable in loss record 31 of 73
-==377538==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377538==    by 0x10F0C6: copy_envp (mini_envp.c:50)
-==377538==    by 0x109764: init_minishell (main.c:65)
-==377538==    by 0x109885: main (main.c:101)
-==377538== 
-==377538== 3,789 bytes in 40 blocks are still reachable in loss record 48 of 73
-==377538==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377538==    by 0x1101D9: ft_strdup (in /home/antuel/minishell/minishell)
-==377538==    by 0x10F110: copy_envp (mini_envp.c:55)
-==377538==    by 0x109764: init_minishell (main.c:65)
-==377538==    by 0x109885: main (main.c:101)
-==377538== 
-==377538== LEAK SUMMARY:
-==377538==    definitely lost: 0 bytes in 0 blocks
-==377538==    indirectly lost: 0 bytes in 0 blocks
-==377538==      possibly lost: 0 bytes in 0 blocks
-==377538==    still reachable: 4,215 bytes in 45 blocks
-==377538==         suppressed: 208,203 bytes in 226 blocks
-==377538== 
-==377538== For lists of detected and suppressed errors, rerun with: -s
-==377538== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==377576== 
-==377576== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==377576== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteTelemetry.log
-==377576==    <inherited from parent>
-==377576== 
-==377576== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteagent.log
-==377576==    <inherited from parent>
-==377576== 
-==377576== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250813T175423/ptyhost.log
-==377576==    <inherited from parent>
-==377576== 
-==377576== Open file descriptor 3: /home/antuel/minishell/valg.log
-==377576==    <inherited from parent>
-==377576== 
-==377576== 
-==377576== HEAP SUMMARY:
-==377576==     in use at exit: 208,331 bytes in 232 blocks
-==377576==   total heap usage: 623 allocs, 391 frees, 244,801 bytes allocated
-==377576== 
-==377576== LEAK SUMMARY:
-==377576==    definitely lost: 0 bytes in 0 blocks
-==377576==    indirectly lost: 0 bytes in 0 blocks
-==377576==      possibly lost: 0 bytes in 0 blocks
-==377576==    still reachable: 0 bytes in 0 blocks
-==377576==         suppressed: 208,331 bytes in 232 blocks
-==377576== 
-==377576== For lists of detected and suppressed errors, rerun with: -s
-==377576== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==377583== 
-==377583== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==377583== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteTelemetry.log
-==377583==    <inherited from parent>
-==377583== 
-==377583== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteagent.log
-==377583==    <inherited from parent>
-==377583== 
-==377583== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250813T175423/ptyhost.log
-==377583==    <inherited from parent>
-==377583== 
-==377583== Open file descriptor 3: /home/antuel/minishell/valg.log
-==377583==    <inherited from parent>
-==377583== 
-==377583== 
-==377583== HEAP SUMMARY:
-==377583==     in use at exit: 208,374 bytes in 235 blocks
-==377583==   total heap usage: 639 allocs, 404 frees, 245,161 bytes allocated
-==377583== 
-==377583== LEAK SUMMARY:
-==377583==    definitely lost: 0 bytes in 0 blocks
-==377583==    indirectly lost: 0 bytes in 0 blocks
-==377583==      possibly lost: 0 bytes in 0 blocks
-==377583==    still reachable: 0 bytes in 0 blocks
-==377583==         suppressed: 208,374 bytes in 235 blocks
-==377583== 
-==377583== For lists of detected and suppressed errors, rerun with: -s
-==377583== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==377584== 
-==377584== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==377584== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteTelemetry.log
-==377584==    <inherited from parent>
-==377584== 
-==377584== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteagent.log
-==377584==    <inherited from parent>
-==377584== 
-==377584== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250813T175423/ptyhost.log
-==377584==    <inherited from parent>
-==377584== 
-==377584== Open file descriptor 3: /home/antuel/minishell/valg.log
-==377584==    <inherited from parent>
-==377584== 
-==377584== 
-==377584== HEAP SUMMARY:
-==377584==     in use at exit: 208,412 bytes in 238 blocks
-==377584==   total heap usage: 655 allocs, 417 frees, 245,427 bytes allocated
-==377584== 
-==377584== LEAK SUMMARY:
-==377584==    definitely lost: 0 bytes in 0 blocks
-==377584==    indirectly lost: 0 bytes in 0 blocks
-==377584==      possibly lost: 0 bytes in 0 blocks
-==377584==    still reachable: 0 bytes in 0 blocks
-==377584==         suppressed: 208,412 bytes in 238 blocks
-==377584== 
-==377584== For lists of detected and suppressed errors, rerun with: -s
-==377584== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==377585== 
-==377585== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==377585== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteTelemetry.log
-==377585==    <inherited from parent>
-==377585== 
-==377585== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteagent.log
-==377585==    <inherited from parent>
-==377585== 
-==377585== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250813T175423/ptyhost.log
-==377585==    <inherited from parent>
-==377585== 
-==377585== Open file descriptor 3: /home/antuel/minishell/valg.log
-==377585==    <inherited from parent>
-==377585== 
-==377585== 
-==377585== HEAP SUMMARY:
-==377585==     in use at exit: 208,450 bytes in 241 blocks
-==377585==   total heap usage: 671 allocs, 430 frees, 245,716 bytes allocated
-==377585== 
-==377585== LEAK SUMMARY:
-==377585==    definitely lost: 0 bytes in 0 blocks
-==377585==    indirectly lost: 0 bytes in 0 blocks
-==377585==      possibly lost: 0 bytes in 0 blocks
-==377585==    still reachable: 0 bytes in 0 blocks
-==377585==         suppressed: 208,450 bytes in 241 blocks
-==377585== 
-==377585== For lists of detected and suppressed errors, rerun with: -s
-==377585== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==377618== 
-==377618== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==377618== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteTelemetry.log
-==377618==    <inherited from parent>
-==377618== 
-==377618== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteagent.log
-==377618==    <inherited from parent>
-==377618== 
-==377618== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250813T175423/ptyhost.log
-==377618==    <inherited from parent>
-==377618== 
-==377618== Open file descriptor 3: /home/antuel/minishell/valg.log
-==377618==    <inherited from parent>
-==377618== 
-==377618== 
-==377618== HEAP SUMMARY:
-==377618==     in use at exit: 208,499 bytes in 244 blocks
-==377618==   total heap usage: 613 allocs, 369 frees, 241,766 bytes allocated
-==377618== 
-==377618== LEAK SUMMARY:
-==377618==    definitely lost: 0 bytes in 0 blocks
-==377618==    indirectly lost: 0 bytes in 0 blocks
-==377618==      possibly lost: 0 bytes in 0 blocks
-==377618==    still reachable: 0 bytes in 0 blocks
-==377618==         suppressed: 208,499 bytes in 244 blocks
-==377618== 
-==377618== For lists of detected and suppressed errors, rerun with: -s
-==377618== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==377677== 
-==377677== FILE DESCRIPTORS: 8 open (3 std) at exit.
-==377677== Open file descriptor 5:
-==377677==    at 0x49CB07D: pipe (pipe.c:29)
-==377677==    by 0x10DB15: execute_heredoc (heredoc.c:74)
-==377677==    by 0x10DC8A: heredoc (heredoc.c:107)
-==377677==    by 0x10ECC7: prepare_pipeline (execute_begin.c:26)
-==377677==    by 0x10EF97: execute_pipeline (execute_begin.c:101)
-==377677==    by 0x1096D2: second_control (main.c:34)
-==377677==    by 0x109821: main_loop (main.c:86)
-==377677==    by 0x10989F: main (main.c:103)
-==377677== 
-==377677== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteTelemetry.log
-==377677==    <inherited from parent>
-==377677== 
-==377677== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteagent.log
-==377677==    <inherited from parent>
-==377677== 
-==377677== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250813T175423/ptyhost.log
-==377677==    <inherited from parent>
-==377677== 
-==377677== Open file descriptor 3: /home/antuel/minishell/valg.log
-==377677==    <inherited from parent>
-==377677== 
-==377677== 
-==377677== HEAP SUMMARY:
-==377677==     in use at exit: 212,993 bytes in 296 blocks
-==377677==   total heap usage: 644 allocs, 348 frees, 242,492 bytes allocated
-==377677== 
-==377677== 2 bytes in 1 blocks are still reachable in loss record 1 of 77
-==377677==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377677==    by 0x1101D9: ft_strdup (in /home/antuel/minishell/minishell)
-==377677==    by 0x109BEE: set_heredoc (redirections.c:101)
-==377677==    by 0x109CEE: handle_redirection (redirections.c:122)
-==377677==    by 0x10B9E1: handle_redir_fail (fill_cmd_utils.c:99)
-==377677==    by 0x10B5EF: handle_redir_and_advance (fill_cmd.c:36)
-==377677==    by 0x10B6F8: fill_cmd_from_tokens (fill_cmd.c:58)
-==377677==    by 0x10B2BB: handle_new_cmd (cmd_builder_utils.c:38)
-==377677==    by 0x10B345: process_command (cmd_builder_utils.c:57)
-==377677==    by 0x10B4BC: build_cmd_list_from_tokens (cmd_builder.c:56)
-==377677==    by 0x10BE44: parse_line (parse_line.c:54)
-==377677==    by 0x109806: main_loop (main.c:85)
-==377677== 
-==377677== 8 bytes in 1 blocks are still reachable in loss record 6 of 77
-==377677==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377677==    by 0x10B83D: allocate_args_array (fill_cmd_utils.c:51)
-==377677==    by 0x10B64D: fill_cmd_from_tokens (fill_cmd.c:47)
-==377677==    by 0x10B2BB: handle_new_cmd (cmd_builder_utils.c:38)
-==377677==    by 0x10B345: process_command (cmd_builder_utils.c:57)
-==377677==    by 0x10B4BC: build_cmd_list_from_tokens (cmd_builder.c:56)
-==377677==    by 0x10BE44: parse_line (parse_line.c:54)
-==377677==    by 0x109806: main_loop (main.c:85)
-==377677==    by 0x10989F: main (main.c:103)
-==377677== 
-==377677== 16 bytes in 1 blocks are still reachable in loss record 13 of 77
-==377677==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377677==    by 0x109B79: set_heredoc (redirections.c:96)
-==377677==    by 0x109CEE: handle_redirection (redirections.c:122)
-==377677==    by 0x10B9E1: handle_redir_fail (fill_cmd_utils.c:99)
-==377677==    by 0x10B5EF: handle_redir_and_advance (fill_cmd.c:36)
-==377677==    by 0x10B6F8: fill_cmd_from_tokens (fill_cmd.c:58)
-==377677==    by 0x10B2BB: handle_new_cmd (cmd_builder_utils.c:38)
-==377677==    by 0x10B345: process_command (cmd_builder_utils.c:57)
-==377677==    by 0x10B4BC: build_cmd_list_from_tokens (cmd_builder.c:56)
-==377677==    by 0x10BE44: parse_line (parse_line.c:54)
-==377677==    by 0x109806: main_loop (main.c:85)
-==377677==    by 0x10989F: main (main.c:103)
-==377677== 
-==377677== 72 bytes in 1 blocks are still reachable in loss record 24 of 77
-==377677==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377677==    by 0x10B3B8: init_cmd (cmd_builder.c:21)
-==377677==    by 0x10B287: handle_new_cmd (cmd_builder_utils.c:35)
-==377677==    by 0x10B345: process_command (cmd_builder_utils.c:57)
-==377677==    by 0x10B4BC: build_cmd_list_from_tokens (cmd_builder.c:56)
-==377677==    by 0x10BE44: parse_line (parse_line.c:54)
-==377677==    by 0x109806: main_loop (main.c:85)
-==377677==    by 0x10989F: main (main.c:103)
-==377677== 
-==377677== 328 bytes in 1 blocks are still reachable in loss record 35 of 77
-==377677==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377677==    by 0x10F0C6: copy_envp (mini_envp.c:50)
-==377677==    by 0x109764: init_minishell (main.c:65)
-==377677==    by 0x109885: main (main.c:101)
-==377677== 
-==377677== 3,789 bytes in 40 blocks are still reachable in loss record 52 of 77
-==377677==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==377677==    by 0x1101D9: ft_strdup (in /home/antuel/minishell/minishell)
-==377677==    by 0x10F110: copy_envp (mini_envp.c:55)
-==377677==    by 0x109764: init_minishell (main.c:65)
-==377677==    by 0x109885: main (main.c:101)
-==377677== 
-==377677== LEAK SUMMARY:
-==377677==    definitely lost: 0 bytes in 0 blocks
-==377677==    indirectly lost: 0 bytes in 0 blocks
-==377677==      possibly lost: 0 bytes in 0 blocks
-==377677==    still reachable: 4,215 bytes in 45 blocks
-==377677==         suppressed: 208,778 bytes in 251 blocks
-==377677== 
-==377677== For lists of detected and suppressed errors, rerun with: -s
-==377677== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
-==377717== 
-==377717== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==377717== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteTelemetry.log
-==377717==    <inherited from parent>
-==377717== 
-==377717== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteagent.log
-==377717==    <inherited from parent>
-==377717== 
-==377717== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250813T175423/ptyhost.log
-==377717==    <inherited from parent>
-==377717== 
-==377717== Open file descriptor 3: /home/antuel/minishell/valg.log
-==377717==    <inherited from parent>
-==377717== 
-==377717== 
-==377717== HEAP SUMMARY:
-==377717==     in use at exit: 208,873 bytes in 254 blocks
-==377717==   total heap usage: 664 allocs, 410 frees, 242,917 bytes allocated
-==377717== 
-==377717== LEAK SUMMARY:
-==377717==    definitely lost: 0 bytes in 0 blocks
-==377717==    indirectly lost: 0 bytes in 0 blocks
-==377717==      possibly lost: 0 bytes in 0 blocks
-==377717==    still reachable: 0 bytes in 0 blocks
-==377717==         suppressed: 208,873 bytes in 254 blocks
-==377717== 
-==377717== For lists of detected and suppressed errors, rerun with: -s
-==377717== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
-==377432== 
-==377432== FILE DESCRIPTORS: 7 open (3 std) at exit.
-==377432== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteTelemetry.log
-==377432==    <inherited from parent>
-==377432== 
-==377432== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250813T175423/remoteagent.log
-==377432==    <inherited from parent>
-==377432== 
-==377432== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250813T175423/ptyhost.log
-==377432==    <inherited from parent>
-==377432== 
-==377432== Open file descriptor 3: /home/antuel/minishell/valg.log
-==377432==    <inherited from parent>
-==377432== 
-==377432== 
-==377432== HEAP SUMMARY:
-==377432==     in use at exit: 208,494 bytes in 226 blocks
-==377432==   total heap usage: 667 allocs, 441 frees, 242,979 bytes allocated
-==377432== 
-==377432== LEAK SUMMARY:
-==377432==    definitely lost: 0 bytes in 0 blocks
-==377432==    indirectly lost: 0 bytes in 0 blocks
-==377432==      possibly lost: 0 bytes in 0 blocks
-==377432==    still reachable: 0 bytes in 0 blocks
-==377432==         suppressed: 208,494 bytes in 226 blocks
-==377432== 
-==377432== For lists of detected and suppressed errors, rerun with: -s
-==377432== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==41262== Memcheck, a memory error detector
+==41262== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41262== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41262== Command: ./minishell
+==41262== Parent PID: 823
+==41262== 
+==41404== 
+==41404== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==41404== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250817T213158/remoteagent.log
+==41404==    <inherited from parent>
+==41404== 
+==41404== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250817T213158/remoteTelemetry.log
+==41404==    <inherited from parent>
+==41404== 
+==41404== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250817T213158/ptyhost.log
+==41404==    <inherited from parent>
+==41404== 
+==41404== Open file descriptor 3: /home/antuel/minishell/valg.log
+==41404==    <inherited from parent>
+==41404== 
+==41404== 
+==41404== HEAP SUMMARY:
+==41404==     in use at exit: 208,387 bytes in 232 blocks
+==41404==   total heap usage: 649 allocs, 417 frees, 348,522 bytes allocated
+==41404== 
+==41404== LEAK SUMMARY:
+==41404==    definitely lost: 0 bytes in 0 blocks
+==41404==    indirectly lost: 0 bytes in 0 blocks
+==41404==      possibly lost: 0 bytes in 0 blocks
+==41404==    still reachable: 0 bytes in 0 blocks
+==41404==         suppressed: 208,387 bytes in 232 blocks
+==41404== 
+==41404== For lists of detected and suppressed errors, rerun with: -s
+==41404== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41783== 
+==41783== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==41783== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250817T213158/remoteagent.log
+==41783==    <inherited from parent>
+==41783== 
+==41783== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250817T213158/remoteTelemetry.log
+==41783==    <inherited from parent>
+==41783== 
+==41783== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250817T213158/ptyhost.log
+==41783==    <inherited from parent>
+==41783== 
+==41783== Open file descriptor 3: /home/antuel/minishell/valg.log
+==41783==    <inherited from parent>
+==41783== 
+==41783== 
+==41783== HEAP SUMMARY:
+==41783==     in use at exit: 212,676 bytes in 277 blocks
+==41783==   total heap usage: 688 allocs, 411 frees, 349,448 bytes allocated
+==41783== 
+==41783== 30 bytes in 1 blocks are still reachable in loss record 13 of 71
+==41783==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41783==    by 0x1112D7: ft_strdup (in /home/antuel/minishell/minishell)
+==41783==    by 0x10F88D: add_new_var (is_builtin_exec3.c:73)
+==41783==    by 0x10FA92: add_or_replace_var (is_builtin_exec3.c:108)
+==41783==    by 0x10F52D: update_pwd_vars (is_builtin_exec4.c:38)
+==41783==    by 0x10F45E: ft_cd (is_builtin_exec1.c:133)
+==41783==    by 0x10E472: exec_builtin (is_builtin_exec.c:86)
+==41783==    by 0x10EF49: control_builtin (execute_utils.c:52)
+==41783==    by 0x10FDA2: prepare_pipeline (execute_begin.c:24)
+==41783==    by 0x110095: execute_pipeline (execute_begin.c:101)
+==41783==    by 0x10A6F2: second_control (main.c:34)
+==41783==    by 0x10A841: main_loop (main.c:86)
+==41783== 
+==41783== 44 bytes in 1 blocks are still reachable in loss record 14 of 71
+==41783==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41783==    by 0x1112D7: ft_strdup (in /home/antuel/minishell/minishell)
+==41783==    by 0x10FA46: add_or_replace_var (is_builtin_exec3.c:102)
+==41783==    by 0x10F540: update_pwd_vars (is_builtin_exec4.c:39)
+==41783==    by 0x10F45E: ft_cd (is_builtin_exec1.c:133)
+==41783==    by 0x10E472: exec_builtin (is_builtin_exec.c:86)
+==41783==    by 0x10EF49: control_builtin (execute_utils.c:52)
+==41783==    by 0x10FDA2: prepare_pipeline (execute_begin.c:24)
+==41783==    by 0x110095: execute_pipeline (execute_begin.c:101)
+==41783==    by 0x10A6F2: second_control (main.c:34)
+==41783==    by 0x10A841: main_loop (main.c:86)
+==41783==    by 0x10A8BF: main (main.c:103)
+==41783== 
+==41783== 336 bytes in 1 blocks are still reachable in loss record 29 of 71
+==41783==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41783==    by 0x10F7D7: add_new_var (is_builtin_exec3.c:63)
+==41783==    by 0x10FA92: add_or_replace_var (is_builtin_exec3.c:108)
+==41783==    by 0x10F52D: update_pwd_vars (is_builtin_exec4.c:38)
+==41783==    by 0x10F45E: ft_cd (is_builtin_exec1.c:133)
+==41783==    by 0x10E472: exec_builtin (is_builtin_exec.c:86)
+==41783==    by 0x10EF49: control_builtin (execute_utils.c:52)
+==41783==    by 0x10FDA2: prepare_pipeline (execute_begin.c:24)
+==41783==    by 0x110095: execute_pipeline (execute_begin.c:101)
+==41783==    by 0x10A6F2: second_control (main.c:34)
+==41783==    by 0x10A841: main_loop (main.c:86)
+==41783==    by 0x10A8BF: main (main.c:103)
+==41783== 
+==41783== 3,759 bytes in 39 blocks are still reachable in loss record 46 of 71
+==41783==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41783==    by 0x1112D7: ft_strdup (in /home/antuel/minishell/minishell)
+==41783==    by 0x10F829: add_new_var (is_builtin_exec3.c:69)
+==41783==    by 0x10FA92: add_or_replace_var (is_builtin_exec3.c:108)
+==41783==    by 0x10F52D: update_pwd_vars (is_builtin_exec4.c:38)
+==41783==    by 0x10F45E: ft_cd (is_builtin_exec1.c:133)
+==41783==    by 0x10E472: exec_builtin (is_builtin_exec.c:86)
+==41783==    by 0x10EF49: control_builtin (execute_utils.c:52)
+==41783==    by 0x10FDA2: prepare_pipeline (execute_begin.c:24)
+==41783==    by 0x110095: execute_pipeline (execute_begin.c:101)
+==41783==    by 0x10A6F2: second_control (main.c:34)
+==41783==    by 0x10A841: main_loop (main.c:86)
+==41783== 
+==41783== LEAK SUMMARY:
+==41783==    definitely lost: 0 bytes in 0 blocks
+==41783==    indirectly lost: 0 bytes in 0 blocks
+==41783==      possibly lost: 0 bytes in 0 blocks
+==41783==    still reachable: 4,169 bytes in 42 blocks
+==41783==         suppressed: 208,507 bytes in 235 blocks
+==41783== 
+==41783== For lists of detected and suppressed errors, rerun with: -s
+==41783== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41262== 
+==41262== FILE DESCRIPTORS: 7 open (3 std) at exit.
+==41262== Open file descriptor 25: /home/antuel/.vscode-server/data/logs/20250817T213158/remoteagent.log
+==41262==    <inherited from parent>
+==41262== 
+==41262== Open file descriptor 23: /home/antuel/.vscode-server/data/logs/20250817T213158/remoteTelemetry.log
+==41262==    <inherited from parent>
+==41262== 
+==41262== Open file descriptor 22: /home/antuel/.vscode-server/data/logs/20250817T213158/ptyhost.log
+==41262==    <inherited from parent>
+==41262== 
+==41262== Open file descriptor 3: /home/antuel/minishell/valg.log
+==41262==    <inherited from parent>
+==41262== 
+==41262== 
+==41262== HEAP SUMMARY:
+==41262==     in use at exit: 208,205 bytes in 222 blocks
+==41262==   total heap usage: 703 allocs, 481 frees, 349,771 bytes allocated
+==41262== 
+==41262== LEAK SUMMARY:
+==41262==    definitely lost: 0 bytes in 0 blocks
+==41262==    indirectly lost: 0 bytes in 0 blocks
+==41262==      possibly lost: 0 bytes in 0 blocks
+==41262==    still reachable: 0 bytes in 0 blocks
+==41262==         suppressed: 208,205 bytes in 222 blocks
+==41262== 
+==41262== For lists of detected and suppressed errors, rerun with: -s
+==41262== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

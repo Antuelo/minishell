@@ -6,14 +6,14 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/08/13 17:46:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/17 23:08:47 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-#define MENS "minishell: warning: here-document delimited by end-of-file\n"
+#define MENS "minishell: warning: here-document delimited by end-of-file"
 
 /*STDERR_FILENO = Standard error output. Expands to: 2*/
 static void	heredoc_signal_handler(int signo)
@@ -21,7 +21,8 @@ static void	heredoc_signal_handler(int signo)
 	(void)signo;
 	write(STDERR_FILENO, "^C", 2);
 	signal(SIGINT, handle_signs);
-	exit(130);
+	g_exit_status = 130;
+	rl_done = 1;
 }
 
 static void	close_pipes(int pipes[2])
@@ -35,17 +36,22 @@ static void	close_pipes(int pipes[2])
 /*le coeur du heredoc ... là on fait readline dedié*/
 static void	child_heredoc(t_cmd *cmd, char *delim, char ***envp)
 {
-	char	*line;
+	char			*line;
+	extern int		rl_catch_signals;
 
+	g_exit_status = 0;
 	signal(SIGINT, heredoc_signal_handler);
+	rl_catch_signals = 0;
 	close(cmd->hdoc_pipe[0]);
 	while (1)
 	{
 		line = readline("> ");
-		if (!line)
+		if (g_exit_status == 130 || !line)
 		{
-			ft_putstr_fd(MENS, STDERR_FILENO);
-			break ;
+			f_heredoc(cmd, line, envp);
+			if (!line)
+				ft_putstr_fd(MENS, STDERR_FILENO);
+			_exit(130);
 		}
 		if (ft_strcmp(line, delim) == 0)
 			break ;
@@ -53,10 +59,7 @@ static void	child_heredoc(t_cmd *cmd, char *delim, char ***envp)
 		write(cmd->hdoc_pipe[1], "\n", 1);
 		free(line);
 	}
-	close(cmd->hdoc_pipe[1]);
-	free(line);
-	fcf(cmd);
-	f_envp(*envp, count_env(*envp));
+	f_heredoc(cmd, line, envp);
 	_exit(0);
 }
 

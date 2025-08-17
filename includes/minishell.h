@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:58:47 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/13 17:46:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/17 21:34:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int						wait_for_heredoc(pid_t pid, t_cmd *cmd,
 							t_termios *term);
 void					reset_readline(void);
 int						handle_heredoc_interrupt(t_cmd *cmd, t_termios *term);
+void					f_heredoc(t_cmd *cmd, char *line, char ***envp);
 
 /*execution, main ...*/
 int						execute(t_cmd *cmd, char ***envp);

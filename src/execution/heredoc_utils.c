@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 14:55:07 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/08/14 02:54:08 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/14 21:17:14 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	wait_for_heredoc(pid_t pid, t_cmd *cmd, t_termios *term)
 	{
 		close(cmd->hdoc_pipe[0]);
 		restore_original_terminal_mode(term);
-		write(STDOUT_FILENO, "\n", 1);
-		return (130);
+		if (WEXITSTATUS(status) == 130)
+			return (printf("\n"), 130);
 	}
 	return (0);
 }
