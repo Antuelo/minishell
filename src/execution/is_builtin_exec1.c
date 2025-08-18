@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:07 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/13 17:46:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/18 23:47:00 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ int	ft_exit(char **args, char ***envp, int *exit_code)
 	{
 		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 		*exit_code = 2;
-		return (0);
+		return (2);
 	}
 	if (err == 1)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		*exit_code = 1;
 		g_exit_status = 1;
 		return (1);
 	}
@@ -74,7 +75,7 @@ int	ft_exit(char **args, char ***envp, int *exit_code)
 		*exit_code = 0;
 	else
 		*exit_code = (unsigned char)ft_atoi(args[1]);
-	return (0);
+	return (*exit_code);
 }
 
 /*int	ft_exit(char **args, char ***envp, t_cmd *cmd)
@@ -101,11 +102,9 @@ int	ft_exit(char **args, char ***envp, int *exit_code)
 	if (args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		g_exit_status = 1;
-		return (1);
+		return (g_exit_status = 1, 1);
 	}
-	quit_minishell(*envp, (unsigned char)ft_atoi(args[1]));
-	return (0);
+	return (quit_minishell(*envp, (unsigned char)ft_atoi(args[1])), 0);
 }*/
 
 int	ft_cd(char **args, char ***envp)

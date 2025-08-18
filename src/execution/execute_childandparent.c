@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/13 18:04:53 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/18 23:25:35 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 	{
 		if (id_builtin == 5)
 		{
-			if (ft_exit(cmd->args, &envp, &exit_code) == 0)
+			exit_code = ft_exit(cmd->args, &envp, &exit_code);
+			if (exit_code == 0)
 				quit_minishell(envp, exit_code);
 		}
 		child_builtin(cmd, &envp);
@@ -83,7 +84,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		control_heredoc(cmd);
 		setup_redirections(cmd, exec);
 		if (control_infiles(cmd))
-			return (fcf(cmd), _exit(1), (void)0);
+			return (f_heredoc(cmd, NULL, &envp), _exit(1), (void)0);
 		if (!cmd->args || !cmd->args[0] || cmd->args[0][0] == '\0')
 			return (fcf(cmd), f_envp(envp, count_env(envp)), _exit(0), (void)0);
 		fullpath = control_path(cmd, envp, id_builtin);

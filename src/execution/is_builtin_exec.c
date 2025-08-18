@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:01:20 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/28 18:03:00 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/18 23:09:56 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:27:48 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/13 17:41:42 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/18 23:46:21 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,17 @@ int			g_exit_status;
 static int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
 {
 	if (cmds && cmds->args && cmds->args[0]
-		&& ft_strncmp(cmds->args[0], "exit", 4) == 0)
+		&& ft_strncmp(cmds->args[0], "exit", 5) == 0)
 	{
-		if (ft_exit(cmds->args, my_envp, exit_code) == 0)
-		{
-			fcf(cmds);
-			return (1);
-		}
+		*exit_code = ft_exit(cmds->args, my_envp, exit_code);
+		if (*exit_code == 0)
+			return (fcf(cmds), 1);
+		else if (*exit_code == 1)
+			return (fcf(cmds), 0);
+		else if (*exit_code == 2)
+			return (fcf(cmds), 2);
+		else
+			return (fcf(cmds), *exit_code);
 	}
 	if (cmds)
 	{

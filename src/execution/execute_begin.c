@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:45:32 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/13 17:41:42 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/18 23:13:37 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	execute_pipeline(t_cmd *cmd_list, char ***envp)
 
 	prep = prepare_pipeline(cmd_list, &exec, envp);
 	if (prep == 1)
-		ret = 0;
+		return (0);
 	else if (prep == -1)
 		ret = 1;
 	else
