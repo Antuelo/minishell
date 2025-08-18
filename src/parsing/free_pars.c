@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/13 17:47:33 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/19 00:24:27 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	fcl(t_cmd *cmd)
 {
 	t_cmd	*next;
 
+	if (!cmd)
+		return ;
 	while (cmd)
 	{
 		next = cmd->next;

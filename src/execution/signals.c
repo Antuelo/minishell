@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:50 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/14 02:55:28 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/19 00:26:23 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ void	handle_signs(int signo)
 
 void	quit_minishell(char **envp, int code)
 {
-	if (envp)
-	{
-		f_envp(envp, count_env(envp));
-		envp = NULL;
-	}
+	if (!envp || !envp[0])
+		return ;
+	f_envp(envp, count_env(envp));
+	envp = NULL;
 	clear_history();
 	rl_clear_history();
 	exit(code);

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:43:54 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/13 17:46:03 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/19 00:27:04 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	freepath(char **patch)
 
 void	f_envp(char **envp, int count)
 {
+	if (!envp || !envp[0])
+		return ;
 	while (--count >= 0)
 		free(envp[count]);
 	free(envp);

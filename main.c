@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:27:48 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/18 23:46:21 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/19 00:06:43 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	second_control(t_cmd *cmds, char ***my_envp, int *exit_code)
 		else
 			return (fcf(cmds), *exit_code);
 	}
+	(void)*exit_code;
 	if (cmds)
 	{
 		execute_pipeline(cmds, my_envp);

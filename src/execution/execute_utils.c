@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 18:00:04 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/18 23:34:15 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/19 00:07:28 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	control_builtin(t_cmd *cmd_list, char ***envp)
 		if (id == 5)
 		{
 			if (ft_exit(cmd_list->args, envp, &exit_code) == 0)
-				quit_minishell(*envp, exit_code);
+				f_heredoc(cmd_list, NULL, envp);
 			return (1);
 		}
 		else
