@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:59:29 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/19 00:46:53 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/21 00:02:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 				quit_minishell(envp, exit_code);
 			}
 			else
-				return (f_envp(envp, count_env(envp)),(void)0);
+				return (f_envp(envp, count_env(envp)), (void)0);
 		}
 		else
 			child_builtin(cmd, &envp);

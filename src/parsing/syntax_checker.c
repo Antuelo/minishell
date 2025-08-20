@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:50:04 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/08 14:50:04 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/21 00:18:42 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,13 @@ int	contains_forbidden_chars(char *line)
 			|| line[i] == '(' || line[i] == ')')
 		{
 			printf("Syntax error near unexpected token `%c'\n", line[i]);
-			return (1);
+			return (g_exit_status = 2, 1);
 		}
 		if ((line[i] == '&' && line[i + 1] == '&')
 			|| (line[i] == '|' && line[i + 1] == '|'))
 		{
 			printf("Syntax error near unexpected token `%.2s'\n", &line[i]);
-			return (1);
+			return (g_exit_status = 2, 1);
 		}
 		i++;
 	}

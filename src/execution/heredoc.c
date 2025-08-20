@@ -6,23 +6,31 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 11:07:36 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/08/17 23:08:47 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/21 00:00:39 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-#define MENS "minishell: warning: here-document delimited by end-of-file"
+#define MENS "minishell: warning: here-document delimited by end-of-file\n"
 
-/*STDERR_FILENO = Standard error output. Expands to: 2*/
+/*STDERR_FILENO = Standard error output. Expands to: 2
+Secuencia	Significado	Tamaño
+\033[1D	Retrocede 1 carácter	4 bytes
+\033[2D	Retrocede 2 caracteres	4 bytes
+\033[1C	Avanza 1 carácter	4 bytes
+\033[2C	Avanza 2 caracteres	4 bytes
+\033[1A	Sube 1 línea	4 bytes
+\033[1B	Baja 1 línea	4 bytes
+\033[2K	Borra la línea actual	4 bytes*/
 static void	heredoc_signal_handler(int signo)
 {
 	(void)signo;
 	write(STDERR_FILENO, "^C", 2);
-	signal(SIGINT, handle_signs);
+	close(STDIN_FILENO);
 	g_exit_status = 130;
-	rl_done = 1;
+	write(1, "\033[1A", 4);
 }
 
 static void	close_pipes(int pipes[2])
@@ -41,17 +49,16 @@ static void	child_heredoc(t_cmd *cmd, char *delim, char ***envp)
 
 	g_exit_status = 0;
 	signal(SIGINT, heredoc_signal_handler);
-	rl_catch_signals = 0;
 	close(cmd->hdoc_pipe[0]);
 	while (1)
 	{
 		line = readline("> ");
-		if (g_exit_status == 130 || !line)
+		if (g_exit_status == 130 && !line)
+			return (f_heredoc(cmd, line, envp), _exit(130));
+		else if (!line)
 		{
 			f_heredoc(cmd, line, envp);
-			if (!line)
-				ft_putstr_fd(MENS, STDERR_FILENO);
-			_exit(130);
+			return (ft_putstr_fd(MENS, STDERR_FILENO), exit (0));
 		}
 		if (ft_strcmp(line, delim) == 0)
 			break ;
