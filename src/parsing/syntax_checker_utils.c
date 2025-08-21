@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
+/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 20:29:45 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/10 20:37:11 by anoviedo         ###   ########.fr       */
+/*   Created: 2025/08/21 20:02:25 by llabatut          #+#    #+#             */
+/*   Updated: 2025/08/21 20:02:25 by llabatut         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@ int	check_pipe_redirection(t_token *tokens)
 			next = curr->next;
 			if (!skip_redirs_and_check_filename(&next))
 				return (0);
-			if (!next)
-			{
-				printf("Syntax error: missing command after pipe\n");
-				return (0);
-			}
 		}
 		curr = curr->next;
 	}
