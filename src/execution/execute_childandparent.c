@@ -6,27 +6,43 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:10:28 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/08/23 22:10:27 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/24 00:08:17 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
+static void	child_builtin(t_cmd *cmd, char ***envp)
+{
+	int	status;
+
+	status = exec_builtin(cmd, envp);
+	f_envp(*envp, count_env(*envp));
+	fcf(cmd);
+	_exit(status);
+}
+
 static void	condition(t_cmd *cmd, char **envp, int id_builtin, char *fullpath)
 {
-	int	count;
-	int	status;
+	int	exit_code;
 
 	if (id_builtin > 0)
 	{
 		if (id_builtin == 5)
-			ft_exit(cmd->args);
-		count = count_env(envp);
-		status = exec_builtin(cmd, &envp);
-		f_envp(envp, count);
-		free(fullpath);
-		exit(status);
+		{
+			exit_code = ft_exit(cmd->args, &envp, &exit_code);
+			g_exit_status = exit_code;
+			if (exit_code == 0)
+			{
+				fcf(cmd);
+				quit_minishell(envp, exit_code);
+			}
+			else
+				return (f_envp(envp, count_env(envp)), (void)0);
+		}
+		else
+			child_builtin(cmd, &envp);
 	}
 	else
 		execute_execve(fullpath, cmd, envp);
@@ -82,8 +98,7 @@ void	execute_fork(t_cmd *cmd, t_exec *exec, char **envp, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		condition(cmd, envp, id_builtin, fullpath);
-		free(fullpath);
-		return (fcf(cmd), _exit(g_exit_status), (void)0);
+		return (free(fullpath), fcf(cmd), _exit(g_exit_status), (void)0);
 	}
 	parent_process(exec, cmd);
 	signal(SIGINT, SIG_IGN);

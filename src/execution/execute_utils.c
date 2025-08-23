@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 17:39:17 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/07/14 14:18:37 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/24 00:15:58 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,19 @@ int	init_exec(t_exec *exec, int count)
 int	control_builtin(t_cmd *cmd_list, char ***envp)
 {
 	int	id;
+	int	exit_code;
 
 	id = is_builtin(cmd_list->args[0]);
-	if (!cmd_list->next && !cmd_list->infile && !cmd_list->outfile && id > 0)
+	if (!cmd_list->next && !cmd_list->infile && !cmd_list->outfile
+		&& cmd_list->append == -1 && !cmd_list->heredoc
+		&& (id == 4 || id == 5 || id == 6 || id == 7))
 	{
 		if (id == 5)
-			ft_exit(cmd_list->args);
+		{
+			if (ft_exit(cmd_list->args, envp, &exit_code) == 0)
+				f_heredoc(cmd_list, NULL, envp);
+			return (1);
+		}
 		else
 			g_exit_status = exec_builtin(cmd_list, envp);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:10:49 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/08/23 22:10:27 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/23 22:57:20 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,32 +43,51 @@ int	ft_unset(char **args, char ***envp)
 	return (0);
 }
 
-int	ft_exit(char **args)
+int	validate_exit_args(char **args)
 {
 	int	i;
 
-	if (isatty(STDIN_FILENO))
-		write(2, "exit\n", 5);
 	if (!args[1])
-		exit(0);
+		return (0);
 	i = 0;
 	while (args[1][i])
 	{
-		if ((args[1][i] < '0' || args[1][i] > '9') && !(i == 0
-				&& (args[1][i] == '-' || args[1][i] == '+')))
-		{
-			ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
-			exit(2);
-		}
+		if ((args[1][i] < '0' || args[1][i] > '9')
+			&& !(i == 0 && (args[1][i] == '-' || args[1][i] == '+')))
+			return (2);
 		i++;
 	}
 	if (args[2])
+		return (1);
+	return (0);
+}
+
+int	ft_exit(char **args, char ***envp, int *exit_code)
+{
+	int	err;
+
+	(void)envp;
+	if (isatty(STDIN_FILENO))
+		write(2, "exit\n", 5);
+	err = validate_exit_args(args);
+	if (err == 2)
+	{
+		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
+		*exit_code = 2;
+		return (2);
+	}
+	if (err == 1)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		*exit_code = 1;
 		g_exit_status = 1;
 		return (1);
 	}
-	exit((unsigned char)ft_atoi(args[1]));
+	if (!args[1])
+		*exit_code = 0;
+	else
+		*exit_code = (unsigned char)ft_atoi(args[1]);
+	return (*exit_code);
 }
 
 int	ft_cd(char **args, char ***envp)

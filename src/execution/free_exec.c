@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:43:54 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/23 22:10:27 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/24 00:31:59 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	f_envp(char **envp, int count)
 	while (--count >= 0)
 		free(envp[count]);
 	free(envp);
+	envp = NULL;
 }
 
 /* * update_status

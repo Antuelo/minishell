@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:16:06 by anoviedo          #+#    #+#             */
-/*   Updated: 2025/08/23 22:10:27 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/24 00:37:06 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,14 @@ void	f_heredoc(t_cmd *cmd, char *line, char ***envp)
 	if (line)
 		free(line);
 	f_envp(*envp, count_env(*envp));
+}
+
+void	quit_minishell(char **envp, int code)
+{
+	if (envp || envp[0])
+		f_envp(envp, count_env(envp));
+	envp = NULL;
+	clear_history();
+	rl_clear_history();
+	exit(code);
 }

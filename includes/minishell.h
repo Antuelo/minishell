@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 13:29:38 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/23 22:10:27 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/23 23:02:40 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int						ft_env(char **envp);
 int						ft_pwd(void);
 int						ft_unset(char **args, char ***envp);
 char					**rebuild_envp(char **args, char **envp, int i, int j);
-int						ft_exit(char **args);
+int						ft_exit(char **args, char ***envp, int *exit_code);
 int						ft_export(char **args, char ***envp, t_cmd *cmd);
 void					tryed_env(char **envp);
 int						ft_cd(char **args, char ***envp);
@@ -127,5 +127,6 @@ void					f_envp(char **envp, int count);
 void					wait_all_processes(t_exec *exec);
 void					f_heredoc(t_cmd *cmd, char *line, char ***envp);
 void					close_all_heredoc_fds(t_cmd *list);
+void					quit_minishell(char **envp, int code);
 
 #endif
