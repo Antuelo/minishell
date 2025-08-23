@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:45:32 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/14 13:17:16 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/23 18:37:53 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	prepare_pipeline(t_cmd *cmd_list, char ***envp, t_exec *exec)
 	t_cmd	*cmd;
 	int		status;
 
-	status = heredoc(cmd_list, 0);
+	status = heredoc(cmd_list, 0, envp);
 	if (status)
 		return (g_exit_status = status, -1);
 	cmd = cmd_list;

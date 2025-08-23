@@ -6,12 +6,22 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:09:53 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/04 23:52:32 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/23 18:51:38 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+
+/*fcf = free_cmd_full ... ça libère même les cmd déjà utilisés*/
+void	fcf(t_cmd *any)
+{
+	if (!any)
+		return ;
+	while (any->prev)
+		any = any->prev;
+	free_cmd_list(any);
+}
 
 static void	ft_free_strarray(char **arr)
 {
@@ -72,16 +82,3 @@ void	free_all(char *line, t_token *tokens, t_cmd *cmds)
 		free_cmd_list(cmds);
 }
 
-// Libère chaque argument d’un tableau de strings (args)
-/*static void	free_cmd_args(char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		free(args[i]);
-		i++;
-	}
-	free(args);
-}*/

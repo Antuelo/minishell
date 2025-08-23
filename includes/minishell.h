@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llabatut <llabatut@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 13:29:38 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/25 13:29:38 by llabatut         ###   ########.ch       */
+/*   Updated: 2025/08/23 22:10:27 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void					print_in_case(char *arg, char *path);
 int						add_or_replace_var(char ***envp, char *new_var);
 void					print_export_format(char *line);
 int						control_infiles(t_cmd *cmd);
-int						heredoc(t_cmd *cmds, int status);
+int						heredoc(t_cmd *cmds, int status, char ***envp);
 int						control_fork_pipe(t_cmd *cmd, t_exec *exec, int i);
 void					execute_fork(t_cmd *cmd, t_exec *exec, char **envp,
 							int i);
@@ -123,7 +123,9 @@ void					clean_exit(t_cmd *cmd, char **envp, int code);
 /*free everythings*/
 void					freepath(char **patch);
 void					free_cmd(t_cmd *cmd);
-void					free_envp(char **envp, int count);
+void					f_envp(char **envp, int count);
 void					wait_all_processes(t_exec *exec);
+void					f_heredoc(t_cmd *cmd, char *line, char ***envp);
+void					close_all_heredoc_fds(t_cmd *list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 16:01:28 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/12 09:43:52 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/23 22:10:27 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*first_control(char **my_envp)
 	input = readline(prompt);
 	if (!input)
 	{
-		free_envp(my_envp, count_env(my_envp));
+		f_envp(my_envp, count_env(my_envp));
 		write(1, "exit\n", 5);
 		return (NULL);
 	}
