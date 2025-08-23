@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:35:04 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/21 00:04:21 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:10:57 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static int	set_infile(t_cmd *cmd, t_token *token)
 
 	fd = open(token->value, O_RDONLY);
 	if (fd == -1)
-	{
-		perror(token->value);
-		return (0);
-	}
+		g_exit_status = 1;
 	close(fd);
 	if (cmd->infile)
 		free(cmd->infile);
