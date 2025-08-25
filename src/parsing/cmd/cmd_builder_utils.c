@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 19:10:46 by llabatut          #+#    #+#             */
-/*   Updated: 2025/07/05 00:19:13 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/25 22:14:49 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,15 @@
 static void	update_cmd_links(t_cmd **head, t_cmd **last, t_cmd *new)
 {
 	if (!*head)
+	{
+		new->prev = NULL;
 		*head = new;
+	}
 	else
+	{
+		new->prev = *last;
 		(*last)->next = new;
+	}
 	*last = new;
 }
 

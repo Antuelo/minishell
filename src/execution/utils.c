@@ -6,7 +6,7 @@
 /*   By: anoviedo <antuel@outlook.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 22:10:49 by llabatut          #+#    #+#             */
-/*   Updated: 2025/08/23 23:53:26 by anoviedo         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:57:38 by anoviedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	clean_exit(t_cmd *cmd, char **envp, int code)
 {
-	free_cmd_list(cmd);
+	fcf(cmd);
 	if (envp)
 		f_envp(envp, count_env(envp));
 	exit(code);
